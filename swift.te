@@ -67,6 +67,7 @@ logging_send_syslog_msg(swift_t)
 
 miscfiles_read_localization(swift_t)
 
-#optional_policy(`
-#	unconfined_domain(swift_t)
-#')
+# Allow swift to run unconfined
+optional_policy(`
+	unconfined_domain(swift_t)
+')
