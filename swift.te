@@ -19,6 +19,9 @@
 #
 # Author: Miroslav Grepl 
 #
+# After building, you must run the following:
+#   restorecon -Rv /usr/bin/swift* /var/run/swift
+#
 
 policy_module(swift, 1.0.0)
 
