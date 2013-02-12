@@ -13,7 +13,7 @@ all: ${TARGETS:=.pp.bz2}
 	make -f ${SHAREDIR}/selinux/devel/Makefile $@
 
 clean:
-	rm -f *~ *.if *.tc *.pp *.fc *.pp.bz2
+	rm -f *~ *.if *.tc *.pp *.pp.bz2
 	rm -rf tmp
 
 #install:
