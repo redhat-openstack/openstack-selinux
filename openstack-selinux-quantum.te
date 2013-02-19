@@ -27,3 +27,4 @@ require {
 }
 
 corecmd_exec_bin(dnsmasq_t)
+corecmd_exec_shell(dnsmasq_t)
