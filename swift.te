@@ -25,6 +25,10 @@
 
 policy_module(swift, 1.0.0)
 
+gen_require(`
+	type rsync_t;
+')
+
 ########################################
 #
 # Declarations
@@ -37,6 +41,9 @@ init_daemon_domain(swift_t, swift_exec_t)
 type swift_var_run_t;
 files_pid_file(swift_var_run_t)
 
+type swift_data_t;
+files_type(swift_data_t)
+
 ########################################
 #
 # swift local policy
@@ -48,6 +55,14 @@ allow swift_t self:unix_dgram_socket create_socket_perms;
 
 manage_dirs_pattern(swift_t, swift_var_run_t, swift_var_run_t)
 manage_files_pattern(swift_t, swift_var_run_t, swift_var_run_t)
+
+# swift makes use of rsync, so we need to give rsync permissions
+# to edit swift_data_t files as well as swift_t those permissions
+manage_dirs_pattern(swift_t, swift_data_t, swift_data_t)
+manage_files_pattern(swift_t, swift_data_t, swift_data_t)
+manage_dirs_pattern(rsync_t, swift_data_t, swift_data_t)
+manage_files_pattern(rsync_t, swift_data_t, swift_data_t)
+
 manage_lnk_files_pattern(swift_t, swift_var_run_t, swift_var_run_t)
 files_pid_filetrans(swift_t, swift_var_run_t, { dir })
 
