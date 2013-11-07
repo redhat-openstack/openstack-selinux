@@ -1,0 +1,56 @@
+#
+# SELinux policy module for OpenStack Quantum
+# Copyright 2013 Red Hat, Inc.
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation version 2.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along
+# with this program; if not, write to the Free Software Foundation, Inc.,
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+#
+
+#
+# Author: Miroslav Grepl 
+#
+
+policy_module(openstack-selinux-neutron,0.2.2)
+
+require {
+	type dnsmasq_t;
+	type neutron_var_lib_t;
+	type haproxy_exec_t;
+	type ifconfig_t;
+	type http_port_t;
+}
+
+corecmd_exec_bin(dnsmasq_t)
+corecmd_exec_shell(dnsmasq_t)
+
+rw_files_pattern(dnsmasq_t, neutron_var_lib_t, neutron_var_lib_t)
+
+# bz#1020052 - LBaaS Additions
+
+# <desc>
+# <p>
+# Allow Load Balancer as a Service operation
+# </p>
+# </desc>
+gen_tunable(neutron_allow_lbaas, false)
+
+optional_policy(`
+        tunable_policy(`neutron_allow_lbaas',`
+		allow ifconfig_t haproxy_exec_t:file { read execute open execute_no_trans };
+		allow ifconfig_t http_port_t:tcp_socket name_bind;
+		allow ifconfig_t neutron_var_lib_t:dir { write read add_name remove_name };
+		rw_files_pattern(ifconfig_t, neutron_var_lib_t, neutron_var_lib_t)
+		allow ifconfig_t self:capability dac_override;
+		allow ifconfig_t self:process setrlimit;
+        ')
+')
