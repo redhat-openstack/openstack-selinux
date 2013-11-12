@@ -48,9 +48,12 @@ optional_policy(`
         tunable_policy(`neutron_allow_lbaas',`
 		allow ifconfig_t haproxy_exec_t:file { read execute open execute_no_trans };
 		allow ifconfig_t http_port_t:tcp_socket name_bind;
-		allow ifconfig_t neutron_var_lib_t:dir { write read add_name remove_name };
-		rw_files_pattern(ifconfig_t, neutron_var_lib_t, neutron_var_lib_t)
-		allow ifconfig_t self:capability dac_override;
+
+		allow ifconfig_t neutron_var_lib_t:dir rw_dir_perms;
+		manage_files_pattern(ifconfig_t, neutron_var_lib_t, neutron_var_lib_t)
+		manage_fifo_files_pattern(ifconfig_t, neutron_var_lib_t, neutron_var_lib_t)
+		manage_sock_files_pattern(ifconfig_t, neutron_var_lib_t, neutron_var_lib_t)
+		allow ifconfig_t self:capability { setuid setgid dac_override };
 		allow ifconfig_t self:process setrlimit;
         ')
 ')
