@@ -27,7 +27,4 @@ require {
 	type quantum_var_lib_t;
 }
 
-corecmd_exec_bin(dnsmasq_t)
-corecmd_exec_shell(dnsmasq_t)
-
 rw_files_pattern(dnsmasq_t, quantum_var_lib_t, quantum_var_lib_t)
