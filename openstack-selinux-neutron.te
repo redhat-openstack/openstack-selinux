@@ -17,43 +17,15 @@
 #
 
 #
-# Author: Miroslav Grepl 
+# Author: Lon Hohberger
+#         Miroslav Grepl
 #
 
-policy_module(openstack-selinux-neutron,0.2.2)
+policy_module(openstack-selinux-neutron,0.2.3)
 
 require {
 	type dnsmasq_t;
 	type neutron_var_lib_t;
-	type haproxy_exec_t;
-	type ifconfig_t;
-	type http_port_t;
 }
 
-corecmd_exec_bin(dnsmasq_t)
-corecmd_exec_shell(dnsmasq_t)
-
 rw_files_pattern(dnsmasq_t, neutron_var_lib_t, neutron_var_lib_t)
-
-# bz#1020052 - LBaaS Additions
-
-# <desc>
-# <p>
-# Allow Load Balancer as a Service operation
-# </p>
-# </desc>
-gen_tunable(neutron_allow_lbaas, false)
-
-optional_policy(`
-        tunable_policy(`neutron_allow_lbaas',`
-		allow ifconfig_t haproxy_exec_t:file { read execute open execute_no_trans };
-		allow ifconfig_t http_port_t:tcp_socket name_bind;
-
-		allow ifconfig_t neutron_var_lib_t:dir rw_dir_perms;
-		manage_files_pattern(ifconfig_t, neutron_var_lib_t, neutron_var_lib_t)
-		manage_fifo_files_pattern(ifconfig_t, neutron_var_lib_t, neutron_var_lib_t)
-		manage_sock_files_pattern(ifconfig_t, neutron_var_lib_t, neutron_var_lib_t)
-		allow ifconfig_t self:capability { setuid setgid dac_override };
-		allow ifconfig_t self:process setrlimit;
-        ')
-')
