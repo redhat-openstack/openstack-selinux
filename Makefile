@@ -1,4 +1,4 @@
-TARGETS?=
+TARGETS?=os-ovs
 MODULES?=${TARGETS:=.pp.bz2}
 SHAREDIR?=/usr/share
 #INSTALL=?=install

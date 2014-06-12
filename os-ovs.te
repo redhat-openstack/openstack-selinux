@@ -1,0 +1,18 @@
+#
+# openstack-selinux policy for RHEL7
+#
+# Allow openvswitch to write to files in /tmp
+#
+# Author: Lon Hohberger <lhh@redhat.com>
+#
+policy_module(os-ovs,0.1)
+
+require {
+	type openvswitch_t;
+	type init_tmp_t;
+	class file write;
+}
+
+#============= openvswitch_t ==============
+allow openvswitch_t init_tmp_t:file write;
+
