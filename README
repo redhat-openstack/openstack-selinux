@@ -1,0 +1,14 @@
+This repository contains OpenStack policy workarounds 
+for EL6 and EL7 and derivatives.  Each release has its
+own corresponsing branch.
+
+Branch    Operating System
+ el7      Red Hat Enterprise Linux 7, CentOS 7, and related
+ el6      Red Hat Enterprise Linux 6, CentOS 6, and related
+
+The policies here are not designed to replace - but augment -
+the selinux-policy package from your operating system.
+
+Bugs may be filed against the 'openstack-selinux' package
+in the 'RDO' or 'Red Hat OpenStack' products at
+https://bugzilla.redhat.com/
