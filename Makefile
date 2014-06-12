@@ -1,4 +1,4 @@
-TARGETS?=openstack-selinux-nova openstack-selinux-neutron openstack-selinux-quantum swift openstack-rsync
+TARGETS?=
 MODULES?=${TARGETS:=.pp.bz2}
 SHAREDIR?=/usr/share
 #INSTALL=?=install
