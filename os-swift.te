@@ -1,0 +1,13 @@
+policy_module(os-swift,0.1)
+
+require {
+	type swift_t;
+}
+
+# Bugzilla 1105344
+corenet_tcp_connect_keystone_port(swift_t)
+corenet_tcp_connect_memcache_port(swift_t)
+
+# Bugzilla 1109087
+corenet_tcp_connect_xserver_port(swift_t)
+

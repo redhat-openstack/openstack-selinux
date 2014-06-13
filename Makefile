@@ -1,4 +1,4 @@
-TARGETS?=os-ovs
+TARGETS?=os-ovs os-monitoring-plugins os-swift
 MODULES?=${TARGETS:=.pp.bz2}
 SHAREDIR?=/usr/share
 #INSTALL=?=install
