@@ -1,4 +1,4 @@
-TARGETS?=os-ovs os-monitoring-plugins os-swift os-nova
+TARGETS?=os-ovs os-swift os-nova
 MODULES?=${TARGETS:=.pp.bz2}
 SHAREDIR?=/usr/share
 #INSTALL=?=install
