@@ -4,6 +4,7 @@ require {
         type nova_network_t;
         attribute nova_domain;
         class capability { net_raw sys_ptrace kill };
+        class capability2 block_suspend;
 }
 
 # from upstream - Bugzilla 1107861
@@ -13,6 +14,7 @@ init_read_utmp(nova_domain)
 # Bugzilla 1095869
 # Allow create/modify/delete virtual networks
 allow nova_network_t self:capability { net_raw sys_ptrace kill };
+allow nova_network_t self:capability2 block_suspend;
 
 kernel_rw_net_sysctls(nova_network_t)
 dev_rw_vhost(nova_network_t)
