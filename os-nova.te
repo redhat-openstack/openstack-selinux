@@ -1,0 +1,17 @@
+policy_module(os-nova,0.1)
+
+require {
+        type nova_network_t;
+        attribute nova_domain;
+        class capability { net_raw sys_ptrace kill };
+}
+
+# from upstream
+auth_read_passwd(nova_domain)
+init_read_utmp(nova_domain)
+
+allow nova_network_t self:capability { net_raw sys_ptrace kill };
+
+# create/modify/delete virtual networks
+kernel_rw_net_sysctls(nova_network_t)
+dev_rw_vhost(nova_network_t)
