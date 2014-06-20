@@ -7,6 +7,7 @@ require {
 # Bugzilla 1105344
 corenet_tcp_connect_keystone_port(swift_t)
 corenet_tcp_connect_memcache_port(swift_t)
+allow swift_t httpd_config_t:dir search;
 
 # Bugzilla 1109087
 corenet_tcp_connect_xserver_port(swift_t)
