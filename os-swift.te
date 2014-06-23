@@ -2,6 +2,7 @@ policy_module(os-swift,0.1)
 
 require {
 	type swift_t;
+	type httpd_config_t;
 }
 
 # Bugzilla 1105344
