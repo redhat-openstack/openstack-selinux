@@ -1,0 +1,9 @@
+policy_module(os-neutron, 0.1)
+
+require {
+	type neutron_t;
+	class unix_stream_socket connectto;
+}
+
+# Bugzilla 1110263
+allow neutron_t self:unix_stream_socket { accept listen connectto };
