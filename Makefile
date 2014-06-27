@@ -1,4 +1,4 @@
-TARGETS?=os-ovs os-swift os-nova os-neutron
+TARGETS?=os-ovs os-swift os-nova os-neutron os-mysql
 MODULES?=${TARGETS:=.pp.bz2}
 SHAREDIR?=/usr/share
 #INSTALL=?=install
