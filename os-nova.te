@@ -2,9 +2,13 @@ policy_module(os-nova,0.1)
 
 require {
         type nova_network_t;
-        attribute nova_domain;
+	type nova_var_lib_t;
+	type sshd_t;        
+	attribute nova_domain;
         class capability { net_raw sys_ptrace kill };
-        class capability2 block_suspend;
+	class capability2 block_suspend;
+      	class file read;
+
 }
 
 # from upstream - Bugzilla 1107861
