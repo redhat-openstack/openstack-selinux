@@ -22,7 +22,7 @@ allow nova_network_t self:capability2 block_suspend;
 # Bugzilla 1083566
 allow nova_network_t initrc_var_run_t:file read;
 
-# Bugzillz 1113723
+# Bugzilla 1113723
 allow sshd_t nova_var_lib_t:file read;
 
 kernel_rw_net_sysctls(nova_network_t)
