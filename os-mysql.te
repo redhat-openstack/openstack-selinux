@@ -4,10 +4,15 @@ require {
 	type tram_port_t;
 	type rsync_exec_t;
 	type mysqld_t;
+	type nfs_t;
 	class tcp_socket name_connect;
 	class file { read getattr open execute execute_no_trans };
 }
 
 # Bugzilla 1081544
 allow mysqld_t rsync_exec_t:file { read getattr open execute execute_no_trans };
-allow mysqld_t tram_port_t:tcp_socket name_connect;
+corenet_tcp_bind_tram_port(mysqld_t)
+corenet_tcp_connect_tram_port(mysqld_t)
+
+# Bugzilla 1114581
+allow mysqld_t nfs_t:dir search;

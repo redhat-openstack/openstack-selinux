@@ -3,11 +3,8 @@ policy_module(os-neutron, 0.1)
 require {
 	type neutron_t;
 	class unix_stream_socket connectto;
-	type http_port_t;
 }
 
-# Bugzilla 1110263
+# Bugzilla 1110263 & 1111990
 allow neutron_t self:unix_stream_socket { accept listen connectto };
-
-# Bugzilla 1111990
-allow neutron_t http_port_t:tcp_socket name_connect;
+corenet_tcp_connect_all_ports(neutron_t)
