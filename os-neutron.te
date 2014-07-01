@@ -18,8 +18,11 @@ optional_policy(`
 		type neutron_t;
 		type haproxy_t;
 		type haproxy_exec_t;
+		type neutron_var_lib_t;
 	}
 
 	domtrans_pattern(neutron_t, haproxy_exec_t, haproxy_t)
+	manage_files_pattern(haproxy_t, neutron_var_lib_t, neutron_var_lib_t)
+	manage_sock_files_pattern(haproxy_t, neutron_var_lib_t, neutron_var_lib_t)
 ')
 
