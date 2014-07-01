@@ -1,0 +1,69 @@
+#!/bin/bash
+
+PWD=$(pwd)
+TMP=$(mktemp /tmp/openstack-selinux-test.XXXXX)
+
+if [ -n "$1" ] && [ -n "$2" ]; then
+    echo "Using" $1 "and" $2"!"
+else
+    echo "-------Openstack-selinux policy test-------" 
+    echo "Use the following format:"
+    echo "./testpolicy.sh <audit.log file> <Output of audit2allow on your audit.log>" 
+    exit 1
+fi
+
+file=$2
+policy=${file//.*/}
+extension=${file//*./}
+
+if [ ! -s $2 ]; then
+    echo $2 "is empty"
+    exit 1
+fi
+
+if [ $extension != "te" ]; then
+    echo "ERROR:" $file "needs to have '.te' extension instead of ."$extension
+    exit 1
+fi
+
+totalAVC=$(audit2why -i audit.log | grep -s -c "TE")
+
+if head -n 1 $2 | grep "policy_module("$policy",1.0)"; then
+    echo "----"$file "READY----"
+else
+    echo "Adding policy_module("$policy",1.0) to" $2
+    echo "policy_module("$policy",1.0)" | cat - $2 > temp && mv temp $2
+fi
+
+if sudo make -f /usr/share/selinux/devel/Makefile; then
+    echo "----Makefile completed ----"
+else
+    echo "Makefile FAILED"
+fi
+
+if sudo semodule -r $policy; then
+    echo "----Removing old policy...----"
+else
+    echo "Policy removal FAILED or there was not active policy before"
+fi
+
+if sudo semodule -i ./$policy.pp; then
+    echo "----New policy created from " $file"----"
+else
+    echo "Policy creation FAILED from" $file
+fi
+
+newAVC=$(audit2why -i $1 | grep -s -c "TE")
+
+if audit2why -i $1 | grep "TE"; then
+    echo $newAVC "avc's were found!"
+    echo $totalAVC "existed on the previous policy!" 
+    echo "audit2why loading..."
+    sleep 3
+    audit2why -i $1 | less
+else
+    echo "----TEST COMPLETE----"
+    echo "no avc's were found!"
+fi
+
+exit 0
