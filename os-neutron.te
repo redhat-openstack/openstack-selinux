@@ -8,3 +8,17 @@ require {
 # Bugzilla 1110263 & 1111990
 allow neutron_t self:unix_stream_socket { accept listen connectto };
 corenet_tcp_connect_all_ports(neutron_t)
+
+# Bugzilla #1114254
+allow neutron_t haproxy_exec_t:file execute_no_trans;
+
+optional_policy(`
+	require {
+		type neutron_t;
+		type haproxy_t;
+		type haproxy_exec_t;
+	}
+
+	domtrans_pattern(neutron_t, haproxy_exec_t, haproxy_t)
+')
+
