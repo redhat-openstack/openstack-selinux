@@ -1,0 +1,36 @@
+#!/bin/bash
+
+TMP=$(mktemp /tmp/openstack-selinux-test.XXXXXX)
+
+PWD=$(pwd)
+cd "$(dirname $0)"
+
+TEST_FILES=$(/bin/ls -1 bz*)
+
+passed=0
+failed=0
+
+for f in $TEST_FILES; do
+	while read; do
+		echo "$REPLY" > $TMP
+		if audit2why -i $TMP | grep -q 'Missing type'; then
+			echo Failed on $f with the following AVC:
+			audit2why -i $TMP
+			((failed++))
+		else
+			((passed++))
+		fi
+	done < $f
+done
+
+cd "$PWD"
+
+echo Results: $passed passed, $failed failed
+echo -n "Overall result: "
+if [ $failed -ne 0 ]; then
+	echo FAIL
+	exit 1
+fi
+
+echo PASS
+exit 0
