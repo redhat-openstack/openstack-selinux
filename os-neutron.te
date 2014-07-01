@@ -2,6 +2,7 @@ policy_module(os-neutron, 0.1)
 
 require {
 	type neutron_t;
+	type haproxy_exec_t;
 	class unix_stream_socket connectto;
 }
 
