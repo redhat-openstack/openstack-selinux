@@ -11,7 +11,12 @@ passed=0
 failed=0
 
 for f in $TEST_FILES; do
+        echo "CHECKING:" $f
+	totalAVC=$(grep -s -c "AVC" $f)
+	count=0
 	while read; do
+	        ((count++))
+		echo "("$count"/"$totalAVC")"
 		echo "$REPLY" > $TMP
 		if audit2why -i $TMP | grep -q 'Missing type'; then
 			echo Failed on $f with the following AVC:
