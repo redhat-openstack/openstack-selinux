@@ -3,12 +3,16 @@ policy_module(os-neutron, 0.1)
 require {
 	type neutron_t;
 	type haproxy_exec_t;
+	type haproxy_t;
 	class unix_stream_socket connectto;
 }
 
 # Bugzilla 1110263 & 1111990
 allow neutron_t self:unix_stream_socket { accept listen connectto };
 corenet_tcp_connect_all_ports(neutron_t)
+
+# Bugzilla 1116755
+allow neutron_t haproxy_t:unix_stream_socket { accept listen connectto };
 
 # Bugzilla 1114254
 allow neutron_t haproxy_exec_t:file execute_no_trans;
