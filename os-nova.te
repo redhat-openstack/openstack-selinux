@@ -7,7 +7,7 @@ require {
 	attribute nova_domain;
         class capability { net_raw sys_ptrace kill };
 	class capability2 block_suspend;
-      	class file read;
+	class file { getattr read open };
 }
 
 # from upstream - Bugzilla 1107861
