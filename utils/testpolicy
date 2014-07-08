@@ -21,6 +21,10 @@ if [ ! -s $2 ]; then
     exit 1
 fi
 
+echo "Checking if proper packages are installed.."
+sudo yum install selinux* -y
+echo "All packages are installed and updated"
+
 if [ $extension != "te" ]; then
     echo "ERROR:" $file "needs to have '.te' extension instead of ."$extension
     exit 1
