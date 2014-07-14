@@ -16,3 +16,8 @@ corenet_tcp_connect_tram_port(mysqld_t)
 
 # Bugzilla 1114581
 allow mysqld_t nfs_t:dir search;
+
+# Bugzilla 1118859
+domain_read_all_domains_state(mysqld_t)
+files_search_pids(mysqld_t)
+files_getattr_all_sockets(mysqld_t)

@@ -43,6 +43,7 @@ if sudo make -f /usr/share/selinux/devel/Makefile; then
     echo "----Makefile completed ----"
 else
     echo "Makefile FAILED"
+    exit 1
 fi
 
 if sudo semodule -r $policy; then
@@ -55,11 +56,12 @@ if sudo semodule -i ./$policy.pp; then
     echo "----New policy created from " $file"----"
 else
     echo "Policy creation FAILED from" $file
+    exit 1
 fi
 
 newAVC=$(audit2why -i $1 | grep -s -c "TE")
 
-if audit2why -i $1 | grep "TE"; then
+if audit2why -i $1 | grep -q "TE"; then
     echo $newAVC "avc's were found!"
     echo $totalAVC "existed on the previous policy!" 
     echo "audit2why loading..."
