@@ -1,0 +1,3 @@
+type=AVC msg=audit(1405371699.582:201): avc:  denied  { getattr } for  pid=14592 comm="lsof" path="/usr/bin/mysqld_safe" dev="dm-0" ino=17369661 scontext=system_u:system_r:mysqld_t:s0 tcontext=system_u:object_r:mysqld_safe_exec_t:s0 tclass=file
+
+

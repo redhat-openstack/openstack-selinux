@@ -1,0 +1,8 @@
+policy_module(os-glance,0.1)
+
+require {
+	type glance_api_t;
+}
+
+# Bugzilla 1119151
+corenet_tcp_connect_all_ports(glance_api_t)
