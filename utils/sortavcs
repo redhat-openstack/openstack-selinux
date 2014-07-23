@@ -1,0 +1,47 @@
+#!/bin/bash
+
+if [ -n "$1" ] && [ -n "$2" ]; then
+    echo "Sorting" $1"!"
+else
+    echo "-------Sort AVCs-------" 
+    echo "Sort AVCs will remove duplicate AVCs from you audit.log so you can save them for the regression test in the /openstack-selinux/tests directory."
+    echo "Use the following format:"
+    echo "./sortavcs <file with AVCs> <bzXXXXXXXX>"
+    exit 1
+fi
+
+rm -f ~/openstack-selinux/tests/*~ ~/openstack-selinux/tests/*#
+
+path=~/openstack-selinux/tests/$2
+duplicate=$(ls ~/openstack-selinux/tests | grep -Fx $2)
+
+if [ "$duplicate" == "$2" ]; then
+    echo $path "already exists."
+    echo "Appending new policy to" $2
+else
+    echo "Created" $2 "in" $path
+    echo "----Removing duplicates----"
+fi
+
+declare -A avcs
+
+while read; do
+
+    LINE="$REPLY"
+    
+    HASH=$(echo $LINE | perl -n -e'/^type=AVC.*{ ([^}]*) }.*comm="([^\"]*)" .*(dest=[0-9]+|path).*scontext=([^ ]*) tcontext=([^ ]*)/ && print "$1.$2.$3.$4.$5\n"')
+    if [ -z "$HASH" ]; then
+	continue
+    fi
+
+    if [ -z "${avcs[\"$HASH\"]}" ]; then
+	avcs[\"$HASH\"]="$LINE"
+    fi
+done < $1
+
+for x in "${!avcs[@]}"; do
+    echo ${avcs[$x]} >> $path
+done
+
+echo "----SUCCESS----"
+echo "AVCs are saved in ~/openstack-selinux/tests/"$2

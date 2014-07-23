@@ -1,0 +1,2 @@
+type=AVC msg=audit(1405130267.572:5587): avc:  denied  { execstack } for  pid=8320 comm="glance-api" scontext=system_u:system_r:glance_api_t:s0 tcontext=system_u:system_r:glance_api_t:s0 tclass=process
+type=AVC msg=audit(1405130267.572:5587): avc:  denied  { execmem } for  pid=8320 comm="glance-api" scontext=system_u:system_r:glance_api_t:s0 tcontext=system_u:system_r:glance_api_t:s0 tclass=process
