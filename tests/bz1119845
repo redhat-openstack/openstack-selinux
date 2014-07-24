@@ -1,3 +1,2 @@
-type=AVC msg=audit(1405141351.574:1913): avc:  denied  { execstack } for  pid=22718 comm="qemu-kvm" scontext=system_u:system_r:svirt_t:s0:c62
-,c1018 tcontext=system_u:system_r:svirt_t:s0:c62,c1018 tclass=process
+type=AVC msg=audit(1405141351.574:1913): avc:  denied  { execstack } for  pid=22718 comm="qemu-kvm" scontext=system_u:system_r:svirt_t:s0:c62,c1018 tcontext=system_u:system_r:svirt_t:s0:c62,c1018 tclass=process
 type=AVC msg=audit(1405141351.574:1913): avc:  denied  { execmem } for  pid=22718 comm="qemu-kvm" scontext=system_u:system_r:svirt_t:s0:c62,c1018 tcontext=system_u:system_r:svirt_t:s0:c62,c1018 tclass=process
