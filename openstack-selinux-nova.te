@@ -23,6 +23,10 @@ require {
 	type semanage_t;
 	type nova_var_lib_t;
 	type qemu_t;
+	type sshd_t;
+	type nova_var_lib_t;
+	type sshd_t;
+	class dir { search getattr };
 	class capability dac_override;
 	class file { write ioctl read open getattr };
 }
@@ -32,6 +36,9 @@ require {
 
 allow qemu_t nova_var_lib_t:file rw_file_perms;
 allow qemu_t self:capability dac_override;
+
+allow sshd_t nova_var_lib_t:file read_file_perms;
+allow sshd_t nova_var_lib_t:dir { search getattr };
 
 # Compile with:
 #  make -f /usr/share/selinux/devel/Makefile 
