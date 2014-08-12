@@ -1,4 +1,14 @@
 #!/bin/bash
+#
+# This test works by reading in each bz* file and then looping through
+# line by line. The assumption is that bz* is a list of type=AVC audit
+# messages.
+#
+# The other assumption is that you have the openstack-selinux policies
+# loaded.
+#
+
+export LANG=C
 
 TMP=$(mktemp /tmp/openstack-selinux-test.XXXXXX)
 
@@ -12,14 +22,28 @@ failed=0
 
 for f in $TEST_FILES; do
         echo "CHECKING:" $f
-	totalAVC=$(grep -s -c "AVC" $f)
+	totalAVC=$(grep -s -c "type=AVC" $f)
 	count=0
 	while read; do
 	        ((count++))
 		echo "("$count"/"$totalAVC")"
+
+		# Copy our individual AVC line to our temp file.
 		echo "$REPLY" > $TMP
+
+		#
+		# Ensure that the AVC does not generate a 'Missing type
+		# enforcement' error message from audit2why.  This requires
+		# that the openstack-selinux policies are installed and
+		# loaded, or you will receive false failures.
+		#
 		if audit2why -i $TMP | grep -q 'Missing type'; then
 			echo Failed on $f with the following AVC:
+			#
+			# An optimization could be to call audit2why only
+			# once (and check that output above), but this is
+			# an error path we hope to not hit very often.
+			#
 			audit2why -i $TMP
 			((failed++))
 		else
