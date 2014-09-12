@@ -2,7 +2,11 @@ policy_module(os-glance,0.1)
 
 require {
 	type glance_api_t;
+	type unreserved_port_t;
 }
 
 # Bugzilla 1119151
 corenet_tcp_connect_all_ports(glance_api_t)
+
+# Bugzilla 1135510
+allow glance_api_t unreserved_port_t:tcp_socket name_connect;
