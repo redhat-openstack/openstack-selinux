@@ -1,7 +1,8 @@
 #!/bin/bash
-
-PWD=$(pwd)
-TMP=$(mktemp /tmp/openstack-selinux-test.XXXXX)
+#
+# Test custom rules by building a local policy module
+# and see if any AVCs remain.
+#
 
 if [ -n "$1" ] && [ -n "$2" ]; then
     echo "Using" $1 "and" $2"!"
@@ -49,7 +50,7 @@ fi
 if sudo semodule -r $policy; then
     echo "----Removing old policy...----"
 else
-    echo "Policy removal FAILED or there was not active policy before"
+    echo "WARNING: Policy removal either failed or there was not active policy before which is OK"
 fi
 
 if sudo semodule -i ./$policy.pp; then
@@ -63,7 +64,7 @@ newAVC=$(audit2why -i $1 | grep -s -c "TE")
 
 if audit2why -i $1 | grep -q "TE"; then
     echo $newAVC "avc's were found!"
-    echo $totalAVC "existed on the previous policy!" 
+    echo $totalAVC "existed on the previous module!"
     echo "audit2why loading..."
     sleep 3
     audit2why -i $1 | less

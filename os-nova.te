@@ -3,11 +3,16 @@ policy_module(os-nova,0.1)
 require {
         type nova_network_t;
 	type nova_var_lib_t;
+	type nova_api_t;
+	type nova_scheduler_t;
 	type sshd_t;        
+	type sssd_var_lib_t;
+	type cert_t;
 	attribute nova_domain;
         class capability { net_raw sys_ptrace kill };
 	class capability2 block_suspend;
 	class file { getattr read open };
+	class sock_file write;
 }
 
 # from upstream - Bugzilla 1107861
@@ -24,6 +29,13 @@ allow nova_network_t initrc_var_run_t:file read;
 
 # Bugzilla 1113723
 allow sshd_t nova_var_lib_t:file { getattr read open };
+
+# Bugzilla 1135510
+allow nova_api_t sssd_var_lib_t:sock_file write;
+allow nova_scheduler_t cert_t:file { read getattr open };
+
+# Bugzilla 1134617
+allow nova_api_t tmpfs_t:filesystem getattr;
 
 kernel_rw_net_sysctls(nova_network_t)
 dev_rw_vhost(nova_network_t)

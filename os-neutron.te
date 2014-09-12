@@ -4,6 +4,7 @@ require {
 	type neutron_t;
 	type haproxy_exec_t;
 	type haproxy_t;
+	type ipsec_mgmt_exec_t;
 	class unix_stream_socket connectto;
 }
 
@@ -16,6 +17,9 @@ allow neutron_t haproxy_t:unix_stream_socket { accept listen connectto };
 
 # Bugzilla 1114254
 allow neutron_t haproxy_exec_t:file execute_no_trans;
+
+# Bugzilla 1135510
+allow neutron_t ipsec_mgmt_exec_t:file exec_file_perms;
 
 optional_policy(`
 	require {

@@ -1,2 +1,0 @@
-type=AVC msg=audit(1404829246.844:2311): avc:  denied  { open } for  pid=622 comm="sshd" path="/var/lib/nova/.ssh/authorized_keys" dev="dm-1" ino=135212782 scontext=system_u:system_r:sshd_t:s0-s0:c0.c1023 tcontext=system_u:object_r:nova_var_lib_t:s0 tclass=file
-type=AVC msg=audit(1404829246.844:2312): avc:  denied  { getattr } for  pid=622 comm="sshd" path="/var/lib/nova/.ssh/authorized_keys" dev="dm-1" ino=135212782 scontext=system_u:system_r:sshd_t:s0-s0:c0.c1023 tcontext=system_u:object_r:nova_var_lib_t:s0 tclass=file
