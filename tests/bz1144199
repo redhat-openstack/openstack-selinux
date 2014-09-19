@@ -1,0 +1,1 @@
+type=AVC msg=audit(1411134377.778:4436): avc:  denied  { name_bind } for  pid=7139 comm="neutron-ns-meta" src=80 scontext=system_u:system_r:neutron_t:s0 tcontext=system_u:object_r:http_port_t:s0 tclass=tcp_socket

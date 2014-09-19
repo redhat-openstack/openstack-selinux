@@ -5,6 +5,8 @@ require {
 	type haproxy_exec_t;
 	type haproxy_t;
 	type ipsec_mgmt_exec_t;
+	type http_port_t;
+	class tcp_socket name_bind;
 	class unix_stream_socket connectto;
 }
 
@@ -20,6 +22,9 @@ allow neutron_t haproxy_exec_t:file execute_no_trans;
 
 # Bugzilla 1135510
 allow neutron_t ipsec_mgmt_exec_t:file exec_file_perms;
+
+# Bugzilla 1144199
+allow neutron_t http_port_t:tcp_socket name_bind;
 
 optional_policy(`
 	require {
