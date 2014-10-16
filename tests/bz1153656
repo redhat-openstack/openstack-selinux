@@ -1,0 +1,1 @@
+type=AVC msg=audit(1413422314.326:70130): avc:  denied  { sigkill } for  pid=11884 comm="kill" scontext=system_u:system_r:neutron_t:s0 tcontext=system_u:system_r:dnsmasq_t:s0 tclass=process
