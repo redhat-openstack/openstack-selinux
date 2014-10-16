@@ -6,9 +6,16 @@ require {
 	type haproxy_t;
 	type ipsec_mgmt_exec_t;
 	type http_port_t;
+	type dnsmasq_t;
+	type proc_t;
+	class file read;
 	class tcp_socket name_bind;
 	class unix_stream_socket connectto;
 }
+
+# Bugzilla 1153656
+allow neutron_t dnsmasq_t:process sigkill;
+allow haproxy_t proc_t:file read;
 
 # Bugzilla 1110263 & 1111990
 allow neutron_t self:unix_stream_socket { accept listen connectto };
