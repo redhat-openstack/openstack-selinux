@@ -1,6 +1,6 @@
 policy_module(os-neutron, 0.1)
 
-require {
+gen_require(`
 	type neutron_t;
 	type haproxy_exec_t;
 	type haproxy_t;
@@ -11,7 +11,7 @@ require {
 	class file read;
 	class tcp_socket name_bind;
 	class unix_stream_socket connectto;
-}
+')
 
 # Bugzilla 1153656
 allow neutron_t dnsmasq_t:process sigkill;
