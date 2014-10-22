@@ -1,6 +1,6 @@
 policy_module(os-nova,0.1)
 
-require {
+gen_require(`
         type nova_network_t;
 	type nova_var_lib_t;
 	type nova_api_t;
@@ -14,7 +14,7 @@ require {
 	class capability2 block_suspend;
 	class file { getattr read open };
 	class sock_file write;
-}
+')
 
 # from upstream - Bugzilla 1107861
 auth_read_passwd(nova_domain)

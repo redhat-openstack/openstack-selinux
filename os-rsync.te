@@ -1,6 +1,6 @@
 policy_module(os-rsync,0.1)
 
-require {
+gen_require(`
 	type load_policy_t;
 	type init_t;
 	type cert_t;
@@ -10,7 +10,7 @@ require {
 	class fifo_file write;
 	class file { relabelfrom write relabelto };
 	class dir { relabelfrom relabelto };
-}
+')
 
 # Bugzilla 1135637
 allow rsync_t etc_runtime_t:file relabelto;

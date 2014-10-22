@@ -1,6 +1,6 @@
 policy_module(os-mysql,0.1)
 
-require {
+gen_require(`
 	type tram_port_t;
 	type rsync_exec_t;
 	type mysqld_t;
@@ -8,7 +8,7 @@ require {
 	type mysqld_safe_exec_t;
 	class tcp_socket name_connect;
 	class file { read getattr open execute execute_no_trans };
-}
+')
 
 # Bugzilla 1081544
 allow mysqld_t rsync_exec_t:file { read getattr open execute execute_no_trans };
