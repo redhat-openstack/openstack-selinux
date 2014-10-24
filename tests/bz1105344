@@ -1,0 +1,3 @@
+type=AVC msg=audit(1403293198.799:61): avc: denied { search } for pid=14890 comm="swift-proxy-ser" name="httpd" dev="dm-0" ino=26196995 scontext=system_u:system_r:swift_t:s0 tcontext=system_u:object_r:httpd_config_t:s0 tclass=dir
+type=AVC msg=audit(1402517105.472:312): avc: denied { name_connect } for pid=14809 comm="swift-proxy-ser" dest=35357 scontext=system_u:system_r:swift_t:s0 tcontext=system_u:object_r:keystone_port_t:s0 tclass=tcp_socket
+type=AVC msg=audit(1402517105.469:311): avc: denied { name_connect } for pid=14809 comm="swift-proxy-ser" dest=11211 scontext=system_u:system_r:swift_t:s0 tcontext=system_u:object_r:memcache_port_t:s0 tclass=tcp_socket
