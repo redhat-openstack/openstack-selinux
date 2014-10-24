@@ -14,5 +14,7 @@ gen_require(`
 ')
 
 #============= openvswitch_t ==============
+# Bugzilla #1108187
+#
 allow openvswitch_t init_tmp_t:file write;
 
