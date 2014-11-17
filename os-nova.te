@@ -5,6 +5,8 @@ gen_require(`
 	type nova_var_lib_t;
 	type nova_api_t;
 	type nova_scheduler_t;
+	type nova_console_t;
+	type nova_cert_t;
 	type sshd_t;        
 	type sssd_var_lib_t;
 	type cert_t;
@@ -15,6 +17,11 @@ gen_require(`
 	class file { getattr read open };
 	class sock_file write;
 ')
+
+# Bugzilla 1162761 and 1158213
+corenet_tcp_connect_memcache_port(nova_console_t)
+corenet_tcp_connect_memcache_port(nova_scheduler_t)
+corenet_tcp_connect_memcache_port(nova_cert_t)
 
 # from upstream - Bugzilla 1107861
 auth_read_passwd(nova_domain)
