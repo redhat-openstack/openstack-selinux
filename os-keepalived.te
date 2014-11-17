@@ -1,0 +1,13 @@
+policy_module(os-keepalived,0.1)
+
+gen_require(`
+        type keepalived_t;
+	type haproxy_t;
+	class process signull;
+	class capability { net_admin net_raw kill };
+')
+
+# Bugzilla 1145886
+domain_read_all_domains_state(keepalived_t)
+allow keepalived_t haproxy_t:process signull;
+allow keepalived_t self:capability kill;
