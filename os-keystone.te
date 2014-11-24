@@ -1,0 +1,8 @@
+policy_module(os-keystone,0.1)
+
+gen_require(`
+        type keystone_t;
+        class self signal;
+')
+
+allow keystone_t self:process signal;
