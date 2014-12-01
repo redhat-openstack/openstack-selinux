@@ -1,0 +1,1 @@
+type=AVC msg=audit(1412368083.631:63869): avc:  denied  { search } for  pid=1332 comm="nova-scheduler" name="pki" dev="vda1" ino=16818314 scontext=system_u:system_r:nova_scheduler_t:s0 tcontext=system_u:object_r:cert_t:s0 tclass=dir

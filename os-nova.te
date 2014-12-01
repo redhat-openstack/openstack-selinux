@@ -16,7 +16,10 @@ gen_require(`
 	class capability2 block_suspend;
 	class file { getattr read open };
 	class sock_file write;
+	class dir search;
 ')
+# Bugzilla 1149975
+allow nova_scheduler_t cert_t:dir search;
 
 # Bugzilla 1162761 and 1158213
 corenet_tcp_connect_memcache_port(nova_console_t)
