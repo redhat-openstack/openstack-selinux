@@ -1,0 +1,1 @@
+type=AVC msg=audit(1417638763.636:183): avc: denied { read } for pid=19681 comm="mysqld_safe" name="cores" dev="dm-0" ino=51125914 scontext=system_u:system_r:mysqld_safe_t:s0 tcontext=system_u:object_r:cluster_var_lib_t:s0 tclass=dir
