@@ -2,6 +2,7 @@ policy_module(os-neutron, 0.1)
 
 gen_require(`
 	type neutron_t;
+	type neutron_var_lib_t;
 	type haproxy_exec_t;
 	type haproxy_t;
 	type ipsec_mgmt_exec_t;
@@ -12,6 +13,10 @@ gen_require(`
 	class tcp_socket name_bind;
 	class unix_stream_socket connectto;
 ')
+
+# Bugzilla 1169859 & 1171460 & 1171458
+can_exec(neutron_t,neutron_var_lib_t)
+keepalived_domtrans(neutron_t)
 
 # Bugzilla 1153656
 allow neutron_t dnsmasq_t:process sigkill;
