@@ -11,13 +11,20 @@ gen_require(`
 	type sssd_var_lib_t;
 	type cert_t;
 	type tmpfs_t;
+	type netutils_exec_t;
 	attribute nova_domain;
+	class packet_socket { bind create getattr };
         class capability { net_raw sys_ptrace kill };
 	class capability2 block_suspend;
-	class file { getattr read open };
+	class file { getattr read open execute execute_no_trans };
 	class sock_file write;
 	class dir search;
 ')
+# Bugzilla 1170839
+allow nova_network_t netutils_exec_t:file { read execute open execute_no_trans };
+allow nova_network_t self:packet_socket { bind create getattr };
+netutils_domtrans(nova_network_t)
+
 # Bugzilla 1149975
 allow nova_scheduler_t cert_t:dir search;
 
