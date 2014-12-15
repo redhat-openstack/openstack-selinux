@@ -9,6 +9,7 @@ gen_require(`
 	type http_port_t;
 	type dnsmasq_t;
 	type proc_t;
+	class netlink_socket { bind create getattr };
 	class file read;
 	class tcp_socket name_bind;
 	class unix_stream_socket connectto;
@@ -17,6 +18,7 @@ gen_require(`
 # Bugzilla 1169859 & 1171460 & 1171458
 can_exec(neutron_t,neutron_var_lib_t)
 keepalived_domtrans(neutron_t)
+allow neutron_t self:netlink_socket { bind create getattr };
 
 # Bugzilla 1153656
 allow neutron_t dnsmasq_t:process sigkill;
