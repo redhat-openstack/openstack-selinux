@@ -2,11 +2,7 @@ policy_module(os-keystone,0.1)
 
 gen_require(`
         type keystone_t;
-        type httpd_t;
         class process signal;
 ')
 
 allow keystone_t self:process signal;
-
-# Bugzilla 1174977
-corenet_tcp_connect_commplex_main_port(httpd_t);
