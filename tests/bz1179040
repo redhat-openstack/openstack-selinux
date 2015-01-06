@@ -1,0 +1,1 @@
+type=AVC msg=audit(1420498849.286:269): avc: denied { read } for pid=6298 comm="sh" name="rabbitmq" dev="sda1" ino=2652593 scontext=system_u:system_r:rabbitmq_beam_t:s0 tcontext=unconfined_u:object_r:rabbitmq_var_lib_t:s0 tclass=lnk_file
