@@ -1,8 +1,15 @@
 policy_module(os-keystone,0.1)
 
 gen_require(`
+	type httpd_t;
+	type keystone_log_t;
         type keystone_t;
+	class file open;
         class process signal;
 ')
 
 allow keystone_t self:process signal;
+
+# Bugzilla 1138424
+allow httpd_t keystone_log_t:file open;
+corenet_tcp_bind_commplex_main_port(httpd_t)
