@@ -13,3 +13,13 @@ allow keystone_t self:process signal;
 # Bugzilla 1180230
 allow httpd_t keystone_log_t:file open;
 corenet_tcp_bind_commplex_main_port(httpd_t)
+
+optional_policy(`
+	gen_require(`
+		type keystone_cgi_script_exec_t;
+		type keystone_t;
+		class file { read getattr open };
+	')
+	# Bugzilla 1176842
+	allow keystone_t keystone_cgi_script_exec_t:file { read getattr open };
+')
