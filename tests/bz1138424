@@ -1,2 +1,0 @@
-type=AVC msg=audit(1420693901.582:15510): avc: denied { name_bind } for pid=1147 comm="httpd" src=5000 scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:commplex_main_port_t:s0 tclass=tcp_socket
-type=AVC msg=audit(1420694028.935:15621): avc: denied { open } for pid=1363 comm="httpd" path="/var/log/keystone/keystone.log" dev="vda1" ino=25700381 scontext=system_u:system_r:httpd_t:s0 tcontext=unconfined_u:object_r:keystone_log_t:s0 tclass=file
