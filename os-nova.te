@@ -13,6 +13,7 @@ gen_require(`
 	type tmpfs_t;
 	type netutils_exec_t;
 	attribute nova_domain;
+	class key write;
 	class packet_socket { bind create getattr };
         class capability { net_raw sys_ptrace kill };
 	class capability2 block_suspend;
@@ -20,6 +21,9 @@ gen_require(`
 	class sock_file write;
 	class dir search;
 ')
+# Bugzilla 1180373
+allow nova_network_t self:key write;
+
 # Bugzilla 1170839
 allow nova_network_t netutils_exec_t:file { read execute open execute_no_trans };
 allow nova_network_t self:packet_socket { bind create getattr };

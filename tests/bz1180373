@@ -1,0 +1,1 @@
+type=AVC msg=audit(1418387899.539:2885): avc:  denied { write } for  pid=28017 ino=249301 scontext=unconfined_u:system_r:nova_network_t:s0 tcontext=unconfined_u:system_r:nova_network_t:s0 tclass=key
