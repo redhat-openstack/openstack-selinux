@@ -11,11 +11,15 @@ gen_require(`
 	type proc_t;
 	type radvd_exec_t;
 	type keepalived_t;
+	class process signal;
 	class netlink_socket { bind create getattr };
 	class file { read execute open execute_no_trans };
 	class tcp_socket name_bind;
 	class unix_stream_socket connectto;
 ')
+
+# Bugzilla 1180679
+allow neutron_t keepalived_t:process signal;
 
 # Bugzilla 1168526 & 1176830
 allow neutron_t radvd_exec_t:file { read open execute execute_no_trans };
