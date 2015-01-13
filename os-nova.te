@@ -12,6 +12,7 @@ gen_require(`
 	type cert_t;
 	type tmpfs_t;
 	type netutils_exec_t;
+	type virtd_t;
 	attribute nova_domain;
 	class key write;
 	class packet_socket { bind create getattr };
@@ -21,6 +22,9 @@ gen_require(`
 	class sock_file write;
 	class dir search;
 ')
+# Bugzilla 1181428
+iscsid_domtrans(virtd_t);
+
 # Bugzilla 1180373
 allow nova_network_t self:key write;
 
