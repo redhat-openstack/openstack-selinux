@@ -1,0 +1,1 @@
+type=AVC msg=audit(1421156344.593:1045): avc: denied { search } for pid=19179 comm="keystone-all" name="keystone" dev="sda1" ino=68483145 scontext=system_u:system_r:keystone_t:s0 tcontext=system_u:object_r:keystone_cgi_script_exec_t:s0 tclass=dir

@@ -19,7 +19,11 @@ optional_policy(`
 		type keystone_cgi_script_exec_t;
 		type keystone_t;
 		class file { read getattr open };
+		class dir search;
 	')
 	# Bugzilla 1176842
 	allow keystone_t keystone_cgi_script_exec_t:file { read getattr open };
+
+	# Bugzilla 1181677
+	allow keystone_t keystone_cgi_script_exec_t:dir search;
 ')
