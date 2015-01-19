@@ -8,7 +8,8 @@ gen_require(`
 	type cloud_var_lib_t;
 	type var_lib_t;
 	type init_var_lib_t;
-	class process signull;
+	type neutron_t;
+	class process { signull sigkill };
 	class capability { net_admin net_raw kill dac_override };
 	class file { execute read create ioctl execute_no_trans write getattr open };
 ')
@@ -24,6 +25,7 @@ allow keepalived_t init_var_lib_t:file { read getattr open };
 allow keepalived_t var_lib_t:file { read getattr open };
 allow keepalived_t var_log_t:file open;
 allow keepalived_t self:capability dac_override;
+allow keepalived_t neutron_t:process sigkill;
 
 # Bugzilla 1145886
 domain_read_all_domains_state(keepalived_t)

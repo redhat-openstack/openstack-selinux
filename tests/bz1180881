@@ -1,2 +1,3 @@
 type=AVC msg=audit(1421230145.638:4595): avc: denied { dac_override } for pid=6425 comm="keepalived" capability=1 scontext=system_u:system_r:keepalived_t:s0 tcontext=system_u:system_r:keepalived_t:s0 tclass=capability
 type=AVC msg=audit(1421230145.641:4596): avc: denied { module_request } for pid=6426 comm="keepalived" kmod="net-pf-16-proto-16-family-IPVS" scontext=system_u:system_r:keepalived_t:s0 tcontext=system_u:system_r:kernel_t:s0 tclass=system
+type=AVC msg=audit(1421165045.206:19477): avc:  denied  { sigkill } for  pid=10254 scontext=system_u:system_r:keepalived_t:s0 tcontext=system_u:object_r:neutron_t:s0 tclass=process
