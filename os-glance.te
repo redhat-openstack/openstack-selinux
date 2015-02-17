@@ -15,3 +15,11 @@ corenet_tcp_connect_all_ports(glance_api_t)
 # in a later release of selinux-policy
 allow glance_api_t self:process { execstack execmem };
 
+
+optional_policy(`
+	gen_require(`
+		type elasticsearch_port_t;
+	')
+	# bugzilla 1192644
+	allow glance_api_t elasticsearch_port_t:tcp_socket name_bind;
+')
