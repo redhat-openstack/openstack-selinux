@@ -1,0 +1,8 @@
+policy_module(os-mongodb,0.1)
+
+gen_require(`
+	type mongod_t;
+')
+
+# Bugzilla 1192049
+allow mongod_t self:process execmem;
