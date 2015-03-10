@@ -2,8 +2,10 @@ policy_module(os-swift,0.1)
 
 gen_require(`
 	type swift_t;
+	type amqp_port_t;
 	type httpd_config_t;
 	type var_log_t;
+	class tcp_socket name_connect;
 	class file { open };
 ')
 
@@ -17,3 +19,4 @@ corenet_tcp_connect_xserver_port(swift_t)
 
 # Emergency tripleo fix
 allow swift_t var_log_t:file open;
+allow swift_t amqp_port_t:tcp_socket name_connect;
