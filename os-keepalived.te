@@ -9,6 +9,8 @@ gen_require(`
 	type var_lib_t;
 	type init_var_lib_t;
 	type neutron_t;
+	type sysfs_t;
+	class filesystem getattr;
 	class process { signull sigkill };
 	class capability { net_admin net_raw kill dac_override };
 	class file { execute read create ioctl execute_no_trans write getattr open };
@@ -31,3 +33,6 @@ allow keepalived_t neutron_t:process sigkill;
 domain_read_all_domains_state(keepalived_t)
 allow keepalived_t haproxy_t:process signull;
 allow keepalived_t self:capability kill;
+
+# Bugzilla 1206148
+allow keepalived_t sysfs_t:filesystem getattr;
