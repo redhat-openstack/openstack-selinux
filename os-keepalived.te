@@ -13,7 +13,7 @@ gen_require(`
 	class filesystem getattr;
 	class process { signull sigkill };
 	class capability { net_admin net_raw kill dac_override };
-	class file { execute read create ioctl execute_no_trans write getattr open };
+	class file { execute read create ioctl unlink execute_no_trans write getattr open };
 ')
 
 # Some files are being created on the fly.
@@ -36,3 +36,4 @@ allow keepalived_t self:capability kill;
 
 # Bugzilla 1206148
 allow keepalived_t sysfs_t:filesystem getattr;
+allow keepalived_t neutron_var_lib_t:file unlink;
