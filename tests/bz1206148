@@ -1,1 +1,2 @@
-type=AVC msg=audit(1427298485.977:392660): avc: denied { getattr } for pid=5025 comm="keepalived" name="/" dev="sysfs" ino=1 scontext=system_u:system_r:keepalived_t:s0 tcontext=system_u:object_r:sysfs_t:s0 tclass=filesystem
+type=AVC msg=audit(1427892592.798:1881233): avc: denied { getattr } for pid=13134 comm="keepalived" name="/" dev="sysfs" ino=1 scontext=system_u:system_r:keepalived_t:s0 tcontext=system_u:object_r:sysfs_t:s0 tclass=filesystem
+type=AVC msg=audit(1427892692.372:1881569): avc: denied { unlink } for pid=12578 comm="keepalived" name="476fee88-54c1-42eb-8f6e-0a7fdddbc628.pid" dev="vda1" ino=192943239 scontext=system_u:system_r:keepalived_t:s0 tcontext=system_u:object_r:neutron_var_lib_t:s0 tclass=file

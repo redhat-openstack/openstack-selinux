@@ -1,0 +1,2 @@
+type=AVC msg=audit(1428486597.985:9617409): avc: denied { read } for pid=23724 comm="glance-registry" name="glance" dev="dm-0" ino=134789393 scontext=system_u:system_r:glance_registry_t:s0 tcontext=system_u:object_r:glance_var_lib_t:s0 tclass=lnk_file
+type=AVC msg=audit(1428759418.718:823087): avc: denied { read } for pid=73969 comm="qemu-kvm" name="nova" dev="dm-0" ino=135140337 scontext=system_u:system_r:svirt_t:s0:c96,c916 tcontext=unconfined_u:object_r:nova_var_lib_t:s0 tclass=lnk_file

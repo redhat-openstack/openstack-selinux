@@ -2,6 +2,9 @@ policy_module(os-glance,0.1)
 
 gen_require(`
 	type glance_api_t;
+	type glance_registry_t;
+	type glance_var_lib_t;
+	class lnk_file read;
 ')
 
 # Bugzilla 1119151
@@ -15,6 +18,8 @@ corenet_tcp_connect_all_ports(glance_api_t)
 # in a later release of selinux-policy
 allow glance_api_t self:process { execstack execmem };
 
+# Bugzilla 1210271
+allow glance_registry_t glance_var_lib_t:lnk_file read;
 
 optional_policy(`
 	gen_require(`

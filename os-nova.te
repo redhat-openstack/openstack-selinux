@@ -13,6 +13,7 @@ gen_require(`
 	type tmpfs_t;
 	type netutils_exec_t;
 	type virtd_t;
+	type svirt_t;
 	attribute nova_domain;
 	class key write;
 	class packet_socket { bind create getattr };
@@ -21,6 +22,7 @@ gen_require(`
 	class file { getattr read open execute execute_no_trans };
 	class sock_file write;
 	class dir search;
+	class lnk_file read;
 ')
 # Bugzilla 1181428
 iscsid_domtrans(virtd_t);
@@ -59,6 +61,9 @@ allow sshd_t nova_var_lib_t:file { getattr read open };
 # Bugzilla 1135510
 allow nova_api_t sssd_var_lib_t:sock_file write;
 allow nova_scheduler_t cert_t:file { read getattr open };
+
+# Bugzilla 1210271
+allow svirt_t nova_var_lib_t:lnk_file read;
 
 # Bugzilla 1134617
 allow nova_api_t tmpfs_t:filesystem getattr;
