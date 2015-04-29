@@ -4,6 +4,7 @@ gen_require(`
 	type glance_api_t;
 	type glance_registry_t;
 	type glance_var_lib_t;
+	type var_lib_t;
 	class lnk_file read;
 ')
 
