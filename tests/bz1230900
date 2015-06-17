@@ -1,0 +1,4 @@
+type=AVC msg=audit(1434131323.679:7807): avc:  denied  { create } for  pid=26750 comm="neutron-rootwra" name="rootwrap.sock" scontext=system_u:system_r:neutron_t:s0 tcontext=system_u:object_r:neutron_tmp_t:s0 tclass=sock_file
+type=AVC msg=audit(1434131323.679:7808): avc:  denied  { setattr } for  pid=26750 comm="neutron-rootwra" name="rootwrap.sock" dev="dm-1" ino=71908034 scontext=system_u:system_r:neutron_t:s0 tcontext=system_u:object_r:neutron_tmp_t:s0 tclass=sock_file
+type=AVC msg=audit(1434131323.679:7809): avc:  denied  { write } for  pid=26673 comm="neutron-openvsw" name="rootwrap.sock" dev="dm-1" ino=71908034 scontext=system_u:system_r:neutron_t:s0 tcontext=system_u:object_r:neutron_tmp_t:s0 tclass=sock_file
+type=AVC msg=audit(1434131631.311:10861): avc:  denied  { write } for  pid=26881 comm="neutron-l3-agen" name="rootwrap.sock" dev="dm-1" ino=68196389 scontext=system_u:system_r:neutron_t:s0 tcontext=system_u:object_r:neutron_tmp_t:s0 tclass=sock_file

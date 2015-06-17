@@ -3,6 +3,7 @@ policy_module(os-neutron, 0.1)
 gen_require(`
 	type neutron_t;
 	type neutron_var_lib_t;
+	type neutron_tmp_t;
 	type haproxy_exec_t;
 	type haproxy_t;
 	type ipsec_mgmt_exec_t;
@@ -52,6 +53,9 @@ allow neutron_t ipsec_mgmt_exec_t:file exec_file_perms;
 
 # Bugzilla 1144199
 allow neutron_t http_port_t:tcp_socket name_bind;
+
+# Bugzilla 1230900
+manage_sock_files_pattern(neutron_t, neutron_tmp_t, neutron_tmp_t)
 
 optional_policy(`
 	require {
