@@ -1,4 +1,4 @@
-TARGETS?=os-ovs os-swift os-nova os-neutron os-mysql os-glance os-rsync os-rabbitmq os-keepalived os-keystone os-haproxy os-mongodb
+TARGETS?=os-ovs os-swift os-nova os-neutron os-mysql os-glance os-rsync os-rabbitmq os-keepalived os-keystone os-haproxy os-mongodb os-ipxe
 MODULES?=${TARGETS:=.pp.bz2}
 SHAREDIR?=/usr/share
 #INSTALL=?=install
