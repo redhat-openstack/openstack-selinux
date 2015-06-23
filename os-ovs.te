@@ -10,9 +10,11 @@ policy_module(os-ovs,0.1)
 gen_require(`
 	type openvswitch_t;
 	type sysctl_net_t;
+	type unreserved_port_t;
 	type init_tmp_t;
 	class dir search;
 	class file { write read getattr open };
+	class tcp_socket name_bind;
 ')
 
 # Bugzilla #1108187
@@ -21,3 +23,6 @@ allow openvswitch_t init_tmp_t:file write;
 # Bugzilla #1231868
 allow openvswitch_t sysctl_net_t:dir search;
 allow openvswitch_t sysctl_net_t:file { read getattr open };
+
+# Bugzilla #1233154
+allow openvswitch_t unreserved_port_t:tcp_socket name_bind;
