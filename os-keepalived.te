@@ -37,3 +37,11 @@ allow keepalived_t self:capability kill;
 # Bugzilla 1206148
 allow keepalived_t sysfs_t:filesystem getattr;
 allow keepalived_t neutron_var_lib_t:file unlink;
+
+# Bugzilla 1243039
+# Allow keepalived to monitor haproxy via 'systemctl status haproxy.service'
+# by default
+optional_policy(`
+	systemd_systemctl_domain(keepalived)
+	unconfined_domain(keepalived_systemctl_t)
+')
