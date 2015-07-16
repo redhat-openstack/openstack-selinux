@@ -37,27 +37,3 @@ allow keepalived_t self:capability kill;
 # Bugzilla 1206148
 allow keepalived_t sysfs_t:filesystem getattr;
 allow keepalived_t neutron_var_lib_t:file unlink;
-
-# Bugzilla 1243039
-# Allow keepalived to monitor haproxy via 'systemctl status haproxy.service'
-# by default
-optional_policy(`
-	gen_require(`
-		type cgroup_t;
-		type init_t;
-		type syslogd_var_run_t;
-		type systemd_systemctl_exec_t;
-		type tmpfs_t;
-	')
-	gen_tunable(keepalived_watch_haproxy, true)
-	tunable_policy(`keepalived_watch_haproxy',`
-		# Allow keepalived to watch haproxy
-		allow keepalived_t cgroup_t:dir { read search open };
-		allow keepalived_t cgroup_t:file { read getattr open };
-		allow keepalived_t init_t:unix_stream_socket connectto;
-		allow keepalived_t syslogd_var_run_t:dir read;
-		allow keepalived_t syslogd_var_run_t:file { read getattr open };
-		allow keepalived_t systemd_systemctl_exec_t:file { read getattr open execute execute_no_trans };
-		allow keepalived_t tmpfs_t:filesystem getattr;
-	')
-')
