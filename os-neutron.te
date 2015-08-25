@@ -11,10 +11,15 @@ gen_require(`
 	type dnsmasq_t;
 	type proc_t;
 	type radvd_exec_t;
+	type modules_object_t;
+	type ipsec_key_file_t;
 	type keepalived_t;
+	class capability setpcap;
+	class key_socket { write read create };
+	class netlink_xfrm_socket { bind create nlmsg_write };
 	class process signal;
 	class netlink_socket { bind create getattr };
-	class file { read execute open execute_no_trans };
+	class file { read ioctl getattr execute open execute_no_trans };
 	class tcp_socket name_bind;
 	class unix_stream_socket connectto;
 ')
@@ -56,6 +61,17 @@ allow neutron_t http_port_t:tcp_socket name_bind;
 
 # Bugzilla 1230900
 manage_sock_files_pattern(neutron_t, neutron_tmp_t, neutron_tmp_t)
+
+# Bugzilla 1245846
+allow neutron_t ipsec_key_file_t:file { read ioctl open getattr };
+allow neutron_t modules_object_t:file getattr;
+allow neutron_t self:capability setpcap;
+allow neutron_t self:key_socket { write read create };
+allow neutron_t self:netlink_xfrm_socket { bind create nlmsg_write };
+ipsec_exec_mgmt(neutron_t)
+ipsec_manage_key_file(neutron_t)
+ipsec_read_config(neutron_t)
+seutil_exec_restorecon(neutron_t)
 
 optional_policy(`
 	require {
