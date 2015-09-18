@@ -1,0 +1,1 @@
+type=AVC msg=audit(1438557558.744:717): avc:  denied  { execmem } for  pid=6120 comm="nova-api" scontext=system_u:system_r:nova_api_t:s0 tcontext=system_u:system_r:nova_api_t:s0 tclass=process
