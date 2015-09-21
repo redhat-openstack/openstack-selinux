@@ -20,3 +20,10 @@ corenet_tcp_connect_xserver_port(swift_t)
 # Emergency tripleo fix
 allow swift_t var_log_t:file open;
 allow swift_t amqp_port_t:tcp_socket name_connect;
+
+# Bugzilla 1249685 (execmem)
+gen_tunable(os_swift_use_execmem, false)
+tunable_policy(`os_swift_use_execmem',`
+	allow swift_t self:process execmem;
+')
+

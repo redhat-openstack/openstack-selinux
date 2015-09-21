@@ -74,9 +74,12 @@ allow svirt_tcg_t nova_var_lib_t:file write;
 allow nova_api_t tmpfs_t:filesystem getattr;
 
 # Bugzilla 1249685
-gen_tunable(nova_use_execmem, false)
-tunable_policy(`nova_use_execmem',`
+gen_tunable(os_nova_use_execmem, false)
+tunable_policy(`os_nova_use_execmem',`
 	allow nova_api_t self:process execmem;
+	allow nova_cert_t self:process execmem;
+	allow nova_console_t self:process execmem;
+	allow nova_scheduler_t self:process execmem;
 ')
 
 kernel_rw_net_sysctls(nova_network_t)

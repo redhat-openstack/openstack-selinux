@@ -1,1 +1,6 @@
 type=AVC msg=audit(1438557558.744:717): avc:  denied  { execmem } for  pid=6120 comm="nova-api" scontext=system_u:system_r:nova_api_t:s0 tcontext=system_u:system_r:nova_api_t:s0 tclass=process
+type=AVC msg=audit(1442850911.498:7799): avc:  denied  { execmem } for  pid=14619 comm="nova-consoleaut" scontext=system_u:system_r:nova_console_t:s0 tcontext=system_u:system_r:nova_console_t:s0 tclass=process
+type=AVC msg=audit(1442850913.426:7801): avc:  denied  { execmem } for  pid=14658 comm="nova-scheduler" scontext=system_u:system_r:nova_scheduler_t:s0 tcontext=system_u:system_r:nova_scheduler_t:s0 tclass=process
+type=AVC msg=audit(1442850920.205:7861): avc:  denied  { execmem } for  pid=14843 comm="nova-cert" scontext=system_u:system_r:nova_cert_t:s0 tcontext=system_u:system_r:nova_cert_t:s0 tclass=process
+type=AVC msg=audit(1442850976.792:8446): avc:  denied  { execmem } for  pid=15791 comm="neutron-openvsw" scontext=system_u:system_r:neutron_t:s0 tcontext=system_u:system_r:neutron_t:s0 tclass=process
+type=AVC msg=audit(1442851152.972:10390): avc:  denied  { execmem } for  pid=19455 comm="swift-account-r" scontext=system_u:system_r:swift_t:s0 tcontext=system_u:system_r:swift_t:s0 tclass=process

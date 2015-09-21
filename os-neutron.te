@@ -92,3 +92,8 @@ optional_policy(`
 	allow neutron_t proc_t:filesystem unmount;
 ')
 
+# Bugzilla 1249685 (execmem)
+gen_tunable(os_neutron_use_execmem, false)
+tunable_policy(`os_neutron_use_execmem',`
+	allow neutron_t self:process execmem;
+')
