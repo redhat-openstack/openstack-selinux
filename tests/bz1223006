@@ -1,0 +1,3 @@
+type=AVC msg=audit(1432714833.802:3193): avc:  denied  { write } for  pid=27251 comm="httpd" name="keystone" dev="dm-1" ino=35731993 scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:keystone_log_t:s0 tclass=dir
+type=AVC msg=audit(1432714833.802:3193): avc:  denied  { add_name } for  pid=27251 comm="httpd" name="keystone.log" scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:keystone_log_t:s0 tclass=dir
+type=AVC msg=audit(1432714833.802:3193): avc:  denied  { create } for  pid=27251 comm="httpd" name="keystone.log" scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:keystone_log_t:s0 tclass=file

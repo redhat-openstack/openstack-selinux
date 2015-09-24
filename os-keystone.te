@@ -4,7 +4,7 @@ gen_require(`
         type httpd_t;
         type keystone_log_t;
         type keystone_t;
-        class file open;
+        class file { create open };
         class process signal;
 ')
 
@@ -13,6 +13,10 @@ allow keystone_t self:process signal;
 # Bugzilla 1180230
 allow httpd_t keystone_log_t:file open;
 corenet_tcp_bind_commplex_main_port(httpd_t)
+
+# Bugzilla 1223006
+allow httpd_t keystone_log_t:file create;
+keystone_manage_log(httpd_t)
 
 optional_policy(`
 	gen_require(`
