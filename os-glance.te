@@ -5,6 +5,8 @@ gen_require(`
 	type glance_registry_t;
 	type glance_var_lib_t;
 	type var_lib_t;
+	type nfs_t;
+	class dir getattr;
 	class lnk_file read;
 ')
 
@@ -24,6 +26,9 @@ allow glance_registry_t glance_var_lib_t:lnk_file read;
 allow glance_api_t glance_var_lib_t:lnk_file read;
 allow glance_api_t var_lib_t:lnk_file read;
 allow glance_registry_t var_lib_t:lnk_file read;
+
+# Bugzilla 1145802
+allow glance_api_t nfs_t:dir getattr;
 
 optional_policy(`
 	gen_require(`
