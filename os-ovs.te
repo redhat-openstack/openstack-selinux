@@ -26,3 +26,7 @@ allow openvswitch_t sysctl_net_t:file { read getattr open };
 
 # Bugzilla #1233154
 allow openvswitch_t unreserved_port_t:tcp_socket name_bind;
+
+# Bugzilla #1259419
+corenet_tcp_connect_unreserved_ports(openvswitch_t)
+swift_manage_data_files(openvswitch_t)
