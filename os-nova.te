@@ -90,7 +90,10 @@ optional_policy(`
                 type nova_t;
                 type httpd_config_t;
                 class dir search;
+                class process execmem;
         ')
         # bugzilla 1281547
         allow nova_t httpd_config_t:dir search;
+        # bugzilla 1280101
+        allow nova_t self:process execmem;
 ')
