@@ -1,0 +1,1 @@
+type=AVC msg=audit(1448201694.695:14046): avc: denied { read write } for pid=14682 comm="ovs-vswitchd" name="tun" dev="devtmpfs" ino=5791 scontext=system_u:system_r:openvswitch_t:s0 tcontext=system_u:object_r:tun_tap_device_t:s0 tclass=chr_file

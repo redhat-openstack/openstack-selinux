@@ -30,3 +30,6 @@ allow openvswitch_t unreserved_port_t:tcp_socket name_bind;
 # Bugzilla #1259419
 corenet_tcp_connect_unreserved_ports(openvswitch_t)
 swift_manage_data_files(openvswitch_t)
+
+# Bugzilla #1284268
+corenet_rw_inherited_tun_tap_dev(openvswitch_t)

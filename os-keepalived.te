@@ -10,6 +10,7 @@ gen_require(`
 	type init_var_lib_t;
 	type neutron_t;
 	type sysfs_t;
+	type systemd_systemctl_exec_t;
 	class filesystem getattr;
 	class process { signull sigkill };
 	class capability { net_admin net_raw kill dac_override };
@@ -37,6 +38,9 @@ allow keepalived_t self:capability kill;
 # Bugzilla 1206148
 allow keepalived_t sysfs_t:filesystem getattr;
 allow keepalived_t neutron_var_lib_t:file unlink;
+
+# Bugzilla 1278430
+allow keepalived_t systemd_systemctl_exec_t:file getattr;
 
 # Bugzilla 1243039
 # Allow keepalived to monitor haproxy via 'systemctl status haproxy.service'

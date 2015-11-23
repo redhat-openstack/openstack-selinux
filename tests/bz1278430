@@ -1,0 +1,1 @@
+type=AVC msg=audit(1446728340.533:70764): avc: denied { getattr } for pid=14829 comm="sh" path="/usr/bin/systemctl" dev="sda1" ino=662168 scontext=system_u:system_r:keepalived_t:s0 tcontext=unconfined_u:object_r:systemd_systemctl_exec_t:s0 tclass=file

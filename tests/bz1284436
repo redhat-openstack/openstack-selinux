@@ -1,0 +1,1 @@
+type=AVC msg=audit(1448063445.338:2728): avc: denied { name_connect } for pid=30202 comm="redis-server" dest=6379 scontext=system_u:system_r:redis_t:s0 tcontext=system_u:object_r:redis_port_t:s0 tclass=tcp_socket
