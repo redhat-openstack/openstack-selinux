@@ -6,8 +6,12 @@ gen_require(`
 	type mysqld_t;
 	type nfs_t;
 	type mysqld_safe_exec_t;
+	type cluster_tmp_t;
+	type cluster_var_lib_t;
+	type mysqld_safe_t;
 	class tcp_socket name_connect;
-	class file { read getattr open execute execute_no_trans };
+	class file { read getattr open execute execute_no_trans write };
+	class dir read;
 ')
 
 # Bugzilla 1081544
@@ -23,3 +27,7 @@ domain_read_all_domains_state(mysqld_t)
 files_search_pids(mysqld_t)
 files_getattr_all_sockets(mysqld_t)
 allow mysqld_t mysqld_safe_exec_t:file getattr;
+
+# Bugzilla 1284672
+allow mysqld_safe_t cluster_tmp_t:file write;
+allow mysqld_safe_t cluster_var_lib_t:dir read;
