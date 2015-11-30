@@ -12,9 +12,13 @@ gen_require(`
 	type sysctl_net_t;
 	type unreserved_port_t;
 	type init_tmp_t;
+	type tun_tap_device_t;
 	class dir search;
 	class file { write read getattr open };
 	class tcp_socket name_bind;
+	class tun_socket create;
+	class chr_file open;
+
 ')
 
 # Bugzilla #1108187
@@ -33,3 +37,5 @@ swift_manage_data_files(openvswitch_t)
 
 # Bugzilla #1284268
 corenet_rw_inherited_tun_tap_dev(openvswitch_t)
+allow openvswitch_t self:tun_socket create;
+allow openvswitch_t tun_tap_device_t:chr_file open;
