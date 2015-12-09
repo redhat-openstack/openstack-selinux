@@ -1,0 +1,3 @@
+type=AVC msg=audit(1449393248.423:8265): avc: denied { read } for pid=3486 comm="sshd" name="lastlog" dev="sda2" ino=365978 scontext=system_u:system_r:sshd_t:s0-s0:c0.c1023 tcontext=system_u:object_r:cluster_var_log_t:s0 tclass=file
+type=AVC msg=audit(1449393248.424:8266): avc: denied { read write } for pid=3486 comm="sshd" name="lastlog" dev="sda2" ino=365978 scontext=system_u:system_r:sshd_t:s0-s0:c0.c1023 tcontext=system_u:object_r:cluster_var_log_t:s0 tclass=file
+type=AVC msg=audit(1449393989.852:9113): avc: denied { read write } for pid=26966 comm="useradd" name="lastlog" dev="sda2" ino=365978 scontext=unconfined_u:unconfined_r:useradd_t:s0-s0:c0.c1023 tcontext=system_u:object_r:cluster_var_log_t:s0 tclass=file
