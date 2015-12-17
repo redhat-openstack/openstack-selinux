@@ -78,6 +78,8 @@ seutil_exec_restorecon(neutron_t)
 # Bugzilla 1280083
 allow neutron_t httpd_config_t:dir search;
 
+# Bugzilla 1284268
+corecmd_getattr_all_executables(neutron_t)
 
 optional_policy(`
 	require {
