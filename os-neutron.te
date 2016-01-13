@@ -15,6 +15,7 @@ gen_require(`
 	type modules_object_t;
 	type ipsec_key_file_t;
 	type keepalived_t;
+	type logrotate_t;
 	class capability setpcap;
 	class key_socket { write read create };
 	class netlink_xfrm_socket { bind create nlmsg_write };
@@ -24,6 +25,7 @@ gen_require(`
 	class tcp_socket name_bind;
 	class unix_stream_socket connectto;
 	class dir search;
+	class netlink_selinux_socket create;
 ')
 
 # Bugzilla 1180679
@@ -80,6 +82,11 @@ allow neutron_t httpd_config_t:dir search;
 
 # Bugzilla 1284268
 corecmd_getattr_all_executables(neutron_t)
+
+# Bugzilla 1294420
+allow logrotate_t self:netlink_selinux_socket create;
+allow neutron_t radvd_exec_t:file getattr;
+
 
 optional_policy(`
 	require {
