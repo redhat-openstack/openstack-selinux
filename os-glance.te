@@ -35,6 +35,9 @@ allow glance_registry_t var_lib_t:lnk_file read;
 # Bugzilla 1145802
 allow glance_api_t nfs_t:dir getattr;
 
+# Bugzilla 1306525
+corenet_tcp_connect_commplex_main_port(glance_registry_t)
+
 optional_policy(`
 	gen_require(`
 		type elasticsearch_port_t;
