@@ -78,6 +78,7 @@ allow nova_api_t tmpfs_t:filesystem getattr;
 # Bugzilla 1315457
 allow httpd_t nova_log_t:dir { add_name write };
 allow httpd_t nova_log_t:file { open create };
+corenet_tcp_bind_osapi_compute_port(httpd_t)
 
 # Bugzilla 1249685
 gen_tunable(os_nova_use_execmem, false)
