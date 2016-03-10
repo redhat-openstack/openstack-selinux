@@ -38,6 +38,9 @@ allow glance_api_t nfs_t:dir getattr;
 # Bugzilla 1306525
 corenet_tcp_connect_commplex_main_port(glance_registry_t)
 
+# Bugzilla 1313617
+fs_getattr_tmpfs(glance_api_t)
+
 optional_policy(`
 	gen_require(`
 		type elasticsearch_port_t;
