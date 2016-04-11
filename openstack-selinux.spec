@@ -1,9 +1,9 @@
 # RPM spec file for OpenStack on RHEL 6 and 7
 # Some bits borrowed from the katello-selinux package
 
-%global selinuxtype     targeted
-%global moduletype      services
-%global modulenames     os-ovs os-swift os-nova os-neutron os-mysql os-glance os-rsync os-rabbitmq os-keepalived os-keystone os-haproxy os-mongodb os-ipxe
+%global selinuxtype	targeted
+%global moduletype	services
+%global modulenames	os-ovs os-swift os-nova os-neutron os-mysql os-glance os-rsync os-rabbitmq os-keepalived os-keystone os-haproxy os-mongodb os-ipxe os-redis os-cinder
 
 # Usage: _format var format
 #   Expand 'modulenames' into various formats as needed
@@ -12,38 +12,39 @@
 
 # We do this in post install and post uninstall phases
 %global relabel_files() \
-        /sbin/restorecon -Rv %{_bindir}/swift* %{_localstatedir}/run/swift /srv %{_bindir}/neutron* &> /dev/null || :\
+	/sbin/restorecon -Rv %{_bindir}/swift* %{_localstatedir}/run/swift /srv %{_bindir}/neutron* &> /dev/null || :\
 
 # Version of SELinux we were using
 %global selinux_policyver 3.13.1-23.el7
 
 # Package information
-Name:                   openstack-selinux
-Version:                0.6.41
-Release:                1%{?dist}
-License:                GPLv2
-Group:                  System Environment/Base
-Summary:                SELinux Policies for OpenStack
-BuildArch:              noarch
-URL:                    https://github.com/redhat-openstack/%{name}
-Requires:               policycoreutils, libselinux-utils
-Requires(post):                 selinux-policy-base >= %{selinux_policyver}, selinux-policy-targeted >= %{selinux_policyver}, policycoreutils, policycoreutils-python
-Requires(postun):       policycoreutils
-BuildRequires:          selinux-policy selinux-policy-devel
+Name:			openstack-selinux
+Version:		0.7.0
+Release:		1%{?dist}
+License:		GPLv2
+Group:			System Environment/Base
+Summary:		SELinux Policies for OpenStack
+BuildArch:		noarch
+URL:			https://github.com/redhat-openstack/%{name}
+Requires:		policycoreutils, libselinux-utils
+Requires(post):		selinux-policy-base >= %{selinux_policyver}, selinux-policy-targeted >= %{selinux_policyver}, policycoreutils, policycoreutils-python
+Requires(postun):	policycoreutils
+BuildRequires:		selinux-policy selinux-policy-devel
 
 #
 # wget -c https://github.ncom/lhh/%{name}/archive/%{version}.tar.gz \
 #    -O %{name}-%{version}.tar.gz
 #
-Source:                 https://github.com/redhat-openstack/%{name}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Source:			%{name}-%{version}.tar.gz
+
 
 %description
 SELinux policy modules for use with OpenStack
 
 %package test
-Summary:                AVC Tests for %{name}
-Requires:               policycoreutils-python, bash
-Requires:               %{name} = %{version}-%{release}
+Summary:		AVC Tests for %{name}
+Requires:		policycoreutils-python, bash
+Requires:		%{name} = %{version}-%{release}
 
 %description test
 AVC tests for %{name}
@@ -60,13 +61,13 @@ make SHARE="%{_datadir}" TARGETS="%{modulenames}"
 %_format INTERFACES $x.if
 install -d %{buildroot}%{_datadir}/selinux/devel/include/%{moduletype}
 install -p -m 644 $INTERFACES \
-        %{buildroot}%{_datadir}/selinux/devel/include/%{moduletype}
+	%{buildroot}%{_datadir}/selinux/devel/include/%{moduletype}
 
 # Install policy modules
 %_format MODULES $x.pp.bz2
 install -d %{buildroot}%{_datadir}/selinux/packages
 install -m 0644 $MODULES \
-        %{buildroot}%{_datadir}/selinux/packages
+	%{buildroot}%{_datadir}/selinux/packages
 
 # Test package files
 install -d %{buildroot}%{_datadir}/%{name}/%{version}/tests
@@ -82,6 +83,9 @@ install -m 0755 tests/check_all %{buildroot}%{_datadir}/%{name}/%{version}/tests
 
 # bz#1118859
 %{_sbindir}/semanage port -N -m -t mysqld_port_t -p tcp 4444 &> /dev/null
+
+# bz#1260202
+%{_sbindir}/semanage port -N -m -t openvswitch_port_t -p tcp 6653 &> /dev/null
 
 #
 # Booleans & file contexts
@@ -120,31 +124,31 @@ done
 echo "$INPUT" | %{_sbindir}/semanage import -N
 
 if %{_sbindir}/selinuxenabled ; then
-        #
-        # Chroot environments (e.g. when building images)
-        # won't get here, but the image will apply all of
-        # the policy on a reboot.
-        #
-        %{_sbindir}/load_policy
+	#
+	# Chroot environments (e.g. when building images)
+	# won't get here, but the image will apply all of
+	# the policy on a reboot.
+	#
+	%{_sbindir}/load_policy
 
-        # Unfortunately, we can't load modules and set
-        # booleans in those modules in a single transaction
-        setsebool -P os_nova_use_execmem on
-        setsebool -P os_neutron_use_execmem on
-        setsebool -P os_swift_use_execmem on
-        setsebool -P os_keystone_use_execmem on
+	# Unfortunately, we can't load modules and set
+	# booleans in those modules in a single transaction
+	setsebool -P os_nova_use_execmem on
+	setsebool -P os_neutron_use_execmem on
+	setsebool -P os_swift_use_execmem on
+	setsebool -P os_keystone_use_execmem on
 
-        %relabel_files
+	%relabel_files
 fi
 
 
 %postun
 if [ $1 -eq 0 ]; then
-        %{_sbindir}/semodule -n -r %{modulenames} &> /dev/null || :
-        if %{_sbindir}/selinuxenabled ; then
-                %{_sbindir}/load_policy
-                %relabel_files
-        fi
+	%{_sbindir}/semodule -n -r %{modulenames} &> /dev/null || :
+	if %{_sbindir}/selinuxenabled ; then
+		%{_sbindir}/load_policy
+		%relabel_files
+	fi
 fi
 
 
@@ -161,6 +165,87 @@ fi
 
 
 %changelog
+* Sun Apr 10 2016 Ryan Hallisey <rhallise@redhat.com> 0.7.0-1
+- Add a Cinder module and allow httpd to open the Cinder log
+- Resolves: rhbz#1325623
+
+* Thu Mar 10 2016 Ryan Hallisey <rhallise@redhat.com> 0.6.58-1
+- Glance needs to talk with tmpfs
+- Resolves: rhbz#1313617
+
+* Tue Mar 8 2016 Ryan Hallisey <rhallise@redhat.com> 0.6.57-1
+- Nova API needs to be able to start in WSGI with Apache
+- Resolves: rhbz#1315457
+
+* Mon Mar 7 2016 Ryan Hallisey <rhallise@redhat.com> 0.6.56-1
+- Nova API needs to be able to start in WSGI with Apache
+- Resolves: rhbz#1315457
+
+* Tue Feb 23 2016 Ryan Hallisey <rhallise@redhat.com> 0.6.55-1
+- Swift needs to exec rsync
+- Resolves: rhbz#1302312
+
+* Mon Feb 22 2016 Ryan Hallisey <rhallise@redhat.com> 0.6.54-1
+- OVS needs to connect to a reserved port
+- Resolves: rhbz#1310383
+
+* Thu Feb 11 2016 Ryan Hallisey <rhallise@redhat.com> 0.6.53-1
+- Allow nova to talk to the glance registry
+- Resolves: rhbz#1306525
+
+* Wed Jan 13 2016 Ryan Hallisey <rhallise@redhat.com> 0.6.52-1
+- Allow OVS to listen on its db port
+- Resolves: rhbz#1284268
+
+* Wed Jan 13 2016 Ryan Hallisey <rhallise@redhat.com> 0.6.51-1
+- Allow neutron use ipv6
+- Resolves: rhbz#1294420
+
+* Thu Dec 17 2015 Ryan Hallisey <rhallise@redhat.com> 0.6.50-1
+- Allow neutron to use all executables
+- Resolves: rhbz#1284268
+
+* Wed Dec 9 2015 Ryan Hallisey <rhallise@redhat.com> 0.6.49-1
+- Some services need to be able to interact with the cluster
+- log file
+- Resolves: rhbz#1283674
+
+* Mon Nov 30 2015 Ryan Hallisey <rhallise@redhat.com> 0.6.48-1
+- Allow ovs to interact with a tun tap device
+- Resolves: rhbz#1284268
+
+* Tue Nov 24 2015 Ryan Hallisey <rhallise@redhat.com> 0.6.47-1
+- Fix policy regression for mysql.  Allow mysql to
+- read cluster dirs and write to cluster tmp files.
+- Resolves: rhbz#1284672
+
+* Mon Nov 23 2015 Ryan Hallisey <rhallise@redhat.com> 0.6.46-1
+- Allow keepalived to check the status of services
+- Allow redis to connect to its own port
+- Allow ovs to read and write tun tap device
+- Resolves: rhbz#1284436 rhbz#1278430 rhbz#1284268
+
+* Wed Nov 18 2015 Ryan Hallisey <rhallise@redhat.com> 0.6.45-1
+- Optional nova_t policy to let nova execmem itself
+- Resolves: rhbz#1280101
+
+* Wed Nov 18 2015 Ryan Hallisey <rhallise@redhat.com> 0.6.44-1
+- Optional nova_t policy to let nova-novncproxy use httpd
+- Resolves: rhbz#1281547
+
+* Wed Nov 11 2015 Ryan Hallisey <rhallise@redhat.com> 0.6.43-1
+- Neutron needs to be able to search http directories
+- Resolves: rhbz#1260202
+
+* Mon Nov 9 2015 Ryan Hallisey <rhallise@redhat.com> 0.6.42-2
+- Openvswitch port is changing to 6653
+- Resolves: rhbz#1260202
+
+* Fri Nov 6 2015 Ryan Hallisey <rhallise@redhat.com> 0.6.42-1
+- OVS needs to be able to connect to unreserved ports
+- Glance needs to be able to interact with nfs
+- Resolves: rhbz#1259419 rhbz#1219406
+
 * Tue Sep 29 2015 Lon Hohberger <lon@redhat.com> 0.6.41-1
 - Add keystone execmem boolean
 - Resolves: rhbz#1249685
@@ -333,7 +418,7 @@ fi
 - Resolves: rhbz#1168526 rhbz#1176830
 
 * Tue Dec 23 2014 Ryan Hallisey <rhallise@redhat.com> - 0.6.6-1
-- Allow neutron to execute radvd files and getattr from
+- Allow neutron to execute radvd files and getattr from 
 - file systems.
 - Resolves: rhbz#1168526 rhbz#1176830
 
@@ -476,7 +561,7 @@ fi
 - Resolves: rhbz#1111990 rhbz#1083609
 
 * Mon Jun 23 2014 Ryan Hallisey <rhallise@redhat.com> - 0.5.4-1
-- Added os-neutron policy
+- Added os-neutron policy 
 - Changes made to os-swift to read httpd_config_t
 - Resolves: rhbz#1105344 rhbz#1110263
 
@@ -538,7 +623,7 @@ fi
 
 * Wed Mar 20 2013 Lon Hohberger <lhh@redhat.com> - 0.1.2-10
 - Depend on later release of selinux-policy since it contains
-  fixes for OpenStack Swift's use of GlusterFS
+  fixes for OpenStack Swift's use of GlusterFS 
   Resolves: rhbz#923426
 
 * Tue Mar 19 2013 Lon Hohberger <lhh@redhat.com> - 0.1.2-9
@@ -572,7 +657,7 @@ fi
 - Spec file cleanups
 
 * Tue Feb 12 2013 Lon Hohberger <lhh@redhat.com> - 0.1.2-2
-- Spec file cleanups
+- Spec file cleanups 
 
 * Tue Feb 12 2013 Lon Hohberger <lhh@redhat.com> - 0.1.2-1
 - Add policy for swift to resolve rsync issues
