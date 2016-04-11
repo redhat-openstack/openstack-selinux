@@ -35,7 +35,7 @@ BuildRequires:		selinux-policy selinux-policy-devel
 # wget -c https://github.ncom/lhh/%{name}/archive/%{version}.tar.gz \
 #    -O %{name}-%{version}.tar.gz
 #
-Source:			%{name}-%{version}.tar.gz
+Source:			https://github.com/redhat-openstack/%{name}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
 
 %description
