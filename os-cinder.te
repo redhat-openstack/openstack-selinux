@@ -1,10 +1,12 @@
 policy_module(os-cinder,0.1)
 
 gen_require(`
-	type cinder_log_t;
-	type httpd_t;
-	class file open;
+        type cinder_log_t;
+        type httpd_t;
+        class file open;
+        class dir { add_name write };
 ')
 
 # Bugzilla 1325623
 allow httpd_t cinder_log_t:file open;
+allow httpd_t cinder_log_t:dir { add_name write };
