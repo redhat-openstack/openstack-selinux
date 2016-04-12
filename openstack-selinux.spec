@@ -20,7 +20,7 @@
 # Package information
 Name:			openstack-selinux
 Version:		0.7.0
-Release:		1%{?dist}
+Release:		2%{?dist}
 License:		GPLv2
 Group:			System Environment/Base
 Summary:		SELinux Policies for OpenStack
@@ -36,6 +36,7 @@ BuildRequires:		selinux-policy selinux-policy-devel
 #    -O %{name}-%{version}.tar.gz
 #
 Source:			https://github.com/redhat-openstack/%{name}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Patch0:                 0001-Allow-httpd-to-write-in-cinder-log-directory.patch
 
 
 %description
@@ -51,6 +52,7 @@ AVC tests for %{name}
 
 %prep
 %setup -q
+%patch0 -p1 -b .cinder
 
 %build
 make SHARE="%{_datadir}" TARGETS="%{modulenames}"
@@ -165,6 +167,10 @@ fi
 
 
 %changelog
+* Tue Apr 12 2016 Haïkel Guémar <hguemar@fedoraproject.org> - 0.7.0-2
+- Allow httpd to write the Cinder log directory
+- Resolves: rhbz#1325623
+
 * Sun Apr 10 2016 Ryan Hallisey <rhallise@redhat.com> 0.7.0-1
 - Add a Cinder module and allow httpd to open the Cinder log
 - Resolves: rhbz#1325623
