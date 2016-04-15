@@ -18,6 +18,9 @@ corenet_tcp_bind_commplex_main_port(httpd_t)
 allow httpd_t keystone_log_t:file create;
 keystone_manage_log(httpd_t)
 
+# Bugzilla 1327609
+corenet_tcp_connect_memcache_port(keystone_t)
+
 # Bugzilla 1249685 (execmem)
 gen_tunable(os_keystone_use_execmem, false)
 tunable_policy(`os_keystone_use_execmem',`
