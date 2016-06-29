@@ -10,12 +10,16 @@ gen_require(`
 	type init_var_lib_t;
 	type neutron_t;
 	type sysfs_t;
+        type NetworkManager_t;
 	type systemd_systemctl_exec_t;
 	class filesystem getattr;
 	class process { signull sigkill };
 	class capability { net_admin net_raw kill dac_override };
 	class file { execute read create ioctl unlink execute_no_trans write getattr open };
 ')
+
+# Bugzilla 1351336
+allow keepalived_t NetworkManager_t:process signull;
 
 # Some files are being created on the fly.
 # Therefore, we will have to allow these rules.
