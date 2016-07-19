@@ -1,0 +1,1 @@
+type=AVC msg=audit(1468946225.187:10125): avc: denied { name_bind } for pid=18325 comm="neutron-openvsw" src=6633 scontext=system_u:system_r:neutron_t:s0 tcontext=system_u:object_r:openflow_port_t:s0 tclass=tcp_socket

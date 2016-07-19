@@ -28,6 +28,9 @@ gen_require(`
 	class netlink_selinux_socket create;
 ')
 
+# Bugzilla 1357961
+corenet_tcp_bind_openflow_port(neutron_t)
+
 # Bugzilla 1180679
 allow neutron_t keepalived_t:process signal;
 
