@@ -19,7 +19,7 @@
 
 # Package information
 Name:			openstack-selinux
-Version:		0.7.2
+Version:		0.7.4
 Release:		1%{?dist}
 License:		GPLv2
 Group:			System Environment/Base
@@ -165,6 +165,9 @@ fi
 
 
 %changelog
+* Tue Jul 19 2016 Haïkel Guémar <hguemar@fedoraproject.org> - 0.7.4-1
+- Upstream 0.7.4
+
 * Wed Apr 13 2016 Haikel Guemar <hguemar@fedoraproject.org> 0.7.2-1
 - Update to 0.7.2
 
