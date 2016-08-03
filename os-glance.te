@@ -11,6 +11,9 @@ gen_require(`
 	class lnk_file read;
 ')
 
+# Bugzilla 1362609
+corenet_tcp_connect_memcache_port(glance_registry_t)
+
 # Bugzilla 1119151
 corenet_tcp_connect_all_ports(glance_api_t)
 
