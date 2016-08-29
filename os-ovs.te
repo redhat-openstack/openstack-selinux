@@ -45,3 +45,6 @@ corenet_tcp_bind_ovsdb_port(openvswitch_t)
 
 # Bugzilla 1310383
 corenet_tcp_connect_reserved_port(openvswitch_t)
+
+# Bugzilla 1334732
+corenet_tcp_connect_openvswitch_port(openvswitch_t)
