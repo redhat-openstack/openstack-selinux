@@ -17,6 +17,7 @@ gen_require(`
 	type virtd_t;
 	type svirt_t;
 	type svirt_tcg_t;
+        type virtlogd_t;
 	attribute nova_domain;
 	class key write;
 	class packet_socket { bind create getattr };
@@ -79,6 +80,9 @@ allow nova_api_t tmpfs_t:filesystem getattr;
 allow httpd_t nova_log_t:dir { add_name write };
 allow httpd_t nova_log_t:file { open create };
 corenet_tcp_bind_osapi_compute_port(httpd_t)
+
+# Bugzilla 1375766
+nova_manage_lib_files(virtlogd_t)
 
 # Bugzilla 1249685
 gen_tunable(os_nova_use_execmem, false)
