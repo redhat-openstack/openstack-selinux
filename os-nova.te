@@ -21,7 +21,7 @@ gen_require(`
 	attribute nova_domain;
 	class key write;
 	class packet_socket { bind create getattr };
-        class capability { net_raw sys_ptrace kill };
+        class capability { dac_override net_raw sys_ptrace kill };
 	class capability2 block_suspend;
 	class file { getattr read write open create execute execute_no_trans };
 	class sock_file write;
@@ -83,6 +83,9 @@ corenet_tcp_bind_osapi_compute_port(httpd_t)
 
 # Bugzilla 1375766
 nova_manage_lib_files(virtlogd_t)
+
+# Bugzilla 1377272
+allow virtlogd_t self:capability dac_override;
 
 # Bugzilla 1249685
 gen_tunable(os_nova_use_execmem, false)
