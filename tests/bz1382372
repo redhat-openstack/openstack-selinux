@@ -1,0 +1,1 @@
+type=AVC msg=audit(1475760735.079:10243): avc: denied { name_connect } for pid=26463 comm="ovs-vswitchd" dest=3310 scontext=system_u:system_r:openvswitch_t:s0 tcontext=system_u:object_r:clamd_port_t:s0 tclass=tcp_socket

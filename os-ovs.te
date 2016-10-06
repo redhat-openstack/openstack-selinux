@@ -51,3 +51,6 @@ corenet_tcp_connect_openvswitch_port(openvswitch_t)
 
 # Bugzilla 1372453
 corenet_tcp_connect_vnc_port(openvswitch_t)
+
+# Bugzilla 1382372
+corenet_tcp_connect_clamd_port(openvswitch_t)
