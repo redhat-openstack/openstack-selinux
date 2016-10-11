@@ -12,7 +12,7 @@
 
 # We do this in post install and post uninstall phases
 %global relabel_files() \
-	/sbin/restorecon -Rv %{_bindir}/swift* %{_localstatedir}/run/swift /srv %{_bindir}/neutron* &> /dev/null || :\
+	/sbin/restorecon -Rv %{_bindir}/swift* %{_localstatedir}/run/swift /srv %{_bindir}/neutron* %{_localstatedir}/run/redis &> /dev/null || :\
 
 # Version of SELinux we were using
 %global selinux_policyver 3.13.1-23.el7
@@ -20,7 +20,7 @@
 # Package information
 Name:			openstack-selinux
 Version:		0.7.4
-Release:		1%{?dist}
+Release:		2%{?dist}
 License:		GPLv2
 Group:			System Environment/Base
 Summary:		SELinux Policies for OpenStack
@@ -165,6 +165,10 @@ fi
 
 
 %changelog
+* Tue Oct 11 2016 Ryan Hallisey <rhallise@redhat.com> 0.7.4-2
+- Run a restorecon of /var/run/redis
+- Resolves: rhbz#1383775
+
 * Tue Jul 19 2016 Haïkel Guémar <hguemar@fedoraproject.org> - 0.7.4-1
 - Upstream 0.7.4
 
