@@ -12,7 +12,7 @@
 
 # We do this in post install and post uninstall phases
 %global relabel_files() \
-	/sbin/restorecon -Rv %{_bindir}/swift* %{_localstatedir}/run/swift /srv %{_bindir}/neutron* %{_localstatedir}/run/redis &> /dev/null || :\
+	/sbin/restorecon -Rv %{_bindir}/swift* %{_localstatedir}/run/swift /srv %{_bindir}/neutron* %{_localstatedir}/run/redis %{_localstatedir}/log &> /dev/null || :\
 
 # Version of SELinux we were using
 %global selinux_policyver 3.13.1-23.el7
@@ -20,7 +20,7 @@
 # Package information
 Name:			openstack-selinux
 Version:		0.7.4
-Release:		2%{?dist}
+Release:		3%{?dist}
 License:		GPLv2
 Group:			System Environment/Base
 Summary:		SELinux Policies for OpenStack
@@ -87,6 +87,9 @@ install -m 0755 tests/check_all %{buildroot}%{_datadir}/%{name}/%{version}/tests
 # bz#1260202
 %{_sbindir}/semanage port -N -m -t openvswitch_port_t -p tcp 6653 &> /dev/null
 
+# bz#1360434
+%{_sbindir}/semanage port -N -m -t http_port_t -p tcp 8088 &> /dev/null
+
 #
 # Booleans & file contexts
 #
@@ -104,6 +107,11 @@ boolean -N -m --on glance_use_execmem
 boolean -N -m --on httpd_execmem
 boolean -N -m --on domain_kernel_load_modules
 boolean -N -m --on httpd_can_network_connect
+boolean -N -m --on swift_can_network
+fcontext -N -a -t httpd_var_lib_t %{_sharedstatedir}/openstack-dashboard
+fcontext -N -a -t httpd_log_t %{_localstatedir}/log/gnocchi/app.log
+fcontext -N -a -t httpd_log_t %{_localstatedir}/log/aodh/app.log
+fcontext -N -a -t httpd_log_t %{_localstatedir}/log/ceilometer/app.log
 fcontext -N -a -t neutron_exec_t %{_bindir}/neutron-rootwrap-daemon
 fcontext -N -a -t neutron_exec_t %{_bindir}/neutron-metadata-agent
 fcontext -N -a -t neutron_exec_t %{_bindir}/neutron-netns-cleanup
