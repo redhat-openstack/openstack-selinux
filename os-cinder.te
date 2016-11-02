@@ -3,6 +3,9 @@ policy_module(os-cinder,0.1)
 gen_require(`
         type cinder_log_t;
         type httpd_t;
+        type iscsid_exec_t;
+        type iscsid_t;
+        type cinder_backup_t;
         class file { open create };
         class dir { add_name write };
 ')
@@ -10,3 +13,6 @@ gen_require(`
 # Bugzilla 1325623
 allow httpd_t cinder_log_t:file { open create };
 allow httpd_t cinder_log_t:dir { add_name write };
+
+# Bugzilla 1384472
+iscsid_domtrans(cinder_backup_t);
