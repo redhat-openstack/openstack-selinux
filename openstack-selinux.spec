@@ -19,8 +19,8 @@
 
 # Package information
 Name:			openstack-selinux
-Version:		0.7.4
-Release:		3%{?dist}
+Version:		0.7.12
+Release:		1%{?dist}
 License:		GPLv2
 Group:			System Environment/Base
 Summary:		SELinux Policies for OpenStack
@@ -173,6 +173,9 @@ fi
 
 
 %changelog
+* Fri Nov 25 2016 Haïkel Guémar <hguemar@fedoraproject.org> - 0.7.12-1
+- Upstream 0.7.12 (RHBZ #1375766)
+
 * Tue Oct 11 2016 Ryan Hallisey <rhallise@redhat.com> 0.7.4-2
 - Run a restorecon of /var/run/redis
 - Resolves: rhbz#1383775
