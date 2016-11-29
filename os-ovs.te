@@ -9,6 +9,8 @@ policy_module(os-ovs,0.1)
 
 gen_require(`
 	type openvswitch_t;
+    type openvswitch_tmp_t;
+    type svirt_t;
 	type sysctl_net_t;
 	type unreserved_port_t;
 	type init_tmp_t;
@@ -51,3 +53,28 @@ corenet_tcp_connect_openvswitch_port(openvswitch_t)
 
 # Bugzilla 1372453
 corenet_tcp_connect_vnc_port(openvswitch_t)
+
+# Bugzilla 1397537
+allow openvswitch_t self:netlink_socket create_socket_perms;
+allow svirt_t openvswitch_t:unix_stream_socket connectto;
+
+exec_files_pattern(openvswitch_t, openvswitch_tmp_t, openvswitch_tmp_t)
+
+kernel_stream_connect(openvswitch_t)
+
+corenet_rw_tun_tap_dev(openvswitch_t)
+
+dev_rw_vfio_dev(openvswitch_t)
+
+fs_manage_hugetlbfs_files(openvswitch_t)
+fs_manage_hugetlbfs_dirs(openvswitch_t)
+
+sysnet_exec_ifconfig(openvswitch_t)
+
+optional_policy(`
+    hostname_exec(openvswitch_t)
+')
+
+optional_policy(`
+    virt_manage_images(openvswitch_t)
+')
