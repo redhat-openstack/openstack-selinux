@@ -9,8 +9,8 @@ policy_module(os-ovs,0.1)
 
 gen_require(`
 	type openvswitch_t;
-    type openvswitch_tmp_t;
-    type svirt_t;
+	type openvswitch_tmp_t;
+	type svirt_t;
 	type sysctl_net_t;
 	type unreserved_port_t;
 	type init_tmp_t;
