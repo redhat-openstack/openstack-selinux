@@ -19,8 +19,8 @@
 
 # Package information
 Name:			openstack-selinux
-Version:		0.7.12
-Release:		1%{?dist}
+Version:		0.7.13
+Release:		2%{?dist}
 License:		GPLv2
 Group:			System Environment/Base
 Summary:		SELinux Policies for OpenStack
@@ -108,6 +108,7 @@ boolean -N -m --on httpd_execmem
 boolean -N -m --on domain_kernel_load_modules
 boolean -N -m --on httpd_can_network_connect
 boolean -N -m --on swift_can_network
+boolean -N -m --on httpd_use_openstack
 fcontext -N -a -t httpd_var_lib_t %{_sharedstatedir}/openstack-dashboard
 fcontext -N -a -t httpd_log_t %{_localstatedir}/log/gnocchi/app.log
 fcontext -N -a -t httpd_log_t %{_localstatedir}/log/aodh/app.log
@@ -173,6 +174,13 @@ fi
 
 
 %changelog
+* Fri Dec 9 2016 Ryan Hallisey <rhallise@redhat.com> 0.7.13-2
+- Turn on httpd_use_openstack boolean
+- Resolves: rhbz#1402926
+
+* Fri Dec 9 2016 Ryan Hallisey <rhallise@redhat.com> 0.7.13-1
+- Upstream 0.7.13
+
 * Fri Nov 25 2016 Haïkel Guémar <hguemar@fedoraproject.org> - 0.7.12-1
 - Upstream 0.7.12 (RHBZ #1375766)
 
