@@ -30,6 +30,34 @@ tarball: .git/config
 			https://github.com/redhat-openstack/openstack-selinux/archive/$$RELEASE.tar.gz ;\
 	fi
 
+local-tarball: .git/config
+	#
+	# Creating local tarball.  Note: this only works if the
+	# current HEAD matches a tag.
+	#
+	@RELEASE=$$(git tag --points-at=$$(git log -1 | awk '/^commit/ { print $$2 }')) ;\
+	if [ -z "$$RELEASE" ]; then				\
+		echo "Failed.  Try 'git tag' first."		;\
+	else							\
+		TMPDIR=$$(mktemp /tmp/os-XXXXXX)		;\
+		rm -f openstack-selinux-$$RELEASE.tar.gz	;\
+		make clean					;\
+		rm -f $$TMPDIR					;\
+		mkdir -p $$TMPDIR/openstack-selinux-$$RELEASE	;\
+		cp -a . $$TMPDIR/openstack-selinux-$$RELEASE	;\
+		if pushd $$TMPDIR/openstack-selinux-$$RELEASE; then \
+			rm -rf .git .git*				;\
+			cd ..						;\
+			tar -czvf openstack-selinux-$$RELEASE.tar.gz openstack-selinux-$$RELEASE ;\
+			popd						;\
+			cp $$TMPDIR/*.tar.gz .				;\
+			rm -rf $$TMPDIR					;\
+		else						\
+			false					;\
+		fi						;\
+	fi
+
+
 
 #install:
 #	${INSTALL} -m 0644 ${TARGETS} \
