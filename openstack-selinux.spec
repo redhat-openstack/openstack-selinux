@@ -113,6 +113,7 @@ fcontext -N -a -t httpd_var_lib_t %{_sharedstatedir}/openstack-dashboard
 fcontext -N -a -t httpd_log_t %{_localstatedir}/log/gnocchi/app.log
 fcontext -N -a -t httpd_log_t %{_localstatedir}/log/aodh/app.log
 fcontext -N -a -t httpd_log_t %{_localstatedir}/log/ceilometer/app.log
+fcontext -N -a -t httpd_log_t %{_localstatedir}/log/panko/panko.log
 fcontext -N -a -t neutron_exec_t %{_bindir}/neutron-rootwrap-daemon
 fcontext -N -a -t neutron_exec_t %{_bindir}/neutron-metadata-agent
 fcontext -N -a -t neutron_exec_t %{_bindir}/neutron-netns-cleanup
