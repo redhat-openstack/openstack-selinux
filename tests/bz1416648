@@ -1,0 +1,1 @@
+type=AVC msg=audit(1485417258.802:149230): avc:  denied  { open } for  pid=496396 comm="httpd" path="/var/log/panko/panko.log" dev="vda2" ino=8426312 scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:var_log_t:s0 tclass=file
