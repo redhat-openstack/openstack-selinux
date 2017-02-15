@@ -71,6 +71,7 @@ install_policies() {
 	fcontext -N -a -t httpd_log_t $LOCALSTATEDIR/log/gnocchi/app.log
 	fcontext -N -a -t httpd_log_t $LOCALSTATEDIR/log/aodh/app.log
 	fcontext -N -a -t httpd_log_t $LOCALSTATEDIR/log/ceilometer/app.log
+	fcontext -N -a -t httpd_log_t $LOCALSTATEDIR/log/panko/panko.log
 	fcontext -N -a -t neutron_exec_t $BINDIR/neutron-rootwrap-daemon
 	fcontext -N -a -t neutron_exec_t $BINDIR/neutron-metadata-agent
 	fcontext -N -a -t neutron_exec_t $BINDIR/neutron-netns-cleanup
