@@ -124,7 +124,7 @@ uninstall_policies() {
 }
 
 
-while getopts m:x opt; do
+while getopts m:xq opt; do
 	case $opt in
 	m)	# modules
 		MODULES="$OPTARG"
