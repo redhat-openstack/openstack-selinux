@@ -23,6 +23,7 @@ relabel_files()
 	do_echo "Relabeling files..."
 	$SBINDIR/restorecon -Rv $BINDIR/swift* \
 				$LOCALSTATEDIR/run/swift \
+				$SHAREDSTATEDIR/nova/.ssh \
 				/srv \
 				$BINDIR/neutron* \
 				$LOCALSTATEDIR/run/redis \

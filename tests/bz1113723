@@ -1,1 +1,0 @@
-type=AVC msg=audit(1403806776.581:13347): avc:  denied  { read } for  pid=17182 comm="sshd" name="authorized_keys" dev="sda5" ino=25167914 scontext=system_u:system_r:sshd_t:s0-s0:c0.c1023 tcontext=system_u:object_r:nova_var_lib_t:s0 tclass=file
