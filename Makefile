@@ -1,6 +1,6 @@
 TARGETS?=os-ovs os-swift os-nova os-neutron os-mysql os-glance os-rsync os-rabbitmq os-keepalived os-keystone os-haproxy os-mongodb os-ipxe os-redis os-cinder
 MODULES?=${TARGETS:=.pp.bz2}
-SHAREDIR?=/usr/share
+DATADIR?=/usr/share
 #INSTALL=?=install
 
 all: ${TARGETS:=.pp.bz2}
@@ -10,7 +10,7 @@ all: ${TARGETS:=.pp.bz2}
 	bzip2 -9 $^
 
 %.pp: %.te
-	make -f ${SHAREDIR}/selinux/devel/Makefile $@
+	make -f ${DATADIR}/selinux/devel/Makefile $@
 
 clean:
 	rm -f *~ *.if *.tc *.pp *.pp.bz2
@@ -61,5 +61,5 @@ local-tarball: .git/config
 
 #install:
 #	${INSTALL} -m 0644 ${TARGETS} \
-#		${DESTDIR}${SHAREDIR}/targeted/modules
+#		${DESTDIR}${DATADIR}/targeted/modules
 
