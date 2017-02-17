@@ -1,0 +1,1 @@
+type=AVC msg=audit(1479212822.497:463): avc:  denied  { create } for  pid=4322 comm="glance-api" name="privsep.sock" scontext=system_u:system_r:glance_api_t:s0 tcontext=system_u:object_r:glance_tmp_t:s0 tclass=sock_file
