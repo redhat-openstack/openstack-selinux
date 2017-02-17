@@ -4,11 +4,14 @@ gen_require(`
 	type glance_api_t;
 	type glance_registry_t;
 	type glance_var_lib_t;
+	type glance_tmp_t;
 	type var_lib_t;
 	type nfs_t;
 	class dir { write getattr remove_name create add_name };
 	class file { write getattr unlink open create };
 	class lnk_file read;
+	type sudo_exec_t;
+	class file { execute };
 ')
 
 # Bugzilla 1362609
@@ -45,6 +48,10 @@ corenet_tcp_connect_commplex_main_port(glance_registry_t)
 
 # Bugzilla 1313617
 fs_getattr_tmpfs(glance_api_t)
+
+# Bugzilla 1395240
+manage_sock_files_pattern(glance_api_t, glance_tmp_t, glance_tmp_t)
+allow glance_api_t sudo_exec_t:file { execute };
 
 optional_policy(`
 	gen_require(`
