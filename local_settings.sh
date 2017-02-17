@@ -24,6 +24,7 @@ relabel_files()
 	$SBINDIR/restorecon -Rv $BINDIR/swift* \
 				$LOCALSTATEDIR/run/swift \
 				$SHAREDSTATEDIR/nova/.ssh \
+				$SHAREDSTATEDIR/designate/bind9 \
 				/srv \
 				$BINDIR/neutron* \
 				$LOCALSTATEDIR/run/redis \
@@ -68,6 +69,7 @@ install_policies() {
 	boolean -N -m --on httpd_can_network_connect
 	boolean -N -m --on swift_can_network
 	boolean -N -m --on httpd_use_openstack
+	fcontext -N -a -t named_zone_t \"$SHAREDSTATEDIR/designate/bind9(/.*)?\"
 	fcontext -N -a -t httpd_var_lib_t $SHAREDSTATEDIR/openstack-dashboard
 	fcontext -N -a -t httpd_log_t $LOCALSTATEDIR/log/gnocchi/app.log
 	fcontext -N -a -t httpd_log_t $LOCALSTATEDIR/log/aodh/app.log
