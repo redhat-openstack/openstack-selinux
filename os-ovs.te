@@ -20,6 +20,7 @@ gen_require(`
 	class tcp_socket name_bind;
 	class tun_socket create;
 	class chr_file open;
+	class netlink_generic_socket create_socket_perms;
 
 ')
 
@@ -70,6 +71,9 @@ fs_manage_hugetlbfs_files(openvswitch_t)
 fs_manage_hugetlbfs_dirs(openvswitch_t)
 
 sysnet_exec_ifconfig(openvswitch_t)
+
+# bugzilla #1419418
+allow openvswitch_t self:netlink_generic_socket create_socket_perms;
 
 optional_policy(`
     hostname_exec(openvswitch_t)

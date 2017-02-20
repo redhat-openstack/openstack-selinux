@@ -16,6 +16,7 @@ gen_require(`
 	type ipsec_key_file_t;
 	type keepalived_t;
 	type logrotate_t;
+	type nsfs_t;
 	class capability setpcap;
 	class key_socket { write read create };
 	class netlink_xfrm_socket { bind create nlmsg_write };
@@ -115,3 +116,6 @@ gen_tunable(os_neutron_use_execmem, false)
 tunable_policy(`os_neutron_use_execmem',`
 	allow neutron_t self:process execmem;
 ')
+
+# Bugzilla 1419418
+allow neutron_t nsfs_t:file { open read };
