@@ -1,0 +1,1 @@
+type=AVC msg=audit(1409330049.520:333): avc: denied { getattr } for pid=25567 comm="nova-api" name="/" dev="tmpfs" ino=7282 scontext=system_u:system_r:nova_api_t:s0 tcontext=system_u:object_r:tmpfs_t:s0 tclass=filesystem

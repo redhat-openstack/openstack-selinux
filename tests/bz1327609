@@ -1,0 +1,1 @@
+type=AVC msg=audit(1460720246.797:113659): avc: denied { name_connect } for pid=14974 comm="keystone-all" dest=11211 scontext=system_u:system_r:keystone_t:s0 tcontext=system_u:object_r:memcache_port_t:s0 tclass=tcp_socket

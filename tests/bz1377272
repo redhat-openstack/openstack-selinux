@@ -1,0 +1,1 @@
+type=AVC msg=audit(1474294984.518:10089): avc: denied { dac_override } for pid=13229 comm="virtlogd" capability=1 scontext=system_u:system_r:virtlogd_t:s0-s0:c0.c1023 tcontext=system_u:system_r:virtlogd_t:s0-s0:c0.c1023 tclass=capability

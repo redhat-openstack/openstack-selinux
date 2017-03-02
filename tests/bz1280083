@@ -1,0 +1,1 @@
+type=AVC msg=audit(1447193408.754:426): avc: denied { search } for pid=26870 comm="neutron-server" name="httpd" dev="sda1" ino=793777 scontext=system_u:system_r:neutron_t:s0 tcontext=system_u:object_r:httpd_config_t:s0 tclass=dir

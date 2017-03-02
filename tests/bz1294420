@@ -1,0 +1,1 @@
+type=AVC msg=audit(1451203693.469:240652): avc: denied { create } for pid=6620 comm="su" scontext=system_u:system_r:logrotate_t:s0-s0:c0.c1023 tcontext=system_u:system_r:logrotate_t:s0-s0:c0.c1023 tclass=netlink_selinux_socket

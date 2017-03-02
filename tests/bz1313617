@@ -1,0 +1,1 @@
+type=AVC msg=audit(1456857432.481:34143): avc: denied { getattr } for pid=91939 comm="glance-api" name="/" dev="tmpfs" ino=1236 scontext=system_u:system_r:glance_api_t:s0 tcontext=system_u:object_r:tmpfs_t:s0 tclass=filesystem

@@ -1,0 +1,1 @@
+type=AVC msg=audit(1404722961.440:8305): avc:  denied  { connectto } for  pid=1407 comm="neutron-lbaas-a" scontext=system_u:system_r:neutron_t:s0 tcontext=system_u:system_r:haproxy_t:s0 tclass=unix_stream_socket

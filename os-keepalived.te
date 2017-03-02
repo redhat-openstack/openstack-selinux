@@ -1,0 +1,55 @@
+policy_module(os-keepalived,0.1)
+
+gen_require(`
+	type keepalived_t;
+	type haproxy_t;
+	type neutron_var_lib_t;
+	type var_log_t;
+	type cloud_var_lib_t;
+	type var_lib_t;
+	type init_var_lib_t;
+	type neutron_t;
+	type sysfs_t;
+        type NetworkManager_t;
+	type systemd_systemctl_exec_t;
+	class filesystem getattr;
+	class process { signull sigkill };
+	class capability { net_admin net_raw kill dac_override };
+	class file { execute read create ioctl unlink execute_no_trans write getattr open };
+')
+
+# Bugzilla 1351336
+allow keepalived_t NetworkManager_t:process signull;
+
+# Some files are being created on the fly.
+# Therefore, we will have to allow these rules.
+# Bugzilla 1180679 and Bugzilla 1180881
+neutron_manage_lib_dirs(keepalived_t)
+sysnet_exec_ifconfig(keepalived_t)
+allow keepalived_t neutron_var_lib_t:file { execute read create getattr execute_no_trans write ioctl open };
+allow keepalived_t cloud_var_lib_t:file { read getattr open };
+allow keepalived_t init_var_lib_t:file { read getattr open };
+allow keepalived_t var_lib_t:file { read getattr open };
+allow keepalived_t var_log_t:file open;
+allow keepalived_t self:capability dac_override;
+allow keepalived_t neutron_t:process sigkill;
+
+# Bugzilla 1145886
+domain_read_all_domains_state(keepalived_t)
+allow keepalived_t haproxy_t:process signull;
+allow keepalived_t self:capability kill;
+
+# Bugzilla 1206148
+allow keepalived_t sysfs_t:filesystem getattr;
+allow keepalived_t neutron_var_lib_t:file unlink;
+
+# Bugzilla 1278430
+allow keepalived_t systemd_systemctl_exec_t:file getattr;
+
+# Bugzilla 1243039
+# Allow keepalived to monitor haproxy via 'systemctl status haproxy.service'
+# by default
+optional_policy(`
+	systemd_systemctl_domain(keepalived)
+	unconfined_domain(keepalived_systemctl_t)
+')

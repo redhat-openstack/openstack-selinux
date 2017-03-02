@@ -1,0 +1,10 @@
+type=AVC msg=audit(1417690758.589:915): avc: denied { read open } for pid=8511 comm="nova-rootwrap" path="/usr/sbin/arping" dev="vda1" ino=17240309 scontext=system_u:system_r:nova_network_t:s0 tcontext=system_u:object_r:netutils_exec_t:s0 tclass=file
+type=AVC msg=audit(1417690758.590:916): avc: denied { create } for pid=8511 comm="arping" scontext=system_u:system_r:nova_network_t:s0 tcontext=system_u:system_r:nova_network_t:s0 tclass=packet_socket
+type=AVC msg=audit(1417690758.591:917): avc: denied { bind } for pid=8511 comm="arping" scontext=system_u:system_r:nova_network_t:s0 tcontext=system_u:system_r:nova_network_t:s0 tclass=packet_socket
+type=AVC msg=audit(1417690758.589:915): avc: denied { execute_no_trans } for pid=8511 comm="nova-rootwrap" path="/usr/sbin/arping" dev="vda1" ino=17240309 scontext=system_u:system_r:nova_network_t:s0 tcontext=system_u:object_r:netutils_exec_t:s0 tclass=file
+type=AVC msg=audit(1417690758.591:918): avc: denied { getattr } for pid=8511 comm="arping" scontext=system_u:system_r:nova_network_t:s0 tcontext=system_u:system_r:nova_network_t:s0 tclass=packet_socket
+type=AVC msg=audit(1417690351.147:8882): avc: denied { signal } for pid=9605 comm="keystone-all" scontext=system_u:system_r:keystone_t:s0 tcontext=system_u:system_r:keystone_t:s0 tclass=process
+type=AVC msg=audit(1417690758.588:914): avc: denied { execute } for pid=8510 comm="nova-rootwrap" name="arping" dev="vda1" ino=17240309 scontext=system_u:system_r:nova_network_t:s0 tcontext=system_u:object_r:netutils_exec_t:s0 tclass=file
+
+
+

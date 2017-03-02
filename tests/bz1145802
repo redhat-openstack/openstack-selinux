@@ -1,0 +1,1 @@
+type=AVC msg=audit(1411046175.546:2138): avc: denied { getattr } for pid=4848 comm="glance-api" path="/var/lib/glance/images" dev="0:36" ino=111738944 scontext=system_u:system_r:glance_api_t:s0 tcontext=system_u:object_r:nfs_t:s0 tclass=dir

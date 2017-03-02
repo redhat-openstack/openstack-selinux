@@ -1,0 +1,1 @@
+type=AVC msg=audit(1424715492.561:319885): avc:  denied  { execmem } for  pid=30884 comm="mongod" scontext=system_u:system_r:mongod_t:s0 tcontext=system_u:system_r:mongod_t:s0 tclass=process

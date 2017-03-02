@@ -1,0 +1,1 @@
+type=AVC msg=audit(1414504423.908:14689): avc:  denied  { signal } for  pid=55983 comm="keystone-all" scontext=system_u:system_r:keystone_t:s0 tcontext=system_u:system_r:keystone_t:s0 tclass=process

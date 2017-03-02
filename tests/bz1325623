@@ -1,0 +1,4 @@
+type=AVC msg=audit(1460257814.82:8553): avc: denied { open } for pid=14325 comm="httpd" path="/var/log/cinder/cinder-api.log" dev="vda1" ino=318834799 scontext=system_u:system_r:httpd_t:s0 tcontext=unconfined_u:object_r:cinder_log_t:s0 tclass=file
+type=AVC msg=audit(1460418646.779:3276): avc: denied { write } for pid=2209 comm="httpd" name="cinder" dev="vda1" ino=117531620 scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:cinder_log_t:s0 tclass=dir
+type=AVC msg=audit(1460418573.405:3254): avc: denied { add_name } for pid=2191 comm="httpd" name="cinder" dev="vda1" ino=117531620 scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:cinder_log_t:s0 tclass=dir
+type=AVC msg=audit(1460489301.63:483): avc: denied { create } for pid=14118 comm="httpd" name="cinder-api.log" scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:cinder_log_t:s0 tclass=file

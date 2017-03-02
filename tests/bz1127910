@@ -1,0 +1,3 @@
+type=AVC msg=audit(1409615248.750:4447): avc: denied { name_connect } for pid=8695 comm="httpd" dest=7002 scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:unreserved_port_t:s0 tclass=tcp_socket
+type=AVC msg=audit(1409330405.309:350): avc: denied { name_connect } for pid=4076 comm="httpd" dest=5050 scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:mmcc_port_t:s0 tclass=tcp_socket
+type=AVC msg=audit(1409330362.290:337): avc: denied { name_connect } for pid=2873 comm="httpd" dest=5432 scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:postgresql_port_t:s0 tclass=tcp_socket

@@ -1,0 +1,3 @@
+type=AVC msg=audit(1415721028.879:10207): avc:  denied  { name_connect } for  pid=53095 comm="nova-consoleaut" dest=11211 scontext=system_u:system_r:nova_console_t:s0 tcontext=system_u:object_r:memcache_port_t:s0 tclass=tcp_socket
+type=AVC msg=audit(1415721032.117:10221): avc:  denied  { name_connect } for  pid=53360 comm="nova-scheduler" dest=11211 scontext=system_u:system_r:nova_scheduler_t:s0 tcontext=system_u:object_r:memcache_port_t:s0 tclass=tcp_socket
+type=AVC msg=audit(1415721039.382:10383): avc:  denied  { name_connect } for  pid=53974 comm="nova-cert" dest=11211 scontext=system_u:system_r:nova_cert_t:s0 tcontext=system_u:object_r:memcache_port_t:s0 tclass=tcp_socket

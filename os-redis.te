@@ -1,0 +1,18 @@
+policy_module(os-redis,0.1)
+
+gen_require(`
+	type redis_port_t;
+	type redis_t;
+	type cluster_var_log_t;
+	type sshd_t;
+	type useradd_t;
+	class tcp_socket name_connect;
+	class file { read write };
+')
+
+# Bugzilla 1284436
+allow redis_t redis_port_t:tcp_socket name_connect;
+
+# Bugzilla 1283674
+allow sshd_t cluster_var_log_t:file { read write };
+allow useradd_t cluster_var_log_t:file { read write };

@@ -1,0 +1,109 @@
+policy_module(os-nova,0.1)
+
+gen_require(`
+        type nova_network_t;
+	type nova_var_lib_t;
+	type nova_api_t;
+	type nova_scheduler_t;
+	type nova_console_t;
+	type nova_cert_t;
+	type sssd_var_lib_t;
+	type cert_t;
+	type nova_log_t;
+	type httpd_t;
+	type tmpfs_t;
+	type netutils_exec_t;
+	type virtd_t;
+	type svirt_t;
+	type svirt_tcg_t;
+        type virtlogd_t;
+	attribute nova_domain;
+	class key write;
+	class packet_socket { bind create getattr };
+        class capability { dac_override net_raw sys_ptrace kill };
+	class capability2 block_suspend;
+	class file { getattr read write open create execute execute_no_trans };
+	class sock_file write;
+	class dir { add_name write search };
+	class lnk_file read;
+')
+# Bugzilla 1181428
+iscsid_domtrans(virtd_t);
+
+# Bugzilla 1180373
+allow nova_network_t self:key write;
+
+# Bugzilla 1170839
+allow nova_network_t netutils_exec_t:file { read execute open execute_no_trans };
+allow nova_network_t self:packet_socket { bind create getattr };
+netutils_domtrans(nova_network_t)
+
+# Bugzilla 1149975
+allow nova_scheduler_t cert_t:dir search;
+
+# Bugzilla 1162761 and 1158213
+corenet_tcp_connect_memcache_port(nova_console_t)
+corenet_tcp_connect_memcache_port(nova_scheduler_t)
+corenet_tcp_connect_memcache_port(nova_cert_t)
+
+# from upstream - Bugzilla 1107861
+auth_read_passwd(nova_domain)
+init_read_utmp(nova_domain)
+
+# Bugzilla 1095869
+# Allow create/modify/delete virtual networks
+allow nova_network_t self:capability { net_raw sys_ptrace kill };
+allow nova_network_t self:capability2 block_suspend;
+
+# Bugzilla 1083566
+allow nova_network_t initrc_var_run_t:file read;
+
+# Bugzilla 1135510
+allow nova_api_t sssd_var_lib_t:sock_file write;
+allow nova_scheduler_t cert_t:file { read getattr open };
+
+# Bugzilla 1210271
+allow svirt_t nova_var_lib_t:lnk_file read;
+
+# Bugzilla 1211628
+allow svirt_t nova_var_lib_t:file write;
+allow svirt_tcg_t nova_var_lib_t:file write;
+
+# Bugzilla 1134617
+allow nova_api_t tmpfs_t:filesystem getattr;
+
+# Bugzilla 1315457
+allow httpd_t nova_log_t:dir { add_name write };
+allow httpd_t nova_log_t:file { open create };
+corenet_tcp_bind_osapi_compute_port(httpd_t)
+
+# Bugzilla 1375766
+nova_manage_lib_files(virtlogd_t)
+
+# Bugzilla 1377272
+allow virtlogd_t self:capability dac_override;
+
+# Bugzilla 1249685
+gen_tunable(os_nova_use_execmem, false)
+tunable_policy(`os_nova_use_execmem',`
+	allow nova_api_t self:process execmem;
+	allow nova_cert_t self:process execmem;
+	allow nova_console_t self:process execmem;
+	allow nova_scheduler_t self:process execmem;
+')
+
+kernel_rw_net_sysctls(nova_network_t)
+dev_rw_vhost(nova_network_t)
+
+optional_policy(`
+        gen_require(`
+                type nova_t;
+                type httpd_config_t;
+                class dir search;
+                class process execmem;
+        ')
+        # bugzilla 1281547
+        allow nova_t httpd_config_t:dir search;
+        # bugzilla 1280101
+        allow nova_t self:process execmem;
+')

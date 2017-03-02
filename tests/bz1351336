@@ -1,0 +1,1 @@
+type=AVC msg=audit(1467223302.024:526): avc: denied { signull } for pid=21579 comm="keepalived" scontext=system_u:system_r:keepalived_t:s0 tcontext=system_u:system_r:NetworkManager_t:s0 tclass=process

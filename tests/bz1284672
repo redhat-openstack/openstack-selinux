@@ -1,0 +1,2 @@
+type=AVC msg=audit(1448300619.049:156): avc: denied { write } for pid=30790 comm="mysqld_safe" path="/tmp/tmp.3eZRnSANSZ" dev="sda2" ino=26429760 scontext=system_u:system_r:mysqld_safe_t:s0 tcontext=system_u:object_r:cluster_tmp_t:s0 tclass=file
+type=AVC msg=audit(1448300621.547:157): avc: denied { read } for pid=31659 comm="mysqld_safe" name="cores" dev="sda2" ino=26693278 scontext=system_u:system_r:mysqld_safe_t:s0 tcontext=unconfined_u:object_r:cluster_var_lib_t:s0 tclass=dir

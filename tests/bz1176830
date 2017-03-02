@@ -1,0 +1,1 @@
+type=AVC msg=audit(1419326478.236:14309): avc:  denied  { getattr } for  pid=32013 comm="neutron-ns-meta" name="/" dev="sysfs" ino=1 scontext=system_u:system_r:neutron_t:s0 tcontext=system_u:object_r:sysfs_t:s0 tclass=filesystem

@@ -1,0 +1,1 @@
+type=AVC msg=audit(1453889488.386:89570): avc: denied { execute } for pid=8553 comm="swift-object-re" name="rsync" dev="sda2" ino=2006949 scontext=system_u:system_r:swift_t:s0 tcontext=unconfined_u:object_r:rsync_exec_t:s0 tclass=file

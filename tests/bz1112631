@@ -1,0 +1,2 @@
+type=AVC msg=audit(1403597997.050:4426): avc:  denied  { name_connect } for  pid=9106 comm="glusterfs" dest=50023 scontext=system_u:system_r:glusterd_t:s0-s0:c0.c1023 tcontext=system_u:object_r:ephemeral_port_t:s0 tclass=tcp_socket
+type=AVC msg=audit(1403597997.056:4427): avc:  denied  { name_connect } for  pid=9106 comm="glusterfs" dest=50011 scontext=system_u:system_r:glusterd_t:s0-s0:c0.c1023 tcontext=system_u:object_r:ephemeral_port_t:s0 tclass=tcp_socket

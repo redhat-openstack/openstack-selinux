@@ -1,0 +1,33 @@
+policy_module(os-mysql,0.1)
+
+gen_require(`
+	type tram_port_t;
+	type rsync_exec_t;
+	type mysqld_t;
+	type nfs_t;
+	type mysqld_safe_exec_t;
+	type cluster_tmp_t;
+	type cluster_var_lib_t;
+	type mysqld_safe_t;
+	class tcp_socket name_connect;
+	class file { read getattr open execute execute_no_trans write };
+	class dir read;
+')
+
+# Bugzilla 1081544
+allow mysqld_t rsync_exec_t:file { read getattr open execute execute_no_trans };
+corenet_tcp_bind_tram_port(mysqld_t)
+corenet_tcp_connect_tram_port(mysqld_t)
+
+# Bugzilla 1114581
+allow mysqld_t nfs_t:dir search;
+
+# Bugzilla 1118859
+domain_read_all_domains_state(mysqld_t)
+files_search_pids(mysqld_t)
+files_getattr_all_sockets(mysqld_t)
+allow mysqld_t mysqld_safe_exec_t:file getattr;
+
+# Bugzilla 1284672
+allow mysqld_safe_t cluster_tmp_t:file write;
+allow mysqld_safe_t cluster_var_lib_t:dir read;

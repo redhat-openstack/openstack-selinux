@@ -1,0 +1,10 @@
+policy_module(os-ipxe,0.1)
+
+gen_require(`
+	type httpd_t;
+	type tftpdir_t;
+	class file { read getattr open };
+')
+
+# Bugzilla 1232892
+allow httpd_t tftpdir_t:file { read getattr open };

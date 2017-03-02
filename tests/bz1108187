@@ -1,0 +1,1 @@
+type=AVC msg=audit(1402493890.821:585): avc: denied { write } for pid=31594 comm="ovs-vsctl" path="/tmp/puppet20140611-31236-1adclaf" dev="dm-1" ino=101120987 scontext=system_u:system_r:openvswitch_t:s0 tcontext=system_u:object_r:init_tmp_t:s0 tclass=file

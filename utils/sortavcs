@@ -1,0 +1,58 @@
+#!/bin/bash
+
+if [ -n "$1" ] && [ -n "$2" ]; then
+    echo "Sorting" $1"!"
+else
+    echo "-------Sort AVCs-------" 
+    echo "Sort AVCs will remove duplicate AVCs from you audit.log so you can save them for the regression test in the /openstack-selinux/tests directory."
+    echo "Use the following format:"
+    echo "./sortavcs <file with AVCs> <bzXXXXXXXX>"
+    exit 1
+fi
+
+rm -f ~/openstack-selinux/tests/*~ ~/openstack-selinux/tests/*#
+
+path=~/openstack-selinux/tests/$2
+duplicate=$(ls ~/openstack-selinux/tests | grep -Fx $2)
+
+if [ "$duplicate" == "$2" ]; then
+    echo $path "already exists."
+    echo "Appending new policy to" $2
+else
+    echo "Created" $2 "in" $path
+    echo "----Removing duplicates----"
+fi
+
+declare -A avcs
+
+while read; do
+
+    LINE="$REPLY"
+    
+    # Optimization: if not type=AVC, we don't care
+    [[ $LINE =~ ^type=AVC ]] || continue
+
+    # Look for dest/path
+    [[ $LINE =~ [^\{]+\{\ (.*)\ \}.*comm=\"([^\"]*)\".*(dest=[0-9]+|path).*scontext=([^\ ]*)\ tcontext=([^\ ]*) ]]
+    HASH="${BASH_REMATCH[1]}.${BASH_REMATCH[2]}.${BASH_REMATCH[3]}.${BASH_REMATCH[4]}.${BASH_REMATCH[5]}"
+
+    # ... which isn't always there ... 
+    if [ "$HASH" = "...." ]; then
+        [[ $LINE =~ [^\{]+\{\ (.*)\ \}.*comm=\"([^\"]*)\".*scontext=([^\ ]*)\ tcontext=([^\ ]*) ]]
+        # XXX the trailing . is important for non-matches
+        HASH="${BASH_REMATCH[1]}.${BASH_REMATCH[2]}.${BASH_REMATCH[3]}.${BASH_REMATCH[4]}."
+    fi
+
+    [ "$HASH" = "...." ] && continue
+
+    if [ -z "${avcs[\"$HASH\"]}" ]; then
+	avcs[\"$HASH\"]="$LINE"
+    fi
+done < $1
+
+for x in "${!avcs[@]}"; do
+    echo ${avcs[$x]} >> $path
+done
+
+echo "----SUCCESS----"
+echo "AVCs are saved in ~/openstack-selinux/tests/"$2

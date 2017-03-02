@@ -1,0 +1,42 @@
+policy_module(os-keystone,0.1)
+
+gen_require(`
+        type httpd_t;
+        type keystone_log_t;
+        type keystone_t;
+        class file { create open };
+        class process signal;
+')
+
+allow keystone_t self:process signal;
+
+# Bugzilla 1180230
+allow httpd_t keystone_log_t:file open;
+corenet_tcp_bind_commplex_main_port(httpd_t)
+
+# Bugzilla 1223006
+allow httpd_t keystone_log_t:file create;
+keystone_manage_log(httpd_t)
+
+# Bugzilla 1327609
+corenet_tcp_connect_memcache_port(keystone_t)
+
+# Bugzilla 1249685 (execmem)
+gen_tunable(os_keystone_use_execmem, false)
+tunable_policy(`os_keystone_use_execmem',`
+	allow keystone_t self:process execmem;
+')
+
+optional_policy(`
+	gen_require(`
+		type keystone_cgi_script_exec_t;
+		type keystone_t;
+		class file { read getattr open };
+		class dir search;
+	')
+	# Bugzilla 1176842
+	allow keystone_t keystone_cgi_script_exec_t:file { read getattr open };
+
+	# Bugzilla 1181677
+	allow keystone_t keystone_cgi_script_exec_t:dir search;
+')

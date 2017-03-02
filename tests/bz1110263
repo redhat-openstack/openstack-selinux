@@ -1,0 +1,3 @@
+type=AVC msg=audit(1403470895.273:3249): avc:  denied  { connectto } for  pid=17966 comm="neutron-ns-meta" path="/var/lib/neutron/metadata_proxy" scontext=system_u:system_r:neutron_t:s0 tcontext=system_u:system_r:neutron_t:s0 tclass=unix_stream_socket
+type=AVC msg=audit(1404139653.265:1447): avc:  denied  { name_connect } for  pid=4151 comm="neutron-metadat" dest=9696 scontext=system_u:system_r:neutron_t:s0 tcontext=system_u:object_r:neutron_port_t:s0 tclass=tcp_socket
+type=AVC msg=audit(1404139758.268:1579): avc:  denied  { name_connect } for  pid=4151 comm="neutron-metadat" dest=8775 scontext=system_u:system_r:neutron_t:s0 tcontext=system_u:object_r:unreserved_port_t:s0 tclass=tcp_socket

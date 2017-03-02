@@ -1,0 +1,20 @@
+policy_module(os-rabbitmq,0.1)
+
+gen_require(`
+	type init_tmp_t;
+	type rabbitmq_epmd_t;
+	type rabbitmq_beam_t;
+	type rabbitmq_var_lib_t;
+	type systemd_logind_t;
+	type cluster_t;
+	class dbus send_msg;
+	class file write;
+')
+# Bugzilla 1185444
+allow systemd_logind_t cluster_t:dbus send_msg;
+
+# Bugzilla 1135637
+allow rabbitmq_epmd_t init_tmp_t:file write;
+
+# Bugzilla 1179040
+manage_lnk_files_pattern(rabbitmq_beam_t, rabbitmq_var_lib_t, rabbitmq_var_lib_t)

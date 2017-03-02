@@ -1,0 +1,121 @@
+policy_module(os-neutron, 0.1)
+
+gen_require(`
+	type neutron_t;
+	type neutron_var_lib_t;
+	type neutron_tmp_t;
+	type haproxy_exec_t;
+	type haproxy_t;
+	type httpd_config_t;
+	type ipsec_mgmt_exec_t;
+	type http_port_t;
+	type dnsmasq_t;
+	type proc_t;
+	type radvd_exec_t;
+	type modules_object_t;
+	type ipsec_key_file_t;
+	type keepalived_t;
+	type logrotate_t;
+	type nsfs_t;
+	class capability setpcap;
+	class key_socket { write read create };
+	class netlink_xfrm_socket { bind create nlmsg_write };
+	class process signal;
+	class netlink_socket { bind create getattr };
+	class file { read ioctl getattr execute open execute_no_trans };
+	class tcp_socket name_bind;
+	class unix_stream_socket connectto;
+	class dir search;
+	class netlink_selinux_socket create;
+')
+
+# Bugzilla 1357961
+corenet_tcp_bind_openflow_port(neutron_t)
+
+# Bugzilla 1180679
+allow neutron_t keepalived_t:process signal;
+
+# Bugzilla 1168526 & 1176830
+allow neutron_t radvd_exec_t:file { read open execute execute_no_trans };
+fs_getattr_all_fs(neutron_t)
+
+# Bugzilla 1180679
+neutron_domtrans(keepalived_t)
+
+# Bugzilla 1169859 & 1171460 & 1171458
+can_exec(neutron_t,neutron_var_lib_t)
+keepalived_domtrans(neutron_t)
+allow neutron_t self:netlink_socket { bind create getattr };
+
+# Bugzilla 1153656
+allow neutron_t dnsmasq_t:process sigkill;
+allow haproxy_t proc_t:file read;
+
+# Bugzilla 1110263 & 1111990
+allow neutron_t self:unix_stream_socket { accept listen connectto };
+corenet_tcp_connect_all_ports(neutron_t)
+
+# Bugzilla 1116755
+allow neutron_t haproxy_t:unix_stream_socket { accept listen connectto };
+
+# Bugzilla 1114254
+allow neutron_t haproxy_exec_t:file execute_no_trans;
+
+# Bugzilla 1135510
+allow neutron_t ipsec_mgmt_exec_t:file exec_file_perms;
+
+# Bugzilla 1144199
+allow neutron_t http_port_t:tcp_socket name_bind;
+
+# Bugzilla 1230900
+manage_sock_files_pattern(neutron_t, neutron_tmp_t, neutron_tmp_t)
+
+# Bugzilla 1245846
+allow neutron_t ipsec_key_file_t:file { read ioctl open getattr };
+allow neutron_t modules_object_t:file getattr;
+allow neutron_t self:capability setpcap;
+allow neutron_t self:key_socket { write read create };
+allow neutron_t self:netlink_xfrm_socket { bind create nlmsg_write };
+ipsec_exec_mgmt(neutron_t)
+ipsec_manage_key_file(neutron_t)
+ipsec_read_config(neutron_t)
+seutil_exec_restorecon(neutron_t)
+
+# Bugzilla 1280083
+allow neutron_t httpd_config_t:dir search;
+
+# Bugzilla 1284268
+corecmd_getattr_all_executables(neutron_t)
+
+# Bugzilla 1294420
+allow logrotate_t self:netlink_selinux_socket create;
+allow neutron_t radvd_exec_t:file getattr;
+
+
+optional_policy(`
+	require {
+		type neutron_t;
+		type haproxy_t;
+		type haproxy_exec_t;
+		type proc_t;
+		type neutron_var_lib_t;
+	}
+
+	domtrans_pattern(neutron_t, haproxy_exec_t, haproxy_t)
+
+	# Bugzilla 1114254
+	manage_files_pattern(haproxy_t, neutron_var_lib_t, neutron_var_lib_t)
+	manage_sock_files_pattern(haproxy_t, neutron_var_lib_t, neutron_var_lib_t)
+	# Bugzilla 1115724
+	allow neutron_t haproxy_t:process sigkill;
+	allow neutron_t proc_t:filesystem unmount;
+')
+
+# Bugzilla 1249685 (execmem)
+gen_tunable(os_neutron_use_execmem, false)
+tunable_policy(`os_neutron_use_execmem',`
+	allow neutron_t self:process execmem;
+')
+
+# Bugzilla 1419418
+allow neutron_t nsfs_t:file { open read };

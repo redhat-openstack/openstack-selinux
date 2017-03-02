@@ -1,0 +1,2 @@
+type=AVC msg=audit(1403718102.298:671): avc:  denied  { name_bind } for  pid=13262 comm="haproxy" src=5672 scontext=system_u:system_r:haproxy_t:s0 tcontext=system_u:object_r:amqp_port_t:s0 tclass=tcp_socket
+type=AVC msg=audit(1403718102.299:672): avc:  denied  { name_connect } for  pid=13263 comm="haproxy" dest=5672 scontext=system_u:system_r:haproxy_t:s0 tcontext=system_u:object_r:amqp_port_t:s0 tclass=tcp_socket

@@ -1,0 +1,1 @@
+2014-09-17 13:49:34 type=AVC msg=audit(1410961037.591:47785): avc:  denied  { read } for  pid=30253 comm="haproxy" name="filesystems" dev="proc" ino=4026532019 scontext=system_u:system_r:haproxy_t:s0 tcontext=system_u:object_r:proc_t:s0 tclass=file

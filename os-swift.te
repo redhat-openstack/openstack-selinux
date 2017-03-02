@@ -1,0 +1,31 @@
+policy_module(os-swift,0.1)
+
+gen_require(`
+	type swift_t;
+	type amqp_port_t;
+	type httpd_config_t;
+	type var_log_t;
+	class tcp_socket name_connect;
+	class file { open };
+')
+
+# Bugzilla 1105344
+corenet_tcp_connect_keystone_port(swift_t)
+corenet_tcp_connect_memcache_port(swift_t)
+allow swift_t httpd_config_t:dir search;
+
+# Bugzilla 1109087
+corenet_tcp_connect_xserver_port(swift_t)
+
+# Emergency tripleo fix
+allow swift_t var_log_t:file open;
+allow swift_t amqp_port_t:tcp_socket name_connect;
+
+# Bugzilla 1302312
+rsync_exec(swift_t)
+
+# Bugzilla 1249685 (execmem)
+gen_tunable(os_swift_use_execmem, false)
+tunable_policy(`os_swift_use_execmem',`
+	allow swift_t self:process execmem;
+')

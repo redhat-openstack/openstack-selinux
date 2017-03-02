@@ -1,0 +1,4 @@
+type=AVC msg=audit(1457378892.760:805): avc: denied { add_name } for pid=21776 comm="httpd" name="nova-api.log" scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:nova_log_t:s0 tclass=dir
+type=AVC msg=audit(1457378892.760:805): avc: denied { write } for pid=21776 comm="httpd" name="nova" dev="vda1" ino=310432274 scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:nova_log_t:s0 tclass=dir
+type=AVC msg=audit(1457378892.760:805): avc: denied { create } for pid=21776 comm="httpd" name="nova-api.log" scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:nova_log_t:s0 tclass=file
+type=AVC msg=audit(1457450838.6:501): avc: denied { name_bind } for pid=23197 comm="httpd" src=8774 scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:osapi_compute_port_t:s0 tclass=tcp_socket

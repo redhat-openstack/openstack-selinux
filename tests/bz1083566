@@ -1,0 +1,1 @@
+type=AVC msg=audit(1398155507.427:1096): avc: denied { read } for pid=6960 comm="sudo" name="utmp" dev="tmpfs" ino=18497 scontext=system_u:system_r:nova_network_t:s0 tcontext=system_u:object_r:initrc_var_run_t:s0 tclass=file
