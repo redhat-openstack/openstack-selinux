@@ -50,6 +50,9 @@ install_policies() {
 	# bz#1360434
 	$SBINDIR/semanage port -N -m -t http_port_t -p tcp 8088 &> /dev/null
 
+	# bz#1396553
+	$SBINDIR/semanage port -m -t http_port_t -p tcp 8000 &> /dev/null
+
 	#
 	# Booleans & file contexts
 	#
