@@ -3,7 +3,7 @@ for EL6 and EL7 and derivatives.  Each release has its
 own corresponsing branch.
 
 Branch    Operating System
- el7      Red Hat Enterprise Linux 7, CentOS 7, and related
+ master   Red Hat Enterprise Linux 7, CentOS 7, and related
  el6      Red Hat Enterprise Linux 6, CentOS 6, and related
 
 The policies here are not designed to replace - but augment -
