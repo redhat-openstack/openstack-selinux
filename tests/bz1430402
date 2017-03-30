@@ -1,0 +1,5 @@
+type=AVC msg=audit(1490708508.568:4786): avc: denied { search } for pid=428106 comm="nova-api" name="my.cnf.d" dev="vda2" ino=866 scontext=system_u:system_r:nova_t:s0 tcontext=system_u:object_r:mysqld_etc_t:s0 tclass=dir
+type=AVC msg=audit(1490708839.879:4915): avc: denied { search } for pid=470231 comm="nova-scheduler" name="my.cnf.d" dev="vda2" ino=866 scontext=system_u:system_r:nova_t:s0 tcontext=system_u:object_r:mysqld_etc_t:s0 tclass=dir
+type=AVC msg=audit(1490708833.260:4883): avc: denied { search } for pid=470038 comm="nova-conductor" name="my.cnf.d" dev="vda2" ino=866 scontext=system_u:system_r:nova_t:s0 tcontext=system_u:object_r:mysqld_etc_t:s0 tclass=dir
+type=AVC msg=audit(1490709327.031:5296): avc: denied { search } for pid=430212 comm="glance-api" name="my.cnf.d" dev="vda2" ino=866 scontext=system_u:system_r:glance_api_t:s0 tcontext=system_u:object_r:mysqld_etc_t:s0 tclass=dir
+type=AVC msg=audit(1490708842.508:4919): avc: denied { search } for pid=470319 comm="nova-consoleaut" name="my.cnf.d" dev="vda2" ino=866 scontext=system_u:system_r:nova_t:s0 tcontext=system_u:object_r:mysqld_etc_t:s0 tclass=dir

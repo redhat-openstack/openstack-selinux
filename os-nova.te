@@ -1,6 +1,7 @@
 policy_module(os-nova,0.1)
 
 gen_require(`
+        type nova_t;
         type nova_network_t;
 	type nova_var_lib_t;
 	type nova_api_t;
@@ -106,4 +107,9 @@ optional_policy(`
         allow nova_t httpd_config_t:dir search;
         # bugzilla 1280101
         allow nova_t self:process execmem;
+')
+
+# Bug 1430402
+optional_policy(`
+	mysql_read_config(nova_t)
 ')

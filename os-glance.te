@@ -60,3 +60,8 @@ optional_policy(`
 	# bugzilla 1192644
 	allow glance_api_t elasticsearch_port_t:tcp_socket name_bind;
 ')
+
+# Bug 1430402
+optional_policy(`
+	mysql_read_config(glance_api_t)
+')
