@@ -1,0 +1,1 @@
+/var/lib/vhost_sockets(/.*)?        gen_context(system_u:object_r:virt_cache_t,s0)
