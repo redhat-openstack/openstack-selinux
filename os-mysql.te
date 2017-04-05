@@ -29,5 +29,6 @@ files_getattr_all_sockets(mysqld_t)
 allow mysqld_t mysqld_safe_exec_t:file getattr;
 
 # Bugzilla 1284672
-allow mysqld_safe_t cluster_tmp_t:file write;
+# Bugzilla 1439182
+allow mysqld_safe_t cluster_tmp_t:file { setattr write_file_perms };
 allow mysqld_safe_t cluster_var_lib_t:dir read;
