@@ -21,6 +21,7 @@ gen_require(`
 	class tun_socket create;
 	class chr_file open;
 	class netlink_generic_socket create_socket_perms;
+        class packet_socket create_socket_perms;
 
 ')
 
@@ -81,4 +82,14 @@ optional_policy(`
 
 optional_policy(`
     virt_manage_images(openvswitch_t)
+')
+
+# bugzilla #1431556
+allow openvswitch_t self:packet_socket create_socket_perms;
+allow openvswitch_t self:capability net_raw;
+optional_policy(`
+    gen_require(`
+        type neutron_t;
+    ')
+    allow openvswitch_t neutron_t:dir search;
 ')

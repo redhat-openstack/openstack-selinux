@@ -1,0 +1,5 @@
+type=AVC msg=audit(1491476260.819:468): avc:  denied  { net_raw } for  pid=16208 comm="ovs-vswitchd" capability=13  scontext=system_u:system_r:openvswitch_t:s0 tcontext=system_u:system_r:openvswitch_t:s0 tclass=capability
+type=AVC msg=audit(1491476260.819:469): avc:  denied  { setopt } for  pid=16208 comm="ovs-vswitchd" scontext=system_u:system_r:openvswitch_t:s0 tcontext=system_u:system_r:openvswitch_t:s0 tclass=packet_socket
+type=AVC msg=audit(1491476260.819:470): avc:  denied  { bind } for  pid=16208 comm="ovs-vswitchd" scontext=system_u:system_r:openvswitch_t:s0 tcontext=system_u:system_r:openvswitch_t:s0 tclass=packet_socket
+type=AVC msg=audit(1491476260.819:468): avc:  denied  { create } for  pid=16208 comm="ovs-vswitchd" scontext=system_u:system_r:openvswitch_t:s0 tcontext=system_u:system_r:openvswitch_t:s0 tclass=packet_socket
+type=AVC msg=audit(1491471288.799:211): avc:  denied  { search } for  pid=16454 comm="ovs-vsctl" name="16445" dev="proc" ino=122913 scontext=system_u:system_r:openvswitch_t:s0 tcontext=system_u:system_r:neutron_t:s0 tclass=dir
