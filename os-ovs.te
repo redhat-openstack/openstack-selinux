@@ -15,6 +15,8 @@ gen_require(`
 	type unreserved_port_t;
 	type init_tmp_t;
 	type tun_tap_device_t;
+	type svirt_t;
+	type virt_cache_t;
 	class dir search;
 	class file { write read getattr open };
 	class tcp_socket name_bind;
@@ -75,6 +77,10 @@ sysnet_exec_ifconfig(openvswitch_t)
 
 # bugzilla #1419418
 allow openvswitch_t self:netlink_generic_socket create_socket_perms;
+
+# bugzilla #1431556
+allow openvswitch_t virt_cache_t:sock_file manage_sock_file_perms;
+allow svirt_t virt_cache_t:sock_file manage_sock_file_perms;
 
 optional_policy(`
     hostname_exec(openvswitch_t)
