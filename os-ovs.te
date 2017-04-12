@@ -78,6 +78,7 @@ sysnet_exec_ifconfig(openvswitch_t)
 allow openvswitch_t self:netlink_generic_socket create_socket_perms;
 
 # bugzilla #1431556
+allow openvswitch_t virt_cache_t:dir list_dir_perms;
 allow openvswitch_t virt_cache_t:sock_file manage_sock_file_perms;
 allow svirt_t virt_cache_t:sock_file manage_sock_file_perms;
 
