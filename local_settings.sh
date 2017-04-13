@@ -76,6 +76,7 @@ install_policies() {
 	fcontext -N -a -t named_zone_t \"$SHAREDSTATEDIR/designate/bind9(/.*)?\"
 	fcontext -N -a -t virt_cache_t \"$SHAREDSTATEDIR/vhost_sockets(/.*)?\"
 	fcontext -N -a -t httpd_var_lib_t $SHAREDSTATEDIR/openstack-dashboard
+        fcontext -N -a -t mongod_var_lib_t \"$SHAREDSTATEDIR/mongodb(/.*)?\"
 	fcontext -N -a -t httpd_log_t $LOCALSTATEDIR/log/gnocchi/app.log
 	fcontext -N -a -t httpd_log_t $LOCALSTATEDIR/log/aodh/app.log
 	fcontext -N -a -t httpd_log_t $LOCALSTATEDIR/log/ceilometer/app.log
