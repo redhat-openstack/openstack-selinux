@@ -89,6 +89,7 @@ optional_policy(`
 
 optional_policy(`
     virt_manage_images(openvswitch_t)
+    virt_stream_connect_svirt(openvswitch_t)
 ')
 
 # bugzilla #1431556
