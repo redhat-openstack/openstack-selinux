@@ -73,6 +73,7 @@ install_policies() {
 	boolean -N -m --on httpd_can_network_connect
 	boolean -N -m --on swift_can_network
 	boolean -N -m --on httpd_use_openstack
+	boolean -N -m --on collectd_tcp_network_connect
 	fcontext -N -a -t named_zone_t \"$SHAREDSTATEDIR/designate/bind9(/.*)?\"
 	fcontext -N -a -t virt_cache_t \"$SHAREDSTATEDIR/vhost_sockets(/.*)?\"
 	fcontext -N -a -t httpd_var_lib_t $SHAREDSTATEDIR/openstack-dashboard
