@@ -1,3 +1,0 @@
-type=AVC msg=audit(1441204057.176:32748): avc: denied { name_connect } for pid=23947 comm="ovsdb-server" dest=6632 scontext=system_u:system_r:openvswitch_t:s0 tcontext=system_u:object_r:unreserved_port_t:s0 tclass=tcp_socket
-type=AVC msg=audit(1441204364.388:32861): avc: denied { getattr } for pid=23982 comm="system_stats4" path="/srv/node/swiftloopback" dev="loop0" ino=2 scontext=system_u:system_r:openvswitch_t:s0 tcontext=system_u:object_r:swift_data_t:s0 tclass=dir
-type=AVC msg=audit(1441204354.383:32858): avc: denied { search } for pid=23982 comm="system_stats4" name="node" dev="sda1" ino=42410035 scontext=system_u:system_r:openvswitch_t:s0 tcontext=system_u:object_r:swift_data_t:s0 tclass=dir

@@ -32,14 +32,14 @@ gen_require(`
 allow openvswitch_t init_tmp_t:file write;
 
 # Bugzilla 1231868
-allow openvswitch_t sysctl_net_t:dir search;
-allow openvswitch_t sysctl_net_t:file { read getattr open };
+# allow openvswitch_t sysctl_net_t:dir search;
+# allow openvswitch_t sysctl_net_t:file { read getattr open };
 
 # Bugzilla 1233154
-allow openvswitch_t unreserved_port_t:tcp_socket name_bind;
+# allow openvswitch_t unreserved_port_t:tcp_socket name_bind;
 
 # Bugzilla 1259419
-corenet_tcp_connect_unreserved_ports(openvswitch_t)
+# corenet_tcp_connect_unreserved_ports(openvswitch_t)
 swift_manage_data_files(openvswitch_t)
 
 # Bugzilla 1284268
@@ -51,10 +51,10 @@ allow openvswitch_t tun_tap_device_t:chr_file open;
 corenet_tcp_bind_ovsdb_port(openvswitch_t)
 
 # Bugzilla 1310383
-corenet_tcp_connect_reserved_port(openvswitch_t)
+# corenet_tcp_connect_reserved_port(openvswitch_t)
 
 # Bugzilla 1334732
-corenet_tcp_connect_openvswitch_port(openvswitch_t)
+# corenet_tcp_connect_openvswitch_port(openvswitch_t)
 
 # Bugzilla 1372453
 corenet_tcp_connect_vnc_port(openvswitch_t)

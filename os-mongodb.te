@@ -5,4 +5,4 @@ gen_require(`
 ')
 
 # Bugzilla 1192049
-allow mongod_t self:process execmem;
+# allow mongod_t self:process execmem;

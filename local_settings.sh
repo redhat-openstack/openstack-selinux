@@ -40,7 +40,8 @@ install_policies() {
 	# Port rules
 	#
 	# bz#1107873
-	$SBINDIR/semanage port -N -a -t amqp_port_t -p tcp 15672 &> /dev/null
+	# Part of base policy - 09-May-2017
+	# $SBINDIR/semanage port -N -a -t amqp_port_t -p tcp 15672 &> /dev/null
 
 	# bz#1118859
 	$SBINDIR/semanage port -N -m -t mysqld_port_t -p tcp 4444 &> /dev/null
@@ -83,9 +84,6 @@ install_policies() {
 	fcontext -N -a -t httpd_log_t $LOCALSTATEDIR/log/ceilometer/app.log
 	fcontext -N -a -t httpd_log_t $LOCALSTATEDIR/log/panko/app.log
 	fcontext -N -a -t neutron_exec_t $BINDIR/neutron-rootwrap-daemon
-	fcontext -N -a -t neutron_exec_t $BINDIR/neutron-metadata-agent
-	fcontext -N -a -t neutron_exec_t $BINDIR/neutron-netns-cleanup
-	fcontext -N -a -t neutron_exec_t $BINDIR/neutron-ns-metadata-proxy
 	fcontext -N -a -t neutron_exec_t $BINDIR/neutron-vpn-agent"
 
 	#

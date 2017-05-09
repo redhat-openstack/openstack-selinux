@@ -35,9 +35,10 @@ allow keepalived_t self:capability dac_override;
 allow keepalived_t neutron_t:process sigkill;
 
 # Bugzilla 1145886
-domain_read_all_domains_state(keepalived_t)
-allow keepalived_t haproxy_t:process signull;
-allow keepalived_t self:capability kill;
+# No longer needed - 09-May-2017
+# domain_read_all_domains_state(keepalived_t)
+# allow keepalived_t haproxy_t:process signull;
+# allow keepalived_t self:capability kill;
 
 # Bugzilla 1206148
 allow keepalived_t sysfs_t:filesystem getattr;

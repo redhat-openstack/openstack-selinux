@@ -1,5 +1,4 @@
-type=AVC msg=audit(1479734070.102:28): avc:  denied  { read write } for  pid=1232 comm="ovs-vswitchd" name="vfio" dev="devtmpfs" ino=34881 scontext=system_u:system_r:openvswitch_t:s0 tcontext=system_u:ob
-ject_r:vfio_device_t:s0 tclass=chr_file
+type=AVC msg=audit(1479734070.102:28): avc:  denied  { read write } for  pid=1232 comm="ovs-vswitchd" name="vfio" dev="devtmpfs" ino=34881 scontext=system_u:system_r:openvswitch_t:s0 tcontext=system_u:object_r:vfio_device_t:s0 tclass=chr_file
 type=AVC msg=audit(1479734082.245:30): avc:  denied  { connectto } for  pid=1302 comm="plymouth" path=002F6F72672F667265656465736B746F702F706C796D6F75746864 scontext=system_u:system_r:openvswitch_t:s0 tcontext=system_u:system_r:kernel_t:s0 tclass=unix_stream_socket
 type=AVC msg=audit(1479734839.323:28): avc:  denied  { open } for  pid=1232 comm="ovs-vswitchd" path="/dev/vfio/vfio" dev="devtmpfs" ino=26699 scontext=system_u:system_r:openvswitch_t:s0 tcontext=system_u:object_r:vfio_device_t:s0 tclass=chr_file
 type=AVC msg=audit(1479735230.962:28): avc:  denied  { ioctl } for  pid=1236 comm="ovs-vswitchd" path="/dev/vfio/vfio" dev="devtmpfs" ino=22693 scontext=system_u:system_r:openvswitch_t:s0 tcontext=system_u:object_r:vfio_device_t:s0 tclass=chr_file

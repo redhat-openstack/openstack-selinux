@@ -13,8 +13,9 @@ gen_require(`
 ')
 
 # Bugzilla 1135637
+# These are no longer needed - 05-may-2017
 allow rsync_t etc_runtime_t:file relabelto;
 allow rsync_t etc_t:file relabelfrom;
-allow rsync_t cert_t:file { relabelfrom relabelto };
+# allow rsync_t cert_t:file { relabelfrom relabelto };
 allow rsync_t cert_t:dir { relabelfrom relabelto };
 allow load_policy_t init_t:fifo_file write;
