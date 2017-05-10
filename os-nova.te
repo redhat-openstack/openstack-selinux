@@ -8,11 +8,9 @@ gen_require(`
 	type nova_scheduler_t;
 	type nova_console_t;
 	type nova_cert_t;
-	type sssd_var_lib_t;
 	type cert_t;
 	type nova_log_t;
 	type httpd_t;
-	type tmpfs_t;
 	type netutils_exec_t;
 	type virtd_t;
 	type svirt_t;
@@ -31,9 +29,6 @@ gen_require(`
 # Bugzilla 1181428
 iscsid_domtrans(virtd_t);
 
-# Bugzilla 1180373
-# allow nova_network_t self:key write;
-
 # Bugzilla 1170839
 allow nova_network_t netutils_exec_t:file { read execute open execute_no_trans };
 allow nova_network_t self:packet_socket { bind create getattr };
@@ -41,11 +36,6 @@ netutils_domtrans(nova_network_t)
 
 # Bugzilla 1149975
 allow nova_scheduler_t cert_t:dir search;
-
-# Bugzilla 1162761 and 1158213
-# corenet_tcp_connect_memcache_port(nova_console_t)
-# corenet_tcp_connect_memcache_port(nova_scheduler_t)
-# corenet_tcp_connect_memcache_port(nova_cert_t)
 
 # from upstream - Bugzilla 1107861
 auth_read_passwd(nova_domain)
@@ -56,25 +46,12 @@ init_read_utmp(nova_domain)
 allow nova_network_t self:capability { net_raw sys_ptrace kill };
 allow nova_network_t self:capability2 block_suspend;
 
-# Bugzilla 1083566
-# 09-May-2017 - provided by base policy
-# allow nova_network_t initrc_var_run_t:file read;
-
-# Bugzilla 1135510
-# 09-May-2017 - provided by base policy
-# allow nova_api_t sssd_var_lib_t:sock_file write;
-# allow nova_scheduler_t cert_t:file { read getattr open };
-
 # Bugzilla 1210271
 allow svirt_t nova_var_lib_t:lnk_file read;
 
 # Bugzilla 1211628
 allow svirt_t nova_var_lib_t:file write;
 allow svirt_tcg_t nova_var_lib_t:file write;
-
-# Bugzilla 1134617
-# 09-May-2017 No longer needed
-# allow nova_api_t tmpfs_t:filesystem getattr;
 
 # Bugzilla 1315457
 allow httpd_t nova_log_t:dir { add_name write };

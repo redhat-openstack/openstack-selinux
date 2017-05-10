@@ -48,22 +48,7 @@ keepalived_domtrans(neutron_t)
 allow neutron_t self:netlink_socket { bind create getattr };
 
 # Bugzilla 1153656
-# No longer needed - 09-May-2017
-# allow neutron_t dnsmasq_t:process sigkill;
 allow haproxy_t proc_t:file read;
-
-# Bugzilla 1110263 & 1111990
-# Allowed by base policy - 9-May-2017
-# allow neutron_t self:unix_stream_socket { accept listen connectto };
-# corenet_tcp_connect_all_ports(neutron_t)
- 
-# Bugzilla 1116755
-# 9-May-2017 - no longer needed
-# allow neutron_t haproxy_t:unix_stream_socket { accept listen connectto };
-
-# Bugzilla 1114254
-# 9-May-2017 - no longer needed
-# allow neutron_t haproxy_exec_t:file execute_no_trans;
 
 # Bugzilla 1135510
 allow neutron_t ipsec_mgmt_exec_t:file exec_file_perms;
@@ -92,7 +77,6 @@ allow neutron_t httpd_config_t:dir search;
 corecmd_getattr_all_executables(neutron_t)
 
 # Bugzilla 1294420
-# allow logrotate_t self:netlink_selinux_socket create;
 allow neutron_t radvd_exec_t:file getattr;
 
 

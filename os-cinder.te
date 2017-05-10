@@ -2,10 +2,8 @@ policy_module(os-cinder,0.1)
 
 gen_require(`
         type cinder_log_t;
-        type httpd_t;
-        type iscsid_exec_t;
-        type iscsid_t;
         type cinder_backup_t;
+        type httpd_t;
         class file { open create };
         class dir { add_name write };
 ')

@@ -2,7 +2,6 @@ policy_module(os-keepalived,0.1)
 
 gen_require(`
 	type keepalived_t;
-	type haproxy_t;
 	type neutron_var_lib_t;
 	type var_log_t;
 	type cloud_var_lib_t;
@@ -33,12 +32,6 @@ allow keepalived_t var_lib_t:file { read getattr open };
 allow keepalived_t var_log_t:file open;
 allow keepalived_t self:capability dac_override;
 allow keepalived_t neutron_t:process sigkill;
-
-# Bugzilla 1145886
-# No longer needed - 09-May-2017
-# domain_read_all_domains_state(keepalived_t)
-# allow keepalived_t haproxy_t:process signull;
-# allow keepalived_t self:capability kill;
 
 # Bugzilla 1206148
 allow keepalived_t sysfs_t:filesystem getattr;

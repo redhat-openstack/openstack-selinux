@@ -39,9 +39,6 @@ install_policies() {
 	#
 	# Port rules
 	#
-	# bz#1107873
-	# Part of base policy - 09-May-2017
-	# $SBINDIR/semanage port -N -a -t amqp_port_t -p tcp 15672 &> /dev/null
 
 	# bz#1118859
 	$SBINDIR/semanage port -N -m -t mysqld_port_t -p tcp 4444 &> /dev/null
