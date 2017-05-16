@@ -1,0 +1,3 @@
+type=AVC msg=audit(1494905982.458:2181): avc:  denied  { open } for  pid=7404 comm="ovs-vsctl" path="/proc/7357/cmdline" dev="proc" ino=216884 scontext=system_u:system_r:openvswitch_t:s0 tcontext=system_u:system_r:neutron_t:s0 tclass=file
+type=AVC msg=audit(1494905982.458:2182): avc:  denied  { getattr } for  pid=7404 comm="ovs-vsctl" path="/proc/7357/cmdline" dev="proc" ino=216884 scontext=system_u:system_r:openvswitch_t:s0 tcontext=system_u:system_r:neutron_t:s0 tclass=file
+type=AVC msg=audit(1494905982.458:2182): avc:  denied  { read } for  pid=7404 comm="ovs-vsctl" path="/proc/7357/cmdline" dev="proc" ino=216884 scontext=system_u:system_r:openvswitch_t:s0 tcontext=system_u:system_r:neutron_t:s0 tclass=file
