@@ -37,18 +37,19 @@ for f in $TEST_FILES; do
 		# that the openstack-selinux policies are installed and
 		# loaded, or you will receive false failures.
 		#
-		if audit2why -i $TMP | grep -q 'Missing type'; then
-			echo Failed on $f with the following AVC:
-			#
-			# An optimization could be to call audit2why only
-			# once (and check that output above), but this is
-			# an error path we hope to not hit very often.
-			#
-			audit2why -i $TMP
-			((failed++))
-		else
+		if audit2why -i $TMP | grep -q -e 'Unknown - '; then
 			((passed++))
+			continue
 		fi
+
+		echo Failed on $f with the following AVC:
+		#
+		# An optimization could be to call audit2why only
+		# once (and check that output above), but this is
+		# an error path we hope to not hit very often.
+		#
+		audit2why -i $TMP
+		((failed++))
 	done < $f
 done
 
