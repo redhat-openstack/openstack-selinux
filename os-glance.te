@@ -22,7 +22,6 @@ allow glance_api_t nfs_t:dir { search getattr write remove_name create add_name 
 allow glance_api_t nfs_t:file { write getattr unlink open create };
 allow glance_registry_t nfs_t:dir search;
 
-
 # Bugzilla 1210271
 allow glance_registry_t glance_var_lib_t:lnk_file read;
 allow glance_api_t glance_var_lib_t:lnk_file read;
@@ -31,7 +30,7 @@ allow glance_registry_t var_lib_t:lnk_file read;
 
 # Bugzilla 1145802
 allow glance_api_t nfs_t:dir getattr;
-
+ 
 # Bugzilla 1306525
 corenet_tcp_connect_commplex_main_port(glance_registry_t)
 

@@ -1,0 +1,1 @@
+type=AVC msg=audit(1495149503.842:3417): avc:  denied  { name_connect } for  pid=24486 comm="glance-api" dest=35357 scontext=system_u:system_r:glance_api_t:s0 tcontext=system_u:object_r:keystone_port_t:s0 tclass=tcp_socket

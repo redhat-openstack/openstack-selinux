@@ -57,6 +57,8 @@ install_policies() {
 	#
 	CR=$'\n'
 	INPUT="boolean -N -m --on virt_use_fusefs
+	boolean -N -m --on glance_api_can_network
+	boolean -N -m --on neutron_can_network
 	boolean -N -m --on glance_use_fusefs
 	boolean -N -m --on haproxy_connect_any
 	boolean -N -m --on nis_enabled
