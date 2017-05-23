@@ -93,7 +93,7 @@ optional_policy(`
 #
 # ovs-vsctl tries to read /proc/[ppid]/cmdline in order to
 # Print debugging information. Allowing OVS to read all of
-# neutron_t labeled files so the parent's cmdline can be 
-# printed is not worth this information at this time 
+# neutron_t labeled files so the parent's cmdline can be
+# printed is not worth this information at this time
 #
 dontaudit openvswitch_t neutron_t:file { read open getattr };

@@ -7,9 +7,9 @@
 if [ -n "$1" ] && [ -n "$2" ]; then
     echo "Using" $1 "and" $2"!"
 else
-    echo "-------Openstack-selinux policy test-------" 
+    echo "-------Openstack-selinux policy test-------"
     echo "Use the following format:"
-    echo "./testpolicy.sh <audit.log file> <Output of audit2allow on your audit.log>" 
+    echo "./testpolicy.sh <audit.log file> <Output of audit2allow on your audit.log>"
     exit 1
 fi
 

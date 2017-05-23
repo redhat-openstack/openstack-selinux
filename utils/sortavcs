@@ -3,7 +3,7 @@
 if [ -n "$1" ] && [ -n "$2" ]; then
     echo "Sorting" $1"!"
 else
-    echo "-------Sort AVCs-------" 
+    echo "-------Sort AVCs-------"
     echo "Sort AVCs will remove duplicate AVCs from you audit.log so you can save them for the regression test in the /openstack-selinux/tests directory."
     echo "Use the following format:"
     echo "./sortavcs <file with AVCs> <bzXXXXXXXX>"
@@ -28,7 +28,7 @@ declare -A avcs
 while read; do
 
     LINE="$REPLY"
-    
+
     # Optimization: if not type=AVC, we don't care
     [[ $LINE =~ ^type=AVC ]] || continue
 
@@ -36,7 +36,7 @@ while read; do
     [[ $LINE =~ [^\{]+\{\ (.*)\ \}.*comm=\"([^\"]*)\".*(dest=[0-9]+|path).*scontext=([^\ ]*)\ tcontext=([^\ ]*) ]]
     HASH="${BASH_REMATCH[1]}.${BASH_REMATCH[2]}.${BASH_REMATCH[3]}.${BASH_REMATCH[4]}.${BASH_REMATCH[5]}"
 
-    # ... which isn't always there ... 
+    # ... which isn't always there ...
     if [ "$HASH" = "...." ]; then
         [[ $LINE =~ [^\{]+\{\ (.*)\ \}.*comm=\"([^\"]*)\".*scontext=([^\ ]*)\ tcontext=([^\ ]*) ]]
         # XXX the trailing . is important for non-matches
