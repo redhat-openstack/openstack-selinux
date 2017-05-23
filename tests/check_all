@@ -11,56 +11,82 @@
 export LANG=C
 
 TMP=$(mktemp /tmp/openstack-selinux-test.XXXXXX)
+rm -f $TMP
+mkdir -p $TMP
 
 PWD=$(pwd)
 cd "$(dirname $0)"
 
 TEST_FILES=$(/bin/ls -1 bz*)
+TEST_INPUT=$TMP/input
+TEST_OUTPUT=$TMP/output
+TEST_FAIL=$TMP/failed_tests
+TEST_FAIL_INFO=$TMP/failed_info
 
 passed=0
 failed=0
 
+rm -f $TEST_INPUT
+touch $TEST_INPUT
 for f in $TEST_FILES; do
-        echo "CHECKING:" $f
-	totalAVC=$(grep -s -c "type=AVC" $f)
-	count=0
-	while read; do
-	        ((count++))
-		echo "("$count"/"$totalAVC")"
-
-		# Copy our individual AVC line to our temp file.
-		echo "$REPLY" > $TMP
-
-		#
-		# Ensure that the AVC does not generate a 'Missing type
-		# enforcement' error message from audit2why.  This requires
-		# that the openstack-selinux policies are installed and
-		# loaded, or you will receive false failures.
-		#
-		if audit2why -i $TMP | grep -q -e 'Unknown - '; then
-			((passed++))
-			continue
-		fi
-
-		echo Failed on $f with the following AVC:
-		#
-		# An optimization could be to call audit2why only
-		# once (and check that output above), but this is
-		# an error path we hope to not hit very often.
-		#
-		audit2why -i $TMP
-		((failed++))
-	done < $f
+	grep '^type=AVC' $f >> $TEST_INPUT
 done
+
+totalAVC=$(wc -l $TEST_INPUT)
+audit2why -i $TEST_INPUT > $TEST_OUTPUT
+
+cat > $TMP/check.awk << EOT
+BEGIN {
+	working = 0
+	last_line = ""
+}
+
+/^type=AVC/ {
+	if (working == 1) {
+		print last_line
+		last_line = ""
+		working = 0
+	}
+	working = 1
+	last_line=\$0
+}
+
+/Unknown -/ {
+	working = 0
+	last_line = ""
+}
+
+END {
+	if (working == 1) {
+		working = 0
+		print last_line
+	}
+}
+EOT
+
+awk -f $TMP/check.awk $TEST_OUTPUT > $TEST_FAIL
+
+while read; do
+	((failed++))
+	grep -n "$REPLY" $TEST_FILES
+	# echo "$REPLY" | audit2why | grep -v '$REPLY'
+done < $TEST_FAIL
+
+if [ $failed -ne 0 ]; then
+	audit2why -i $TEST_FAIL > $TEST_FAIL_INFO
+fi
 
 cd "$PWD"
 
-echo Results: $passed passed, $failed failed
+echo Results: ${totalAVC/ */} total, $failed failed
 echo -n "Overall result: "
 if [ $failed -ne 0 ]; then
 	echo FAIL
+	echo Check $TEST_FAIL_INFO for more information
 	exit 1
 fi
+
+rm -rf $TMP
 
 echo PASS
 exit 0
