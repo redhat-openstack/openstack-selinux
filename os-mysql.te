@@ -6,6 +6,9 @@ gen_require(`
 	type mysqld_t;
 	type nfs_t;
 	type mysqld_safe_exec_t;
+	type cluster_tmp_t;
+	type cluster_var_lib_t;
+	type mysqld_safe_t;
 	class tcp_socket name_connect;
 	class file { read getattr open execute execute_no_trans write };
 	class dir read;
@@ -20,3 +23,9 @@ corenet_tcp_connect_tram_port(mysqld_t)
 
 # Bugzilla 1118859
 allow mysqld_t mysqld_safe_exec_t:file getattr;
+
+# Bugzilla 1284672
+# Bugzilla 1439182
+# Bugzilla 1464114
+allow mysqld_safe_t cluster_tmp_t:file { setattr write_file_perms };
+allow mysqld_safe_t cluster_var_lib_t:dir read;

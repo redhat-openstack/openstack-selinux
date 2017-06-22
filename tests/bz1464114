@@ -1,0 +1,2 @@
+bz1464114:1:type=AVC msg=audit(1498082689.658:317): avc:  denied  { open } for  pid=24495 comm="touch" path="/tmp/tmp.cgvP0Qe4oc" dev="vda2" ino=910 scontext=system_u:system_r:mysqld_safe_t:s0 tcontext=system_u:object_r:cluster_tmp_t:s0 tclass=file
+bz1464114:2:type=AVC msg=audit(1498082689.659:318): avc:  denied  { setattr } for  pid=24496 comm="chown" name="tmp.cgvP0Qe4oc" dev="vda2" ino=910 scontext=system_u:system_r:mysqld_safe_t:s0 tcontext=system_u:object_r:cluster_tmp_t:s0 tclass=file
