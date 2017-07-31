@@ -8,7 +8,7 @@ gen_require(`
 	type var_lib_t;
 	type nfs_t;
 	class dir { write getattr remove_name create add_name };
-	class file { write getattr unlink open create };
+	class file { write getattr unlink open create read};
 	class lnk_file read;
 	type sudo_exec_t;
 	class file { execute };
@@ -19,7 +19,7 @@ corenet_tcp_connect_memcache_port(glance_registry_t)
 
 # Bugzilla 1219406
 allow glance_api_t nfs_t:dir { search getattr write remove_name create add_name };
-allow glance_api_t nfs_t:file { write getattr unlink open create };
+allow glance_api_t nfs_t:file { write getattr unlink open create read };
 allow glance_registry_t nfs_t:dir search;
 
 # Bugzilla 1210271
