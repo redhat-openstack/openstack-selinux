@@ -1,0 +1,1 @@
+type=AVC msg=audit(1499805908.280:4362): avc:  denied  { setpgid } for  pid=16339 comm="keepalived" scontext=system_u:system_r:keepalived_t:s0 tcontext=system_u:system_r:keepalived_t:s0 tclass=process
