@@ -116,6 +116,7 @@ install_policies() {
 		setsebool -P os_neutron_use_execmem on
 		setsebool -P os_swift_use_execmem on
 		setsebool -P os_keystone_use_execmem on
+		setsebool -P os_glance_use_sudo on
 
 		relabel_files
 	fi

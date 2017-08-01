@@ -5,6 +5,9 @@ gen_require(`
 	type glance_registry_t;
 	type glance_var_lib_t;
 	type glance_tmp_t;
+	type fixed_disk_device_t;
+	type init_t;
+	type sysfs_t;
 	type var_lib_t;
 	type nfs_t;
 	class dir { write getattr remove_name create add_name };
@@ -52,4 +55,25 @@ optional_policy(`
 # Bug 1430402
 optional_policy(`
 	mysql_read_config(glance_api_t)
+')
+
+#
+# Bug 1475378
+# Bug 1447779
+# XXX
+# Stolen from the Nova base policy. Broken sudo support for glance.
+#
+gen_tunable(os_glance_use_sudo, false)
+tunable_policy(`os_glance_use_sudo',`
+	sudo_exec(glance_api_t)
+	logging_send_audit_msgs(glance_api_t)
+	iscsid_domtrans(glance_api_t)
+	fstools_domtrans(glance_api_t)
+	allow glance_api_t fixed_disk_device_t:blk_file { getattr ioctl open read setattr write };
+	allow glance_api_t init_t:file { getattr open read };
+	allow glance_api_t self:capability { setuid setgid };
+	allow glance_api_t self:capability { audit_write setuid setgid chown dac_override sys_rawio sys_resource };
+	allow glance_api_t self:netlink_audit_socket { create nlmsg_relay };
+	allow glance_api_t self:process { setcap setrlimit setsched };
+	allow glance_api_t sysfs_t:file append;
 ')
