@@ -82,6 +82,7 @@ install_policies() {
 	fcontext -N -a -t httpd_log_t $LOCALSTATEDIR/log/aodh/app.log
 	fcontext -N -a -t httpd_log_t $LOCALSTATEDIR/log/ceilometer/app.log
 	fcontext -N -a -t httpd_log_t $LOCALSTATEDIR/log/panko/app.log
+	fcontext -N -a -t httpd_log_t $LOCALSTATEDIR/log/zaqar/zaqar.log
 	fcontext -N -a -t neutron_exec_t $BINDIR/neutron-rootwrap-daemon
 	fcontext -N -a -t neutron_exec_t $BINDIR/neutron-vpn-agent"
 
