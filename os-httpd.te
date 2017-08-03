@@ -1,0 +1,38 @@
+policy_module(os-httpd,0.1)
+
+gen_require(`
+	type httpd_t;
+	type var_log_t;
+	type nova_log_t;
+	type cinder_log_t;
+	type glance_log_t;
+	type neutron_log_t;
+	type keystone_log_t;
+	type nova_api_t;
+	type keystone_var_lib_t;
+')
+
+#
+# XXX
+# RH OpenStack Platform services are not all WSGI; some are
+# still using eventlet or another WSGI server.  Furthermore,
+# not all daemons have log files which are covered in base
+# SELinux policy.  For now, with this boolean, allow access
+# for httpd to use all known OpenStack log types and
+# var_log_t until these are all more correctly covered.
+#
+# Bugzilla #1437684
+#  (... and many others ...)
+#
+gen_tunable(os_httpd_wsgi, false)
+tunable_policy(`os_httpd_wsgi',`
+	# OpenStack services which have not gotten their own log type yet
+	manage_files_pattern(httpd_t, var_log_t, var_log_t)
+
+	# OpenStack services which have an assigned log type
+	manage_files_pattern(httpd_t, nova_log_t, nova_log_t)
+	manage_files_pattern(httpd_t, cinder_log_t, cinder_log_t)
+	manage_files_pattern(httpd_t, glance_log_t, glance_log_t)
+	manage_files_pattern(httpd_t, neutron_log_t, neutron_log_t)
+	manage_files_pattern(httpd_t, keystone_log_t, keystone_log_t)
+')

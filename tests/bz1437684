@@ -1,0 +1,1 @@
+type=AVC msg=audit(1490770503.768:2446): avc:  denied  { open } for  pid=16990 comm="httpd" path="/var/log/barbican/api.log" dev="vda1" ino=5772151 scontext=system_u:system_r:httpd_t:s0 tcontext=unconfined_u:object_r:var_log_t:s0 tclass=file

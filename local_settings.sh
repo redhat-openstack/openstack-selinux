@@ -117,6 +117,7 @@ install_policies() {
 		setsebool -P os_swift_use_execmem on
 		setsebool -P os_keystone_use_execmem on
 		setsebool -P os_glance_use_sudo on
+		setsebool -P os_httpd_wsgi on
 
 		relabel_files
 	fi
