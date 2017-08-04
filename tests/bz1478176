@@ -1,0 +1,2 @@
+type=AVC msg=audit(1501609484.063:13177): avc:  denied  { open } for  pid=10111 comm="httpd" path="/var/lib/keystone/.local/share/python_keyring/keyringrc.cfg" dev="dm-0" ino=396418 scontext=system_u:system_r:httpd_t:s0 tcontext=unconfined_u:object_r:keystone_var_lib_t:s0 tclass=file
+type=AVC msg=audit(1501609484.063:13177): avc:  denied  { read } for  pid=10111 comm="httpd" name="keyringrc.cfg" dev="dm-0" ino=396418 scontext=system_u:system_r:httpd_t:s0 tcontext=unconfined_u:object_r:keystone_var_lib_t:s0 tclass=file

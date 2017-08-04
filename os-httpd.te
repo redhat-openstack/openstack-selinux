@@ -35,4 +35,9 @@ tunable_policy(`os_httpd_wsgi',`
 	manage_files_pattern(httpd_t, glance_log_t, glance_log_t)
 	manage_files_pattern(httpd_t, neutron_log_t, neutron_log_t)
 	manage_files_pattern(httpd_t, keystone_log_t, keystone_log_t)
+
+	# RHEL 7.4 keystone change
+	# Bugzilla #1478176
+	# Bugzilla #1478177
+	allow httpd_t keystone_var_lib_t:file { open read };
 ')
