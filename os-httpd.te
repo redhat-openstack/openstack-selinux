@@ -39,5 +39,5 @@ tunable_policy(`os_httpd_wsgi',`
 	# RHEL 7.4 keystone change
 	# Bugzilla #1478176
 	# Bugzilla #1478177
-	allow httpd_t keystone_var_lib_t:file { open read };
+	allow httpd_t keystone_var_lib_t:file read_file_perms;
 ')
