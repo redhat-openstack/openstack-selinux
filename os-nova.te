@@ -56,7 +56,6 @@ allow svirt_tcg_t nova_var_lib_t:file write;
 # Bugzilla 1315457
 allow httpd_t nova_log_t:dir { add_name write };
 allow httpd_t nova_log_t:file { open create };
-corenet_tcp_bind_osapi_compute_port(httpd_t)
 
 # Bugzilla 1375766
 nova_manage_lib_files(virtlogd_t)

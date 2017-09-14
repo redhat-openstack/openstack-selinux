@@ -97,3 +97,10 @@ optional_policy(`
 # printed is not worth this information at this time
 #
 dontaudit openvswitch_t neutron_t:file { read open getattr };
+
+# bugzilla #1489863
+#
+# Something unsets nis_enabled; this works around that by 
+# enabling binding to reserved and unreserved ports (bugzillas
+# #1259419, #1310383)
+corenet_tcp_connect_all_ports(openvswitch_t)

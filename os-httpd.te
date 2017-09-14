@@ -40,4 +40,9 @@ tunable_policy(`os_httpd_wsgi',`
 	# Bugzilla #1478176
 	# Bugzilla #1478177
 	allow httpd_t keystone_var_lib_t:file read_file_perms;
+
+	# Strange issue where nis_enabled disappears
+	# Bugzilla #1315457
+	# Bugzilla #1489863
+	corenet_tcp_bind_all_ports(httpd_t)
 ')
