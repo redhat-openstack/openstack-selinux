@@ -99,24 +99,27 @@ install_policies() {
 	do_echo "Installing OpenStack extra policies and setting booleans..."
 	echo "$INPUT" | $SBINDIR/semanage import -N
 
+	# Unfortunately, we can't load modules and set
+	# booleans in those modules in a single transaction, so
+	# do a second one to set our new booleans.
+	INPUT="boolean -N -m --on os_nova_use_execmem
+	boolean -N -m --on os_neutron_use_execmem
+	boolean -N -m --on os_swift_use_execmem
+	boolean -N -m --on os_keystone_use_execmem
+	boolean -N -m --on os_glance_use_sudo
+	boolean -N -m --on os_httpd_wsgi"
+
+	do_echo "Setting OpenStack booleans..."
+	echo "$INPUT" | $SBINDIR/semanage import -N
+
 	if $SBINDIR/selinuxenabled ; then
 		do_echo "Reloading SELinux policies..."
 		#
 		# Chroot environments (e.g. when building images)
-		# won't get here, but the image will apply all of
-		# the policy on a reboot.
+		# won't get here, which is why we do everything else
+		# above.
 		#
 		$SBINDIR/load_policy
-
-		do_echo "Setting OpenStack booleans..."
-		# Unfortunately, we can't load modules and set
-		# booleans in those modules in a single transaction
-		setsebool -P os_nova_use_execmem on
-		setsebool -P os_neutron_use_execmem on
-		setsebool -P os_swift_use_execmem on
-		setsebool -P os_keystone_use_execmem on
-		setsebool -P os_glance_use_sudo on
-		setsebool -P os_httpd_wsgi on
 
 		relabel_files
 	fi
