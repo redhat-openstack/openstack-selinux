@@ -16,6 +16,8 @@ gen_require(`
 	type svirt_t;
 	type svirt_tcg_t;
         type virtlogd_t;
+	type iptables_t;
+	type modules_conf_t;
 	attribute nova_domain;
 	class key write;
 	class packet_socket { bind create getattr };
@@ -91,4 +93,34 @@ optional_policy(`
 # Bug 1430402
 optional_policy(`
 	mysql_read_config(nova_t)
+')
+
+# Bug 1494907 and related
+allow iptables_t modules_conf_t:file read_file_perms;
+optional_policy(`
+	gen_require(`
+		type systemd_machined_t;
+		type container_runtime_t;
+		type container_share_t;
+		type container_unit_file_t;
+		type svirt_sandbox_file_t;
+		type spc_t;
+	')
+
+	# presumably this is "init_start|stop|status"
+	allow systemd_machined_t container_unit_file_t:service { start stop status };
+
+	# Already present in 2.26
+	virt_transition_svirt(spc_t, system_r)
+	virt_sandbox_entrypoint(svirt_sandbox_file_t)
+
+	# Needs fixed in >2.26
+	allow svirt_t container_runtime_t:process sigchld;
+
+	container_read_share_files(svirt_t)
+	allow svirt_t container_share_t:file { entrypoint execute };
+
+	allow svirt_t spc_t:dir search;
+	allow svirt_t spc_t:fifo_file write_file_perms;
+	allow svirt_t spc_t:file read_file_perms;
 ')
