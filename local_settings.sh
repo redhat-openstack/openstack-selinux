@@ -34,6 +34,18 @@ relabel_files()
 }
 
 
+# usage: set_port tcp|udp port# context
+set_port()
+{
+	$SBINDIR/semanage port -N -m -t $3 -p $1 $2 2>&1 | grep -qE 'ValueError: Port.*is not defined'
+	# Grep succeeded - meaning this was not defined
+	if [ $? -eq 0 ]; then
+		# So, we need to add it.
+		$SBINDIR/semanage port -N -a -t $3 -p $1 $2 &> /dev/null
+	fi
+}
+
+
 install_policies() {
 	do_echo "Setting up ports..."
 	#
@@ -41,16 +53,19 @@ install_policies() {
 	#
 
 	# bz#1118859
-	$SBINDIR/semanage port -N -m -t mysqld_port_t -p tcp 4444 &> /dev/null
+	set_port tcp 4444 mysqld_port_t
 
 	# bz#1260202
-	$SBINDIR/semanage port -N -m -t openvswitch_port_t -p tcp 6653 &> /dev/null
+	set_port tcp 6653 openvswitch_port_t
 
 	# bz#1360434
-	$SBINDIR/semanage port -N -m -t http_port_t -p tcp 8088 &> /dev/null
+	set_port tcp 8088 http_port_t
 
 	# bz#1396553
-	$SBINDIR/semanage port -N -m -t http_port_t -p tcp 8000 &> /dev/null
+	set_port tcp 8000 http_port_t
+
+	# bz#1498921
+	set_port tcp 6639 ovsdb_port_t
 
 	#
 	# Booleans & file contexts
