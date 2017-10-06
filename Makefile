@@ -1,7 +1,8 @@
 TARGETS?=os-ovs os-swift os-nova os-neutron os-mysql os-glance os-rsync os-rabbitmq os-keepalived os-keystone os-haproxy os-mongodb os-ipxe os-redis os-cinder os-httpd
 MODULES?=${TARGETS:=.pp.bz2}
 DATADIR?=/usr/share
-#INSTALL=?=install
+INSTALL?=install
+MODULE_TYPE?=services
 
 all: ${TARGETS:=.pp.bz2} local_settings.sh
 
@@ -67,3 +68,20 @@ local-tarball: .git/config
 #	${INSTALL} -m 0644 ${TARGETS} \
 #		${DESTDIR}${DATADIR}/targeted/modules
 
+install:
+	# Install the setup script
+	${INSTALL} -d ${LOCALDIR}
+	${INSTALL} -m 0755 local_settings.sh ${LOCALDIR}
+
+	# Install tests
+	${INSTALL} -d ${LOCALDIR}/tests
+	${INSTALL} -m 0644 tests/bz* ${LOCALDIR}/tests
+	${INSTALL} -m 0755 tests/check_all ${LOCALDIR}/tests
+
+	# Install interfaces
+	${INSTALL} -d ${DATADIR}/selinux/devel/include/${MODULE_TYPE}
+	${INSTALL} -m 0644 ${TARGETS:=.if} ${DATADIR}/selinux/devel/include/${MODULE_TYPE}
+
+	# Install policy modules
+	${INSTALL} -d ${DATADIR}/selinux/packages
+	${INSTALL} -m 0644 ${TARGETS:=.pp.bz2} ${DATADIR}/selinux/packages
