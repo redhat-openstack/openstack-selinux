@@ -7,8 +7,7 @@ SBINDIR=${SBINDIR:-/sbin}
 LOCALSTATEDIR=${LOCALSTATEDIR:-/var}
 DATADIR=${DATADIR:-/usr/share}
 SHAREDSTATEDIR=${SHAREDSTATEDIR:-/var/lib}
-MODULES=""
-
+MODULES=${MODULES:-@MODULES@}
 
 do_echo() {
 	if [ $QUIET -eq 0 ]; then

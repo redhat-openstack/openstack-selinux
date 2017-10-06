@@ -3,7 +3,7 @@ MODULES?=${TARGETS:=.pp.bz2}
 DATADIR?=/usr/share
 #INSTALL=?=install
 
-all: ${TARGETS:=.pp.bz2}
+all: ${TARGETS:=.pp.bz2} local_settings.sh
 
 %.pp.bz2: %.pp
 	@echo Compressing $^ -\> $@
@@ -12,8 +12,12 @@ all: ${TARGETS:=.pp.bz2}
 %.pp: %.te
 	make -f ${DATADIR}/selinux/devel/Makefile $@
 
+local_settings.sh: local_settings.sh.in
+	sed -e 's/@MODULES@/${TARGETS}/' $^ > $@
+	chmod 0755 $@
+
 clean:
-	rm -f *~ *.if *.tc *.pp *.pp.bz2
+	rm -f *~ *.if *.tc *.pp *.pp.bz2 local_settings.sh
 	rm -rf tmp *.tar.gz
 
 tarball: .git/config
