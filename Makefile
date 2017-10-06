@@ -62,12 +62,6 @@ local-tarball: .git/config
 		fi						;\
 	fi
 
-
-
-#install:
-#	${INSTALL} -m 0644 ${TARGETS} \
-#		${DESTDIR}${DATADIR}/targeted/modules
-
 install:
 	# Install the setup script
 	${INSTALL} -d ${LOCALDIR}
