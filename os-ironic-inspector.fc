@@ -1,0 +1,2 @@
+/httpboot(/.*)? gen_context(system_u:object_r:httpd_sys_content_t,s0)
+/tftpboot(/.*)? gen_context(system_u:object_r:tftpdir_t,s0)
