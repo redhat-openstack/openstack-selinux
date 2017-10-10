@@ -24,8 +24,9 @@ gen_require(`
 	class tun_socket create;
 	class chr_file open;
 	class netlink_generic_socket create_socket_perms;
-        class packet_socket create_socket_perms;
-
+	class netlink_audit_socket { create nlmsg_relay };
+	class capability audit_write;
+	class packet_socket create_socket_perms;
 ')
 
 # Bugzilla 1108187
@@ -104,3 +105,7 @@ dontaudit openvswitch_t neutron_t:file { read open getattr };
 # enabling binding to reserved and unreserved ports (bugzillas
 # #1259419, #1310383)
 corenet_tcp_connect_all_ports(openvswitch_t)
+
+# #1498797
+allow openvswitch_t self:capability audit_write;
+allow openvswitch_t self:netlink_audit_socket { create nlmsg_relay };
