@@ -1,6 +1,0 @@
-module os-ironic-inspector 0.1;
-
-require {
-	type httpd_sys_content_t;
-    type tftpdir_t;
-}

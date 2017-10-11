@@ -2,6 +2,7 @@
 
 QUIET=1
 MODE=0
+ROOTDIR=${ROOTDIR:-/}
 BINDIR=${BINDIR:-/usr/bin}
 SBINDIR=${SBINDIR:-/sbin}
 LOCALSTATEDIR=${LOCALSTATEDIR:-/var}
@@ -98,7 +99,9 @@ install_policies() {
 	fcontext -N -a -t httpd_log_t $LOCALSTATEDIR/log/panko/app.log
 	fcontext -N -a -t httpd_log_t $LOCALSTATEDIR/log/zaqar/zaqar.log
 	fcontext -N -a -t neutron_exec_t $BINDIR/neutron-rootwrap-daemon
-	fcontext -N -a -t neutron_exec_t $BINDIR/neutron-vpn-agent"
+	fcontext -N -a -t neutron_exec_t $BINDIR/neutron-vpn-agent
+	fcontext -N -a -t httpd_sys_content_t \"$ROOTDIR/httpboot(/.*)?\"
+	fcontext -N -a -t tftpdir_t \"$ROOTDIR/tftpboot(/.*)?\""
 
 	#
 	# Append modules
