@@ -29,6 +29,8 @@ relabel_files()
                 $SHAREDSTATEDIR/vhost_sockets \
 				/srv \
 				$BINDIR/neutron* \
+                $ROOTDIR/httpboot \
+                $ROOTDIR/tftpboot \
 				$LOCALSTATEDIR/run/redis \
 				$LOCALSTATEDIR/log \
 	&> /dev/null || :
