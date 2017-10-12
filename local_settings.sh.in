@@ -70,6 +70,10 @@ install_policies() {
 	# bz#1498921
 	set_port tcp 6639 ovsdb_port_t
 
+	# bz#1499134
+	set_port tcp 6641 ovsdb_port_t
+	set_port tcp 6642 ovsdb_port_t
+
 	#
 	# Booleans & file contexts
 	#
