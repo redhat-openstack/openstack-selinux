@@ -1,0 +1,16 @@
+policy_module(os-gnocchi,0.1)
+
+require {
+	type httpd_var_lib_t;
+	type var_lib_t;
+	class filesystem associate;
+}
+
+
+# If using var_lib_t for NFS (I believe the default), gnocchi
+# needs to do a few things that require this.
+# bz#1466444
+gen_tunable(os_gnocchi_use_nfs, false)
+tunable_policy(`os_gnocchi_use_nfs',`
+	allow httpd_var_lib_t var_lib_t:filesystem associate;
+')

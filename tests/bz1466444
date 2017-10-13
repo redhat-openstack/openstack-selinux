@@ -1,0 +1,1 @@
+type=AVC msg=audit(1498672139.870:5641): avc:  denied  { associate } for  pid=365129 comm="httpd" name="gnocchiUvHVPC" scontext=system_u:object_r:httpd_var_lib_t:s0 tcontext=system_u:object_r:var_lib_t:s0 tclass=filesystem
