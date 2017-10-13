@@ -1,0 +1,7 @@
+type=AVC msg=audit(1507882760.767:1386): avc:  denied  { write } for  pid=6246 comm="runuser" scontext=system_u:system_r:openvswitch_t:s0 tcontext=system_u:system_r:openvswitch_t:s0 tclass=netlink_audit_socket
+type=AVC msg=audit(1507882834.017:1434): avc:  denied  { read } for  pid=6495 comm="runuser" scontext=system_u:system_r:openvswitch_t:s0 tcontext=system_u:system_r:openvswitch_t:s0 tclass=netlink_audit_socket
+type=AVC msg=audit(1507882927.297:1507): avc:  denied  { dac_override } for  pid=6744 comm="ovs-vsctl" capability=1  scontext=system_u:system_r:openvswitch_t:s0 tcontext=system_u:system_r:openvswitch_t:s0 tclass=capability
+type=AVC msg=audit(1507594742.843:184): avc:  denied  { create } for  pid=1424 comm="runuser" scontext=system_u:system_r:openvswitch_t:s0 tcontext=system_u:system_r:openvswitch_t:s0 tclass=netlink_audit_socket permissive=1
+type=AVC msg=audit(1507594742.843:185): avc:  denied  { nlmsg_relay } for  pid=1424 comm="runuser" scontext=system_u:system_r:openvswitch_t:s0 tcontext=system_u:system_r:openvswitch_t:s0 tclass=netlink_audit_socket permissive=1
+type=AVC msg=audit(1507594742.844:186): avc:  denied  { audit_write } for  pid=1424 comm="runuser" capability=29 scontext=system_u:system_r:openvswitch_t:s0 tcontext=system_u:system_r:openvswitch_t:s0 tclass=capability permissive=1
+type=AVC msg=audit(1507594743.049:195): avc:  denied  { dac_override } for pid=1431 comm="ovs-vsctl" capability=1 scontext=system_u:system_r:openvswitch_t:s0 tcontext=system_u:system_r:openvswitch_t:s0 tclass=capability permissive=1

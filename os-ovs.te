@@ -24,7 +24,7 @@ gen_require(`
 	class tun_socket create;
 	class chr_file open;
 	class netlink_generic_socket create_socket_perms;
-	class netlink_audit_socket { create nlmsg_relay };
+	class netlink_audit_socket { create nlmsg_relay read write };
 	class capability audit_write;
 	class packet_socket create_socket_perms;
 ')
@@ -107,5 +107,5 @@ dontaudit openvswitch_t neutron_t:file { read open getattr };
 corenet_tcp_connect_all_ports(openvswitch_t)
 
 # #1498797
-allow openvswitch_t self:capability audit_write;
+allow openvswitch_t self:capability { audit_write dac_override };
 allow openvswitch_t self:netlink_audit_socket { create nlmsg_relay };
