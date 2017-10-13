@@ -108,4 +108,4 @@ corenet_tcp_connect_all_ports(openvswitch_t)
 
 # #1498797
 allow openvswitch_t self:capability { audit_write dac_override };
-allow openvswitch_t self:netlink_audit_socket { create nlmsg_relay };
+allow openvswitch_t self:netlink_audit_socket { create nlmsg_relay read write };
