@@ -80,3 +80,10 @@ install:
 	# Install policy modules
 	${INSTALL} -d ${DATADIR}/selinux/packages
 	${INSTALL} -m 0644 ${TARGETS:=.pp.bz2} ${DATADIR}/selinux/packages
+
+# Note: You can't run this in a build system unless the build 
+#       system has access to change the kernel SELinux policies
+check:
+	cd ${LOCALDIR} && ./local_settings.sh
+	cd ${LOCALDIR}/tests && ./check_all
+	cd ${LOCALDIR} && ./local_settings.sh -x
