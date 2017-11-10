@@ -65,6 +65,16 @@ nova_manage_lib_files(virtlogd_t)
 # Bugzilla 1377272
 allow virtlogd_t self:capability dac_override;
 
+# Bugzilla #1499800 (workaround)
+create_files_pattern(virtlogd_t, virt_image_t, virt_log_t)
+delete_files_pattern(virtlogd_t, virt_image_t, virt_log_t)
+rename_files_pattern(virtlogd_t, virt_image_t, virt_log_t)
+
+delete_files_pattern(virtlogd_t, virt_image_t, svirt_image_t)
+rename_files_pattern(virtlogd_t, virt_image_t, svirt_image_t)
+
+filetrans_pattern(virtlogd_t, virt_image_t, virt_log_t, file, "console.log")
+
 # Bugzilla 1249685
 gen_tunable(os_nova_use_execmem, false)
 tunable_policy(`os_nova_use_execmem',`
