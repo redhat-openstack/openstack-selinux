@@ -66,6 +66,7 @@ nova_manage_lib_files(virtlogd_t)
 allow virtlogd_t self:capability dac_override;
 
 # Bugzilla #1499800 (workaround)
+# src: https://eucalyptus.atlassian.net/browse/EUCA-13447
 create_files_pattern(virtlogd_t, virt_image_t, virt_log_t)
 delete_files_pattern(virtlogd_t, virt_image_t, virt_log_t)
 rename_files_pattern(virtlogd_t, virt_image_t, virt_log_t)
