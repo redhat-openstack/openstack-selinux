@@ -13,9 +13,12 @@ gen_require(`
 	type httpd_t;
 	type netutils_exec_t;
 	type virtd_t;
+	type virt_image_t;
 	type svirt_t;
+	type svirt_image_t;
 	type svirt_tcg_t;
         type virtlogd_t;
+	type virt_log_t;
 	type iptables_t;
 	type modules_conf_t;
 	attribute nova_domain;
