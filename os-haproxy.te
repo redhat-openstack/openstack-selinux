@@ -1,10 +1,14 @@
 policy_module(os-haproxy,0.1)
 
 gen_require(`
+	type haproxy_exec_t;
 	type haproxy_t;
+	type ifconfig_t;
 	type sysfs_t;
 	class filesystem getattr;
 ')
 
 # Bugzilla 1195215
 allow haproxy_t sysfs_t:filesystem getattr;
+
+domtrans_pattern(ifconfig_t, haproxy_exec_t, haproxy_t)
