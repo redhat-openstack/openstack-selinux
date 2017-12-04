@@ -24,15 +24,15 @@ relabel_files()
 	do_echo "Relabeling files..."
 	$SBINDIR/restorecon -Rv $BINDIR/swift* \
 				$LOCALSTATEDIR/run/swift \
-				$LOCALSTATEDIR//swift \
+				$LOCALSTATEDIR/swift \
 				$SHAREDSTATEDIR/nova/.ssh \
 				$SHAREDSTATEDIR/designate/bind9 \
-                $SHAREDSTATEDIR/vhost_sockets \
+                		$SHAREDSTATEDIR/vhost_sockets \
 				/srv \
 				$BINDIR/neutron* \
 				$BINDIR/swift-object-* \
-                ${ROOTDIR}httpboot \
-                ${ROOTDIR}tftpboot \
+                		${ROOTDIR}httpboot \
+                		${ROOTDIR}tftpboot \
 				$LOCALSTATEDIR/run/redis \
 				$LOCALSTATEDIR/log \
 	&> /dev/null || :
