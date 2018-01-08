@@ -21,21 +21,27 @@ do_echo() {
 
 relabel_files()
 {
+	local opts=""
+
 	do_echo "Relabeling files..."
-	$SBINDIR/restorecon -Rv $BINDIR/swift* \
-				$LOCALSTATEDIR/run/swift \
-				$LOCALSTATEDIR/swift \
-				$SHAREDSTATEDIR/nova/.ssh \
-				$SHAREDSTATEDIR/designate/bind9 \
-                		$SHAREDSTATEDIR/vhost_sockets \
-				/srv \
-				$BINDIR/neutron* \
-				$BINDIR/swift-object-* \
-                		${ROOTDIR}httpboot \
-                		${ROOTDIR}tftpboot \
-				$LOCALSTATEDIR/run/redis \
-				$LOCALSTATEDIR/log \
-	&> /dev/null || :
+	if [ $QUIET -ne 0 ]; then
+		opts="-v"
+	fi
+	$SBINDIR/setfiles $opts -F $ROOTDIR/etc/selinux/targeted/contexts/files/file_contexts \
+		$BINDIR/swift* \
+		$LOCALSTATEDIR/run/swift \
+		$LOCALSTATEDIR/swift \
+		$SHAREDSTATEDIR/nova/.ssh \
+		$SHAREDSTATEDIR/designate/bind9 \
+		$SHAREDSTATEDIR/vhost_sockets \
+		/srv \
+		$BINDIR/neutron* \
+		$BINDIR/swift-object-* \
+		${ROOTDIR}httpboot \
+		${ROOTDIR}tftpboot \
+		$LOCALSTATEDIR/run/redis \
+		$LOCALSTATEDIR/log \
+	2> /dev/null || :
 }
 
 
@@ -100,7 +106,7 @@ install_policies() {
 	fcontext -N -a -t named_zone_t \"$SHAREDSTATEDIR/designate/bind9(/.*)?\"
 	fcontext -N -a -t virt_cache_t \"$SHAREDSTATEDIR/vhost_sockets(/.*)?\"
 	fcontext -N -a -t httpd_var_lib_t $SHAREDSTATEDIR/openstack-dashboard
-        fcontext -N -a -t mongod_var_lib_t \"$SHAREDSTATEDIR/mongodb(/.*)?\"
+	fcontext -N -a -t mongod_var_lib_t \"$SHAREDSTATEDIR/mongodb(/.*)?\"
 	fcontext -N -a -t httpd_log_t $LOCALSTATEDIR/log/gnocchi/app.log
 	fcontext -N -a -t httpd_log_t $LOCALSTATEDIR/log/aodh/app.log
 	fcontext -N -a -t httpd_log_t $LOCALSTATEDIR/log/ceilometer/app.log
@@ -142,6 +148,7 @@ install_policies() {
 	do_echo "Setting OpenStack booleans..."
 	echo "$INPUT" | $SBINDIR/semanage import -N
 
+	relabel_files
 	if $SBINDIR/selinuxenabled ; then
 		do_echo "Reloading SELinux policies..."
 		#
@@ -151,7 +158,6 @@ install_policies() {
 		#
 		$SBINDIR/load_policy
 
-		relabel_files
 	fi
 }
 
@@ -159,9 +165,9 @@ install_policies() {
 uninstall_policies() {
 	do_echo "Removing OpenStack modules..."
 	$SBINDIR/semodule -n -r $MODULES &> /dev/null || :
+	relabel_files
 	if $SBINDIR/selinuxenabled ; then
 		$SBINDIR/load_policy
-		relabel_files
 	fi
 }
 
