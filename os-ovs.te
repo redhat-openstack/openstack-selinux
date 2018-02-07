@@ -17,6 +17,7 @@ gen_require(`
 	type init_tmp_t;
 	type tun_tap_device_t;
 	type svirt_t;
+	type svirt_tmpfs_t;
 	type virt_cache_t;
 	class dir search;
 	class file { write read getattr open };
@@ -109,3 +110,6 @@ corenet_tcp_connect_all_ports(openvswitch_t)
 # #1498797
 allow openvswitch_t self:capability { audit_write dac_override };
 allow openvswitch_t self:netlink_audit_socket { create nlmsg_relay read write };
+
+# #1542107
+allow openvswitch_t svirt_tmpfs_t:file { read write };

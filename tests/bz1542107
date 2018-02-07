@@ -1,0 +1,1 @@
+type=AVC msg=audit(1517841541.153:650): avc:  denied  { read write } for  pid=7168 comm="vhost_thread2" path=2F6D656D66643A76686F73742D6C6F67202864656C6574656429 dev="tmpfs" ino=324410 scontext=system_u:system_r:openvswitch_t:s0 tcontext=system_u:object_r:svirt_tmpfs_t:s0 tclass=file
