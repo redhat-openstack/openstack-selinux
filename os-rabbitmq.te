@@ -3,11 +3,6 @@ policy_module(os-rabbitmq,0.1)
 gen_require(`
 	type init_tmp_t;
 	type rabbitmq_epmd_t;
-	type rabbitmq_beam_t;
-	type rabbitmq_var_lib_t;
-	type systemd_logind_t;
-	type cluster_t;
-	class dbus send_msg;
 	class file write;
 ')
 
