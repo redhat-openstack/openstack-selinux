@@ -1,10 +1,27 @@
 policy_module(os-rabbitmq,0.1)
 
 gen_require(`
+	type epmd_port_t;
 	type init_tmp_t;
+	type logrotate_t;
 	type rabbitmq_epmd_t;
-	class file write;
+	type rabbitmq_port_t;
+	type rabbitmq_var_lib_t;
+	type security_t;
+	class dir { read write };
+	class file { getattr open read write };
+	class passwd passwd;
+	class security compute_av;
+	class tcp_socket { name_bind name_connect };
 ')
 
 # Bugzilla 1135637
 allow rabbitmq_epmd_t init_tmp_t:file write;
+
+# Bugzilla 1413775
+allow logrotate_t epmd_port_t:tcp_socket {name_connect name_bind};
+allow logrotate_t rabbitmq_port_t:tcp_socket name_connect;
+allow logrotate_t rabbitmq_var_lib_t:dir { read write };
+allow logrotate_t rabbitmq_var_lib_t:file { getattr open read };
+allow logrotate_t security_t:security compute_av;
+allow logrotate_t self:passwd passwd;
