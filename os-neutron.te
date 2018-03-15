@@ -18,6 +18,7 @@ gen_require(`
 	type logrotate_t;
 	type nsfs_t;
 	class capability setpcap;
+	class capability setpgid;
 	class key_socket { write read create };
 	class netlink_xfrm_socket { bind create nlmsg_write };
 	class process signal;
@@ -107,3 +108,6 @@ tunable_policy(`os_neutron_use_execmem',`
 
 # Bugzilla 1419418
 allow neutron_t nsfs_t:file { open read };
+
+# Bugzilla 1547197
+allow neutron_t self:process setpgid;

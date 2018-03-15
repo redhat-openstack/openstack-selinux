@@ -1,0 +1,1 @@
+type=AVC msg=audit(1519144859.347:11041): avc:  denied  { setpgid } for  pid=844370 comm="dibbler-client" scontext=system_u:system_r:neutron_t:s0 tcontext=system_u:system_r:neutron_t:s0 tclass=process
