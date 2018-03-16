@@ -118,6 +118,7 @@ install_policies() {
 	fcontext -N -a -t swift_exec_t $BINDIR/swift-object-reconstructor
 	fcontext -N -a -t swift_exec_t $BINDIR/swift-object-relinker
 	fcontext -N -a -t httpd_sys_content_t \"${ROOTDIR}httpboot(/.*)?\"
+	fcontext -N -a -t ssh_home_t \"$SHAREDSTATEDIR/nova/.ssh(/.*)?\"
 	fcontext -N -a -t tftpdir_t \"${ROOTDIR}tftpboot(/.*)?\""
 
 	#
