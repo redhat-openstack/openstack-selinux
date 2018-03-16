@@ -113,3 +113,6 @@ allow openvswitch_t self:netlink_audit_socket { create nlmsg_relay read write };
 
 # #1542107
 allow openvswitch_t svirt_tmpfs_t:file { read write };
+
+# #1554964
+corenet_tcp_bind_all_ports(openvswitch_t)
