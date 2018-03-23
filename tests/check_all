@@ -29,7 +29,7 @@ failed=0
 rm -f $TEST_INPUT
 touch $TEST_INPUT
 for f in $TEST_FILES; do
-	grep '^type=AVC' $f >> $TEST_INPUT
+	grep '^type=\(USER_\)\?AVC' $f >> $TEST_INPUT
 done
 
 totalAVC=$(wc -l $TEST_INPUT)
