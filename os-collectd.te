@@ -1,0 +1,18 @@
+policy_module(os-collectd,0.1)
+
+gen_require(`
+	type collectd_t;
+	type var_lock_t;
+	type cpu_device_t;
+	class capability sys_rawio;
+')
+
+# Bugzilla #1558465
+allow collectd_t cpu_device_t:chr_file rw_file_perms;
+
+# FIXME: Upstream policy probably needs collectd_var_lock_t
+# and a file transition rule in collectd.te.
+allow collectd_t var_lock_t:dir add_entry_dir_perms;
+allow collectd_t var_lock_t:file manage_file_perms;
+allow collectd_t var_lock_t:lnk_file read_lnk_file_perms;
+allow collectd_t self:capability sys_rawio;
