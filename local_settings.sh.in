@@ -11,6 +11,8 @@ SHAREDSTATEDIR=${SHAREDSTATEDIR:-/var/lib}
 LOCALDIR=${LOCALDIR:-$DATADIR/openstack-selinux/master}
 MODULES=${MODULES:-@MODULES@}
 
+declare -A file_modes
+
 do_echo() {
 	if [ $QUIET -eq 0 ]; then
 		return
@@ -57,7 +59,35 @@ set_port()
 }
 
 
+_cache_file_modes() {
+	if ! [ -d '/etc/selinux/targeted/active' ]; then
+		return
+	fi
+	for f in $(find /etc/selinux/targeted/active -maxdepth 1 -type f); do
+		file_modes[$f]=$(stat -c %a $f)
+	done
+}
+
+
+_restore_file_modes() {
+	for k in "${!file_modes[@]}"; do
+		chmod ${file_modes[$k]} $k
+	done
+}
+
+
 install_policies() {
+	# Bug #1560019
+	#
+	# 'semanage' seems to recreate
+	# /etc/selinux/targeted/active/seusers
+	# /etc/selinux/targeted/active/user_extra
+	# with the wrong mode, breaking 'rpm -Va'
+	#
+	# Store file modes and explicitly chmod
+	# them back when we're done with our setup.
+	_cache_file_modes
+
 	do_echo "Setting up ports..."
 	#
 	# Port rules
@@ -160,16 +190,20 @@ install_policies() {
 		$SBINDIR/load_policy
 
 	fi
+
+	_restore_file_modes
 }
 
 
 uninstall_policies() {
+	_cache_file_modes
 	do_echo "Removing OpenStack modules..."
 	$SBINDIR/semodule -n -r $MODULES &> /dev/null || :
 	relabel_files
 	if $SBINDIR/selinuxenabled ; then
 		$SBINDIR/load_policy
 	fi
+	_restore_file_modes
 }
 
 
