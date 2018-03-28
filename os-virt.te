@@ -1,0 +1,12 @@
+policy_module(os-virt,0.1)
+
+gen_require(`
+	type systemd_logind_t;
+	type virtlogd_t;
+	class dbus send_msg;
+')
+
+# #1561711 - work around inability to send message
+# over dbus.  Will be superseded once #1547250 is
+# fixed.
+allow virtlogd_t systemd_logind_t:dbus send_msg;
