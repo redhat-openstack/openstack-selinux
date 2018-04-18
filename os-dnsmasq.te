@@ -1,0 +1,12 @@
+policy_module(os-dnsmasq,0.1)
+
+gen_require(`
+	type var_lib_t;
+	type dnsmasq_t;
+	class file manage_file_perms;
+')
+
+# bug 1568993
+# dnsmasq_t can already create/delete var_lib_t directories
+allow dnsmasq_t var_lib_t:file manage_file_perms;
+
