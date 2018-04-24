@@ -11,10 +11,12 @@ gen_require(`
 	type sysfs_t;
         type NetworkManager_t;
 	type systemd_systemctl_exec_t;
+	type ifconfig_exec_t;
+	type ifconfig_t;
 	class filesystem getattr;
 	class process { signull sigkill setpgid };
 	class capability { net_admin net_raw kill dac_override };
-	class file { execute read create ioctl unlink execute_no_trans write getattr open };
+	class file { execute read create ioctl unlink execute_no_trans write getattr open entrypoint };
 ')
 
 # Bugzilla 1351336
@@ -51,3 +53,6 @@ optional_policy(`
 # Bugzilla 1469823
 allow keepalived_t self:process setpgid;
 
+# Bugzilla #1434826
+allow keepalived_t ifconfig_exec_t:file entrypoint;
+domtrans_pattern(keepalived_t, ifconfig_exec_t, ifconfig_t)
