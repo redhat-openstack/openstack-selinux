@@ -1,0 +1,55 @@
+policy_module(os-octavia,0.1)
+
+gen_require(`
+	type keepalived_t;
+	type haproxy_t;
+	type ifconfig_t;
+	type user_tmp_t;
+	type var_run_t;
+	type ifconfig_exec_t;
+	type sysfs_t;
+	type var_lib_t;
+	type bin_t;
+	type sysctl_fs_t;
+	type proc_security_t;
+	type sysctl_kernel_t;
+	type etc_t;
+	class sock_file { create link rename setattr unlink write };
+	class capability sys_ptrace;
+	class file { create entrypoint execute execute_no_trans getattr ioctl open read write };
+	class dir { add_name mounton write };
+	class filesystem { mount unmount };
+')
+
+# bind mount capabilities
+allow ifconfig_t etc_t:dir mounton;
+allow ifconfig_t user_tmp_t:dir mounton;
+allow ifconfig_t var_run_t:dir mounton;
+allow ifconfig_t self:capability sys_ptrace;
+allow ifconfig_t proc_security_t:file manage_file_perms;
+allow ifconfig_t sysctl_fs_t:file manage_file_perms;
+allow ifconfig_t sysctl_kernel_t:file manage_file_perms;
+
+#
+# XXX Future work: need to set /var/lib/octavia to something
+#     haproxy_t / keepalived_t can access, rather than giving
+#     these two contexts blanket access to var_lib_t. Need to
+#     work with upstream selinux-policy-contrib developers
+#     to sort this out.  Until then, this set of rules is
+#     better than using unconfined_domain()
+#
+# /var/lib/octavia/vrrp (directory)
+allow keepalived_t var_lib_t:dir { add_name write };
+
+# /var/lib/octavia/vrrp/octavia-keepalived.pid
+# /var/lib/octavia/vrrp/check_script.sh
+allow keepalived_t var_lib_t:file { create execute execute_no_trans getattr ioctl open read write };
+
+# /var/lib/octavia/[uuid].sock
+allow keepalived_t var_lib_t:sock_file { create link rename setattr unlink write };
+
+# Same access for haproxy_t
+allow haproxy_t bin_t:file { entrypoint };
+allow haproxy_t var_lib_t:dir { add_name write };
+allow haproxy_t var_lib_t:file { create execute execute_no_trans getattr ioctl open read write };
+allow haproxy_t var_lib_t:sock_file { create link rename setattr unlink write };
