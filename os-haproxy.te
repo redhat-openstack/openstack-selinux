@@ -4,11 +4,17 @@ gen_require(`
 	type haproxy_exec_t;
 	type haproxy_t;
 	type ifconfig_t;
+	type ifconfig_exec_t;
 	type sysfs_t;
 	class filesystem getattr;
+	class file entrypoint;
 ')
 
 # Bugzilla 1195215
 allow haproxy_t sysfs_t:filesystem getattr;
 
 domtrans_pattern(ifconfig_t, haproxy_exec_t, haproxy_t)
+
+# Bugzilla #1434826
+allow haproxy_t ifconfig_exec_t:file entrypoint;
+domtrans_pattern(haproxy_t, ifconfig_exec_t, ifconfig_t)
