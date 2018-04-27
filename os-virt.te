@@ -10,3 +10,12 @@ gen_require(`
 # over dbus.  Will be superseded once #1547250 is
 # fixed.
 allow virtlogd_t systemd_logind_t:dbus send_msg;
+
+# #1566973
+# Tunable to allow virtlogd to write to NFS
+gen_tunable(os_virtlogd_use_nfs, false)
+tunable_policy(`os_virtlogd_use_nfs',`
+        fs_manage_nfs_dirs(virtlogd_t)
+        fs_manage_nfs_files(virtlogd_t)
+        fs_read_nfs_symlinks(virtlogd_t)
+')

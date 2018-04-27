@@ -1,0 +1,1 @@
+type=AVC msg=audit(1524017564.805:204): avc:  denied  { write } for  pid=12021 comm="virtlogd" name="bec321f0-2651-4948-ac85-1845a91271a0" dev="0:39" ino=4197515 scontext=system_u:system_r:virtlogd_t:s0-s0:c0.c1023 tcontext=system_u:object_r:nfs_t:s0 tclass=dir
