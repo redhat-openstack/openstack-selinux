@@ -1,0 +1,1 @@
+type=AVC msg=audit(1525078074.900:1198999): avc:  denied  { read write } for  pid=11438 comm="ovs-vswitchd" path="socket:[38710370]" dev="sockfs" ino=38710370 scontext=system_u:system_r:openvswitch_t:s0 tcontext=system_u:system_r:svirt_t:s0:c14,c629 tclass=unix_stream_socket

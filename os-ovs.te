@@ -116,3 +116,7 @@ allow openvswitch_t svirt_tmpfs_t:file { read write };
 
 # #1554964
 corenet_tcp_bind_all_ports(openvswitch_t)
+
+# #1572510
+allow openvswitch_t svirt_t:unix_stream_socket { read write };
+
