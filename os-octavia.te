@@ -15,7 +15,7 @@ gen_require(`
 	type sysctl_kernel_t;
 	type etc_t;
 	class sock_file { create link rename setattr unlink write };
-	class capability sys_ptrace;
+	class capability { sys_ptrace sys_admin };
 	class file { create entrypoint execute execute_no_trans getattr ioctl open read write };
 	class dir { add_name mounton write };
 	class filesystem { mount unmount };
@@ -53,3 +53,4 @@ allow haproxy_t bin_t:file { entrypoint };
 allow haproxy_t var_lib_t:dir { add_name write };
 allow haproxy_t var_lib_t:file { create execute execute_no_trans getattr ioctl open read write };
 allow haproxy_t var_lib_t:sock_file { create link rename setattr unlink write };
+allow haproxy_t self:capability { sys_admin };
