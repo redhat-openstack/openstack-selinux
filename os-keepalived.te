@@ -55,4 +55,4 @@ allow keepalived_t self:process setpgid;
 
 # Bugzilla #1434826
 allow keepalived_t ifconfig_exec_t:file entrypoint;
-domtrans_pattern(keepalived_t, ifconfig_exec_t, ifconfig_t)
+sysnet_domtrans_ifconfig(keepalived_t)

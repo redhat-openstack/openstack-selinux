@@ -17,4 +17,4 @@ domtrans_pattern(ifconfig_t, haproxy_exec_t, haproxy_t)
 
 # Bugzilla #1434826
 allow haproxy_t ifconfig_exec_t:file entrypoint;
-domtrans_pattern(haproxy_t, ifconfig_exec_t, ifconfig_t)
+sysnet_domtrans_ifconfig(haproxy_t)
