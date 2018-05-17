@@ -40,11 +40,11 @@ allow ifconfig_t sysctl_kernel_t:file manage_file_perms;
 #     better than using unconfined_domain()
 #
 # /var/lib/octavia/vrrp (directory)
-allow keepalived_t var_lib_t:dir { add_name write };
+allow keepalived_t var_lib_t:dir { add_name write remove_name };
 
 # /var/lib/octavia/vrrp/octavia-keepalived.pid
 # /var/lib/octavia/vrrp/check_script.sh
-allow keepalived_t var_lib_t:file { create execute execute_no_trans getattr ioctl open read write };
+allow keepalived_t var_lib_t:file { create execute execute_no_trans getattr ioctl open read write unlink };
 
 # /var/lib/octavia/[uuid].sock
 allow keepalived_t var_lib_t:sock_file { create link rename setattr unlink write };
@@ -57,8 +57,8 @@ allow keepalived_t user_tmp_t:dir mounton;
 
 # Same access for haproxy_t
 allow haproxy_t bin_t:file { entrypoint };
-allow haproxy_t var_lib_t:dir { add_name write };
-allow haproxy_t var_lib_t:file { create execute execute_no_trans getattr ioctl open read write };
+allow haproxy_t var_lib_t:dir { add_name write remove_name };
+allow haproxy_t var_lib_t:file { create execute execute_no_trans getattr ioctl open read write unlink };
 allow haproxy_t var_lib_t:sock_file { create link rename setattr unlink write };
 allow haproxy_t self:capability { sys_admin };
 
