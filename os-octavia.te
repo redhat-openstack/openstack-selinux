@@ -67,3 +67,5 @@ allow haproxy_t etc_t:dir mounton;
 allow haproxy_t root_t:dir mounton;
 allow haproxy_t sysfs_t:filesystem { mount unmount };
 allow haproxy_t user_tmp_t:dir mounton;
+
+kernel_read_fs_sysctls(ifconfig_t)
