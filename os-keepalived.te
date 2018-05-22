@@ -15,7 +15,7 @@ gen_require(`
 	type ifconfig_t;
 	class filesystem getattr;
 	class process { signull sigkill setpgid };
-	class capability { net_admin net_raw kill dac_override };
+	class capability { net_admin net_raw kill dac_override sys_admin };
 	class file { execute read create ioctl unlink execute_no_trans write getattr open entrypoint };
 ')
 
@@ -32,7 +32,8 @@ allow keepalived_t cloud_var_lib_t:file { read getattr open };
 allow keepalived_t init_var_lib_t:file { read getattr open };
 allow keepalived_t var_lib_t:file { read getattr open };
 allow keepalived_t var_log_t:file open;
-allow keepalived_t self:capability dac_override;
+# bz1434826 - sys_admin
+allow keepalived_t self:capability { dac_override sys_admin };
 allow keepalived_t neutron_t:process sigkill;
 
 # Bugzilla 1206148
