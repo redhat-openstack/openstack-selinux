@@ -1,0 +1,1 @@
+type=AVC msg=audit(1527075675.414:18010): avc:  denied  { name_bind } for  pid=4521 comm="dhcp_release6" src=546 scontext=system_u:system_r:neutron_t:s0 tcontext=system_u:object_r:dhcpc_port_t:s0 tclass=udp_socket

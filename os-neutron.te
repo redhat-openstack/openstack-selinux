@@ -111,3 +111,6 @@ allow neutron_t nsfs_t:file { open read };
 
 # Bugzilla 1547197
 allow neutron_t self:process setpgid;
+
+# Bugzilla 1581729
+corenet_udp_bind_dhcpc_port(neutron_t)
