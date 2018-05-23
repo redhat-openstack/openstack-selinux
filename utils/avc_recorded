@@ -1,0 +1,25 @@
+#!/bin/bash
+
+while read; do
+	if [ "${REPLY/type=AVC/}" == "$REPLY" ] && \
+	   [ "${REPLY/type=USER_AVC/}" == "$REPLY" ]; then
+		continue
+	fi
+	
+	operations=${REPLY/*\{ /}
+	operations=${operations/ \}*/}
+	src=${REPLY/*scontext=/}
+	src=${src/ */}
+	src=${src/:s0*/}
+	tgt=${REPLY/*tcontext=/}
+	tgt=${tgt/ */}
+	tgt=${tgt/:s0*/}
+	tclass=${REPLY/*tclass=/}
+	tclass=${tclass/ */}
+
+	for op in $operations; do
+		s="$op.*scontext=$src.*tcontext=$tgt.*tclass=$tclass"
+		[ -d tests ] && grep "$s" tests/bz*
+		[ -d ../tests ] && grep "$s" ../tests/bz*
+	done
+done
