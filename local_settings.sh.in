@@ -11,6 +11,9 @@ SHAREDSTATEDIR=${SHAREDSTATEDIR:-/var/lib}
 LOCALDIR=${LOCALDIR:-$DATADIR/openstack-selinux/master}
 MODULES=${MODULES:-@MODULES@}
 
+# This is for caching the file modes; -A is a bash associative
+# array ("dict" or "map" in other languages)
+# See bug for bug #1560019 for more information.
 declare -A file_modes
 
 do_echo() {
@@ -29,6 +32,14 @@ relabel_files()
 	if [ $QUIET -ne 0 ]; then
 		opts="-v"
 	fi
+
+	# Setfiles is a lot like restorecon, except it takes a policy
+	# on-disk instead of looking at the kernel-loaded policy
+	# So, it works inside of image builds.
+	#
+	# At a minimum, we need a line for each entry we have where we are
+	# custominzing the label using 'semanage' below, but also
+	# others, when applicable.
 	$SBINDIR/setfiles $opts -F $ROOTDIR/etc/selinux/targeted/contexts/files/file_contexts \
 		$BINDIR/swift* \
 		$LOCALSTATEDIR/run/swift \
@@ -50,6 +61,10 @@ relabel_files()
 # usage: set_port tcp|udp port# context
 set_port()
 {
+	# There's no add-or-modify, so try a modify, and if that fails,
+	# add the new rule.
+	#
+	# -N prevents reloading
 	$SBINDIR/semanage port -N -m -t $3 -p $1 $2 2>&1 | grep -qE 'ValueError: Port.*is not defined'
 	# Grep succeeded - meaning this was not defined
 	if [ $? -eq 0 ]; then
@@ -112,8 +127,11 @@ install_policies() {
 	set_port tcp 6641 ovsdb_port_t
 	set_port tcp 6642 ovsdb_port_t
 
+	# Build up a script to pass to semanage
 	#
 	# Booleans & file contexts
+	# -N -> don't reload policy
+	# -m -> modify
 	#
 	CR=$'\n'
 	INPUT="boolean -N -m --on virt_use_fusefs
@@ -152,22 +170,23 @@ install_policies() {
 	fcontext -N -a -t tftpdir_t \"${ROOTDIR}tftpboot(/.*)?\""
 
 	#
-	# Append modules
+	# Append modules to our semanage script
 	#
 	for x in $MODULES; do
 		INPUT="${INPUT}${CR}module -N -a $DATADIR/selinux/packages/$x.pp.bz2"
 	done
 
 	#
-	# Do everything in one transaction, but don't reload policy
+	# Execute the semanage script:
+	# Do most things in one transaction, but don't reload policy
 	# in case we're in a chroot environment.
 	#
 	do_echo "Installing OpenStack extra policies and setting booleans..."
 	echo "$INPUT" | $SBINDIR/semanage import -N
 
-	# Unfortunately, we can't load modules and set
-	# booleans in those modules in a single transaction, so
-	# do a second one to set our new booleans.
+	# Unfortunately, we can't load new modules and set
+	# booleans defined in those modules in a single transaction,
+	# so do a second one to set our new booleans.
 	INPUT="boolean -N -m --on os_nova_use_execmem
 	boolean -N -m --on os_neutron_use_execmem
 	boolean -N -m --on os_swift_use_execmem
@@ -189,21 +208,29 @@ install_policies() {
 		# above.
 		#
 		$SBINDIR/load_policy
-
 	fi
 
+	# Bug #1560019
 	_restore_file_modes
 }
 
 
 uninstall_policies() {
+	# Bug #1560019
 	_cache_file_modes
+
+	# Remove our modules and rebuild policy
 	do_echo "Removing OpenStack modules..."
 	$SBINDIR/semodule -n -r $MODULES &> /dev/null || :
+
 	relabel_files
+
 	if $SBINDIR/selinuxenabled ; then
+		do_echo "Reloading SELinux policies..."
 		$SBINDIR/load_policy
 	fi
+
+	# Bug #1560019
 	_restore_file_modes
 }
 
