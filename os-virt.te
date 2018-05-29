@@ -2,8 +2,10 @@ policy_module(os-virt,0.1)
 
 gen_require(`
 	type systemd_logind_t;
+	type systemd_logind_inhibit_var_run_t;
 	type virtlogd_t;
 	class dbus send_msg;
+	class fifo_file write;
 ')
 
 # #1561711 - work around inability to send message
@@ -11,6 +13,7 @@ gen_require(`
 # fixed.
 allow virtlogd_t systemd_logind_t:dbus send_msg;
 allow systemd_logind_t virtlogd_t:dbus send_msg;
+allow virtlogd_t systemd_logind_inhibit_var_run_t:fifo_file write;
 
 # #1566973
 # Tunable to allow virtlogd to write to NFS
