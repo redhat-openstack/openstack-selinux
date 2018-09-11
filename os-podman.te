@@ -1,0 +1,7 @@
+policy_module(os-podman, 1.0)
+gen_require(`
+        type container_t;
+')
+#============= container_t ==============
+miscfiles_read_generic_certs(container_t)
+openvswitch_stream_connect(container_t)
