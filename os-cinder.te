@@ -3,9 +3,12 @@ policy_module(os-cinder,0.1)
 gen_require(`
         type cinder_log_t;
         type cinder_backup_t;
+        type systemd_logind_t;
+        type cinder_volume_t;
         type httpd_t;
         class file { open create };
         class dir { add_name write };
+        class dbus { send_msg };
 ')
 
 # Bugzilla 1325623
@@ -14,3 +17,6 @@ allow httpd_t cinder_log_t:dir { add_name write };
 
 # Bugzilla 1384472
 iscsid_domtrans(cinder_backup_t);
+
+# Bugzilla #1628679
+allow systemd_logind_t cinder_volume_t:dbus { send_msg };
