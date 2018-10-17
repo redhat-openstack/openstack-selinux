@@ -21,15 +21,18 @@ gen_require(`
   type virt_log_t;
   type iptables_t;
   type modules_conf_t;
+  type container_share_t;
+  type container_runtime_t;
   attribute nova_domain;
   class key write;
   class packet_socket { bind create getattr };
   class capability { dac_override net_raw sys_ptrace kill };
   class capability2 block_suspend;
-  class file { getattr read write open create execute execute_no_trans };
+  class file { getattr read write open create execute execute_no_trans entrypoint };
   class sock_file write;
-  class dir { add_name write search };
+  class dir { add_name write search read };
   class lnk_file read;
+  class process sigchld;
 ')
 # Bugzilla 1181428
 iscsid_domtrans(virtd_t);
@@ -138,3 +141,9 @@ optional_policy(`
 	allow svirt_t spc_t:fifo_file write_file_perms;
 	allow svirt_t spc_t:file read_file_perms;
 ')
+
+# Requested for podman container engine
+allow svirt_tcg_t container_runtime_t:process sigchld;
+allow svirt_tcg_t container_share_t:file { execute getattr read entrypoint open };
+allow svirt_tcg_t container_share_t:lnk_file read;
+allow svirt_tcg_t container_share_t:dir read;
