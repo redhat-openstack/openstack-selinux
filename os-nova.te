@@ -1,35 +1,35 @@
 policy_module(os-nova,0.1)
 
 gen_require(`
-        type nova_t;
-        type nova_network_t;
-	type nova_var_lib_t;
-	type nova_api_t;
-	type nova_scheduler_t;
-	type nova_console_t;
-	type nova_cert_t;
-	type cert_t;
-	type nova_log_t;
-	type httpd_t;
-	type netutils_exec_t;
-	type virtd_t;
-	type virt_image_t;
-	type svirt_t;
-	type svirt_image_t;
-	type svirt_tcg_t;
-        type virtlogd_t;
-	type virt_log_t;
-	type iptables_t;
-	type modules_conf_t;
-	attribute nova_domain;
-	class key write;
-	class packet_socket { bind create getattr };
-        class capability { dac_override net_raw sys_ptrace kill };
-	class capability2 block_suspend;
-	class file { getattr read write open create execute execute_no_trans };
-	class sock_file write;
-	class dir { add_name write search };
-	class lnk_file read;
+  type nova_t;
+  type nova_network_t;
+  type nova_var_lib_t;
+  type nova_api_t;
+  type nova_scheduler_t;
+  type nova_console_t;
+  type nova_cert_t;
+  type cert_t;
+  type nova_log_t;
+  type httpd_t;
+  type netutils_exec_t;
+  type virtd_t;
+  type virt_image_t;
+  type svirt_t;
+  type svirt_image_t;
+  type svirt_tcg_t;
+  type virtlogd_t;
+  type virt_log_t;
+  type iptables_t;
+  type modules_conf_t;
+  attribute nova_domain;
+  class key write;
+  class packet_socket { bind create getattr };
+  class capability { dac_override net_raw sys_ptrace kill };
+  class capability2 block_suspend;
+  class file { getattr read write open create execute execute_no_trans };
+  class sock_file write;
+  class dir { add_name write search };
+  class lnk_file read;
 ')
 # Bugzilla 1181428
 iscsid_domtrans(virtd_t);
