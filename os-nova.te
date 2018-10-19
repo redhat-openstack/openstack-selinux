@@ -147,3 +147,7 @@ allow svirt_tcg_t container_runtime_t:process sigchld;
 allow svirt_tcg_t container_share_t:file { execute getattr read entrypoint open };
 allow svirt_tcg_t container_share_t:lnk_file read;
 allow svirt_tcg_t container_share_t:dir read;
+
+# Bug 1640528
+auth_use_pam(nova_t)
+init_rw_utmp(nova_t)
