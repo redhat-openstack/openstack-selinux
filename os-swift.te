@@ -2,6 +2,7 @@ policy_module(os-swift,0.1)
 
 gen_require(`
 	type swift_t;
+	type swift_data_t;
 	type amqp_port_t;
 	type var_log_t;
 	class tcp_socket name_connect;

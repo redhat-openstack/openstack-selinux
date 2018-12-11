@@ -4,8 +4,11 @@ gen_require(`
 	type systemd_logind_t;
 	type systemd_logind_inhibit_var_run_t;
 	type virtlogd_t;
+	type svirt_t;
+	type spc_t;
 	class dbus send_msg;
 	class fifo_file write;
+	class tun_socket attach_queue;
 ')
 
 # #1561711 - work around inability to send message
