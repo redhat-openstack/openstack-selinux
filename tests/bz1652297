@@ -1,0 +1,1 @@
+type=AVC msg=audit(1542830504.754:4792): avc:  denied  { read } for  pid=1378 comm="swift-container" name="aae3e64f909b58ab302a0fbb385eff3f.db" dev="loop0" ino=20 scontext=system_u:system_r:swift_t:s0 tcontext=system_u:object_r:swift_data_t:s0 tclass=lnk_file

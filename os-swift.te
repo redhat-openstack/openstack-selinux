@@ -20,3 +20,6 @@ gen_tunable(os_swift_use_execmem, false)
 tunable_policy(`os_swift_use_execmem',`
 	allow swift_t self:process execmem;
 ')
+
+# Bugzilla 1652297
+allow swift_t swift_data_t:lnk_file create;

@@ -1,0 +1,1 @@
+type=AVC msg=audit(1540216030.840:31215): avc:  denied  { attach_queue } for  pid=34373 comm=43505520312F4B564D scontext=system_u:system_r:svirt_t:s0:c457,c875 tcontext=system_u:system_r:spc_t:s0 tclass=tun_socket
