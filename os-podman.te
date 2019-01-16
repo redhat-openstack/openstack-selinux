@@ -1,7 +1,11 @@
 policy_module(os-podman, 1.0)
 gen_require(`
         type container_t;
+        type puppet_etc_t;
 ')
 #============= container_t ==============
 miscfiles_read_generic_certs(container_t)
 openvswitch_stream_connect(container_t)
+# for posterity: read_files_pattern includes dir accesses
+read_files_pattern(container_t, puppet_etc_t, puppet_etc_t)
+read_lnk_files_pattern(container_t, puppet_etc_t, puppet_etc_t)
