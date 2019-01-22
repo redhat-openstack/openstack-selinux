@@ -1,4 +1,4 @@
-TARGETS?=os-ovs os-swift os-nova os-neutron os-mysql os-glance os-rsync os-rabbitmq os-keepalived os-keystone os-haproxy os-mongodb os-ipxe os-redis os-cinder os-httpd os-gnocchi os-collectd os-virt os-dnsmasq os-octavia os-podman
+TARGETS?=os-ovs os-swift os-nova os-neutron os-mysql os-glance os-rsync os-rabbitmq os-keepalived os-keystone os-haproxy os-mongodb os-ipxe os-redis os-cinder os-httpd os-gnocchi os-collectd os-virt os-dnsmasq os-octavia os-podman os-rsyslog
 MODULES?=${TARGETS:=.pp.bz2}
 DATADIR?=/usr/share
 LOCALDIR?=/usr/share/openstack-selinux/master
