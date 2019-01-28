@@ -12,3 +12,13 @@ the selinux-policy package from your operating system.
 Bugs may be filed against the 'openstack-selinux' package
 in the 'RDO' or 'Red Hat OpenStack' products at
 https://bugzilla.redhat.com/
+
+Running the tests
+-----------------
+
+1. Install the selinux-policy-devel package
+2. Ensure the path /usr/share/openstack-selinux/master exists
+3. From your local openstack-selinux repository, run the following
+   command as root:
+
+    $ make clean all install check
