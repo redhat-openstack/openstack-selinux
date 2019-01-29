@@ -9,6 +9,7 @@ gen_require(`
         class file { open create };
         class dir { add_name write };
         class dbus { send_msg };
+        attribute cinder_domain;
 ')
 
 # Bugzilla 1325623
@@ -20,3 +21,12 @@ iscsid_domtrans(cinder_backup_t);
 
 # Bugzilla #1628679
 allow systemd_logind_t cinder_volume_t:dbus { send_msg };
+
+# Bugzilla 1653640
+gen_tunable(os_cinder_use_nfs, false)
+tunable_policy(`os_cinder_use_nfs',`
+        fs_manage_nfs_dirs(cinder_domain)
+        fs_manage_nfs_files(cinder_domain)
+        fs_manage_nfs_symlinks(cinder_domain)
+        fs_exec_nfs_files(cinder_domain)
+')
