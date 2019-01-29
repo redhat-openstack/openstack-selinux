@@ -23,4 +23,4 @@ tunable_policy(`os_swift_use_execmem',`
 ')
 
 # Bugzilla 1652297
-allow swift_t swift_data_t:lnk_file create;
+allow swift_t swift_data_t:lnk_file { create read };
