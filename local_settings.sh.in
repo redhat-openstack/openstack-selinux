@@ -73,6 +73,30 @@ set_port()
 	fi
 }
 
+# usage: set_file_context a|d (add/delete)
+set_file_contexts()
+{
+	INPUT="fcontext -N -$1 -t named_zone_t \"$SHAREDSTATEDIR/designate/bind9(/.*)?\"
+	fcontext -N -$1 -t virt_cache_t \"$SHAREDSTATEDIR/vhost_sockets(/.*)?\"
+	fcontext -N -$1 -t httpd_var_lib_t $SHAREDSTATEDIR/openstack-dashboard
+	fcontext -N -$1 -t mongod_var_lib_t \"$SHAREDSTATEDIR/mongodb(/.*)?\"
+	fcontext -N -$1 -t httpd_log_t $LOCALSTATEDIR/log/gnocchi/app.log
+	fcontext -N -$1 -t httpd_log_t $LOCALSTATEDIR/log/aodh/app.log
+	fcontext -N -$1 -t httpd_log_t $LOCALSTATEDIR/log/ceilometer/app.log
+	fcontext -N -$1 -t httpd_log_t $LOCALSTATEDIR/log/panko/app.log
+	fcontext -N -$1 -t httpd_log_t $LOCALSTATEDIR/log/zaqar/zaqar.log
+	fcontext -N -$1 -t neutron_exec_t $BINDIR/neutron-rootwrap-daemon
+	fcontext -N -$1 -t neutron_exec_t $BINDIR/neutron-vpn-agent
+	fcontext -N -$1 -t swift_var_cache_t \"$LOCALSTATEDIR/cache/swift(/.*)\"
+	fcontext -N -$1 -t swift_exec_t $BINDIR/swift-object-reconstructor
+	fcontext -N -$1 -t swift_exec_t $BINDIR/swift-object-relinker
+	fcontext -N -$1 -t httpd_sys_content_t \"${ROOTDIR}httpboot(/.*)?\"
+	fcontext -N -$1 -t ssh_home_t \"$SHAREDSTATEDIR/nova/.ssh(/.*)?\"
+	fcontext -N -$1 -t tftpdir_t \"${ROOTDIR}tftpboot(/.*)?\""
+
+	echo "$INPUT" | $SBINDIR/semanage import -N
+}
+
 
 _cache_file_modes() {
 	if ! [ -d '/etc/selinux/targeted/active' ]; then
@@ -127,9 +151,12 @@ install_policies() {
 	set_port tcp 6641 ovsdb_port_t
 	set_port tcp 6642 ovsdb_port_t
 
+	# Create all the file contexts
+	set_file_contexts "a"
+
 	# Build up a script to pass to semanage
 	#
-	# Booleans & file contexts
+	# Booleans
 	# -N -> don't reload policy
 	# -m -> modify
 	#
@@ -150,24 +177,7 @@ install_policies() {
 	boolean -N -m --on httpd_can_network_connect
 	boolean -N -m --on swift_can_network
 	boolean -N -m --on httpd_use_openstack
-	boolean -N -m --on collectd_tcp_network_connect
-	fcontext -N -a -t named_zone_t \"$SHAREDSTATEDIR/designate/bind9(/.*)?\"
-	fcontext -N -a -t virt_cache_t \"$SHAREDSTATEDIR/vhost_sockets(/.*)?\"
-	fcontext -N -a -t httpd_var_lib_t $SHAREDSTATEDIR/openstack-dashboard
-	fcontext -N -a -t mongod_var_lib_t \"$SHAREDSTATEDIR/mongodb(/.*)?\"
-	fcontext -N -a -t httpd_log_t $LOCALSTATEDIR/log/gnocchi/app.log
-	fcontext -N -a -t httpd_log_t $LOCALSTATEDIR/log/aodh/app.log
-	fcontext -N -a -t httpd_log_t $LOCALSTATEDIR/log/ceilometer/app.log
-	fcontext -N -a -t httpd_log_t $LOCALSTATEDIR/log/panko/app.log
-	fcontext -N -a -t httpd_log_t $LOCALSTATEDIR/log/zaqar/zaqar.log
-	fcontext -N -a -t neutron_exec_t $BINDIR/neutron-rootwrap-daemon
-	fcontext -N -a -t neutron_exec_t $BINDIR/neutron-vpn-agent
-	fcontext -N -a -t swift_var_cache_t \"$LOCALSTATEDIR/cache/swift(/.*)\"
-	fcontext -N -a -t swift_exec_t $BINDIR/swift-object-reconstructor
-	fcontext -N -a -t swift_exec_t $BINDIR/swift-object-relinker
-	fcontext -N -a -t httpd_sys_content_t \"${ROOTDIR}httpboot(/.*)?\"
-	fcontext -N -a -t ssh_home_t \"$SHAREDSTATEDIR/nova/.ssh(/.*)?\"
-	fcontext -N -a -t tftpdir_t \"${ROOTDIR}tftpboot(/.*)?\""
+	boolean -N -m --on collectd_tcp_network_connect"
 
 	#
 	# Append modules to our semanage script
@@ -222,6 +232,9 @@ uninstall_policies() {
 	# Remove our modules and rebuild policy
 	do_echo "Removing OpenStack modules..."
 	$SBINDIR/semodule -n -r $MODULES &> /dev/null || :
+
+	# Delete all the file contexts
+	set_file_contexts "d"
 
 	relabel_files
 
