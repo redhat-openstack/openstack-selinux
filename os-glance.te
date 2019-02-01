@@ -15,6 +15,7 @@ gen_require(`
 	class lnk_file read;
 	type sudo_exec_t;
 	class file { execute };
+	attribute glance_domain;
 ')
 
 # Bugzilla 1362609
@@ -76,4 +77,13 @@ tunable_policy(`os_glance_use_sudo',`
 	allow glance_api_t self:netlink_audit_socket { create nlmsg_relay };
 	allow glance_api_t self:process { setcap setrlimit setsched };
 	allow glance_api_t sysfs_t:file append;
+')
+
+# Bugzilla 1653640
+gen_tunable(os_glance_use_nfs, false)
+tunable_policy(`os_glance_use_nfs',`
+	fs_manage_nfs_dirs(glance_domain)
+	fs_manage_nfs_files(glance_domain)
+	fs_manage_nfs_symlinks(glance_domain)
+	fs_exec_nfs_files(glance_domain)
 ')
