@@ -84,6 +84,12 @@ install:
 # Note: You can't run this in a build system unless the build 
 #       system has access to change the kernel SELinux policies
 check:
-	cd ${LOCALDIR} && ./local_settings.sh
-	cd ${LOCALDIR}/tests && ./check_all
-	cd ${LOCALDIR} && ./local_settings.sh -x
+	cd ${LOCALDIR} && ./local_settings.sh			;\
+	cd ${LOCALDIR}/tests && ./check_all			;\
+	RET=$$?							;\
+	cd ${LOCALDIR} && ./local_settings.sh -x		;\
+	if [[ "$$RET" -ne 0 ]]; then				\
+		/bin/false					;\
+	else							\
+		/bin/true					;\
+	fi
