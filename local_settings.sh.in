@@ -166,6 +166,7 @@ install_policies() {
 	boolean -N -m --on neutron_can_network
 	boolean -N -m --on glance_use_fusefs
 	boolean -N -m --on haproxy_connect_any
+	boolean -N -m --on nis_enabled
 	boolean -N -m --on rsync_full_access
 	boolean -N -m --on rsync_client
 	boolean -N -m --on virt_use_execmem

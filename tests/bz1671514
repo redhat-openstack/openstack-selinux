@@ -1,0 +1,1 @@
+type=AVC msg=audit(1548880833.900:153941): avc:  denied  { name_connect } for  pid=4841 comm="glance-registry" dest=13357 scontext=system_u:system_r:glance_registry_t:s0 tcontext=system_u:object_r:unreserved_port_t:s0 tclass=tcp_socket
