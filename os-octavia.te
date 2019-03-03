@@ -15,6 +15,9 @@ gen_require(`
 	type proc_security_t;
 	type sysctl_kernel_t;
 	type etc_t;
+	type usermodehelper_t;
+	type keepalived_exec_t;
+	type unconfined_service_t;
 	class sock_file { create link rename setattr unlink write };
 	class capability { sys_ptrace sys_admin };
 	class file { create entrypoint execute execute_no_trans getattr ioctl open read write };
@@ -30,6 +33,7 @@ allow ifconfig_t self:capability sys_ptrace;
 allow ifconfig_t proc_security_t:file manage_file_perms;
 allow ifconfig_t sysctl_fs_t:file manage_file_perms;
 allow ifconfig_t sysctl_kernel_t:file manage_file_perms;
+allow ifconfig_t usermodehelper_t:file { getattr open write };
 
 #
 # XXX Future work: need to set /var/lib/octavia to something
@@ -51,12 +55,15 @@ allow keepalived_t var_lib_t:sock_file { create link rename setattr unlink write
 
 # These are needed during boot when setting up the netns
 allow keepalived_t etc_t:dir mounton;
+allow keepalived_t keepalived_exec_t:file execute_no_trans;
 allow keepalived_t root_t:dir mounton;
 allow keepalived_t sysfs_t:filesystem { mount unmount };
 allow keepalived_t user_tmp_t:dir mounton;
+allow keepalived_t var_run_t:dir { create mounton };
 
 # Same access for haproxy_t
-allow haproxy_t bin_t:file { entrypoint };
+allow haproxy_t bin_t:file { entrypoint execute };
+allow haproxy_t unconfined_service_t:file { open read };
 allow haproxy_t var_lib_t:dir { add_name write remove_name };
 allow haproxy_t var_lib_t:file { create execute execute_no_trans getattr ioctl open read write unlink };
 allow haproxy_t var_lib_t:sock_file { create link rename setattr unlink write };
@@ -69,3 +76,4 @@ allow haproxy_t sysfs_t:filesystem { mount unmount };
 allow haproxy_t user_tmp_t:dir mounton;
 
 kernel_read_fs_sysctls(ifconfig_t)
+
