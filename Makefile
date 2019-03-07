@@ -1,4 +1,4 @@
-TARGETS?=os-ovs os-swift os-nova os-neutron os-mysql os-glance os-rsync os-rabbitmq os-keepalived os-keystone os-haproxy os-mongodb os-ipxe os-redis os-cinder os-httpd os-gnocchi os-collectd os-virt os-dnsmasq os-octavia os-podman os-rsyslog
+TARGETS?=os-ovs os-swift os-nova os-neutron os-mysql os-glance os-rsync os-rabbitmq os-keepalived os-keystone os-haproxy os-mongodb os-ipxe os-redis os-cinder os-httpd os-gnocchi os-collectd os-virt os-dnsmasq os-octavia os-podman os-rsyslog os-pbis
 MODULES?=${TARGETS:=.pp.bz2}
 DATADIR?=/usr/share
 LOCALDIR?=/usr/share/openstack-selinux/master
@@ -19,7 +19,7 @@ local_settings.sh: local_settings.sh.in
 	chmod 0755 $@
 
 clean:
-	rm -f *~ *.if *.tc *.pp *.pp.bz2 local_settings.sh
+	rm -f *~ *.tc *.pp *.pp.bz2 local_settings.sh
 	rm -rf tmp *.tar.gz
 
 tarball: .git/config
