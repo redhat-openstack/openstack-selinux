@@ -50,6 +50,7 @@ allow keepalived_t var_lib_t:file { create execute execute_no_trans getattr ioct
 allow keepalived_t var_lib_t:sock_file { create link rename setattr unlink write };
 
 # These are needed during boot when setting up the netns
+allow keepalived_t bin_t:file { entrypoint };
 allow keepalived_t etc_t:dir mounton;
 allow keepalived_t root_t:dir mounton;
 allow keepalived_t sysfs_t:filesystem { mount unmount };
