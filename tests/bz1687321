@@ -1,0 +1,1 @@
+type=AVC msg=audit(1552241787.746:60): avc:  denied  { entrypoint } for  pid=3530 comm="(kill)" path="/usr/bin/kill" dev="vda1" ino=43348 scontext=system_u:system_r:keepalived_t:s0 tcontext=system_u:object_r:bin_t:s0 tclass=file permissive=1
