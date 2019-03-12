@@ -178,7 +178,8 @@ install_policies() {
 	boolean -N -m --on httpd_can_network_connect
 	boolean -N -m --on swift_can_network
 	boolean -N -m --on httpd_use_openstack
-	boolean -N -m --on collectd_tcp_network_connect"
+	boolean -N -m --on collectd_tcp_network_connect
+	boolean -N -m --on domain_can_mmap_files"
 
 	#
 	# Append modules to our semanage script
