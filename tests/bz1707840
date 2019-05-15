@@ -1,0 +1,1 @@
+type=AVC msg=audit(1557322725.873:12375): avc:  denied  { read write } for  pid=8786 comm="vhost-events" path="socket:[16378370]" dev="sockfs" ino=16378370 scontext=system_u:system_r:openvswitch_t:s0 tcontext=system_u:system_r:spc_t:s0 tclass=unix_stream_socket permissive=1

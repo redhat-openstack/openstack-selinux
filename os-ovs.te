@@ -19,6 +19,7 @@ gen_require(`
 	type svirt_t;
 	type svirt_tmpfs_t;
 	type virt_cache_t;
+        type spc_t;
 	class dir search;
 	class file { write read getattr open };
 	class tcp_socket name_bind;
@@ -28,6 +29,7 @@ gen_require(`
 	class netlink_audit_socket { create nlmsg_relay read write };
 	class capability audit_write;
 	class packet_socket create_socket_perms;
+        class unix_stream_socket { read write connectto };
 ')
 
 # Bugzilla 1108187
@@ -120,3 +122,5 @@ corenet_tcp_bind_all_ports(openvswitch_t)
 # #1572510
 allow openvswitch_t svirt_t:unix_stream_socket { read write };
 
+# bugzilla #1707840
+allow openvswitch_t spc_t:unix_stream_socket { read write };
