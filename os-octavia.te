@@ -67,7 +67,7 @@ allow haproxy_t unconfined_service_t:file { open read };
 allow haproxy_t var_lib_t:dir { add_name write remove_name };
 allow haproxy_t var_lib_t:file { create execute execute_no_trans getattr ioctl open read write unlink };
 allow haproxy_t var_lib_t:sock_file { create link rename setattr unlink write };
-allow haproxy_t self:capability { sys_admin };
+allow haproxy_t self:capability { sys_admin dac_override };
 
 # These are needed during boot when setting up the netns
 allow haproxy_t etc_t:dir mounton;
