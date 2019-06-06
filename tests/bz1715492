@@ -1,0 +1,2 @@
+type=AVC msg=audit(1559218642.208:72): avc:  denied  { dac_override } for  pid=6702 comm="haproxy" capability=1  scontext=system_u:system_r:haproxy_t:s0 tcontext=system_u:system_r:haproxy_t:s0 tclass=capability permissive=1
+
