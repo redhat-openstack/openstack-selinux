@@ -1,0 +1,10 @@
+policy_module(os-barbican,0.1)
+
+gen_require(`
+  type container_t;
+  type pki_common_t;
+')
+
+# Bugzilla 1732578
+allow container_t pki_common_t:dir read;
+exec_files_pattern(container_t, pki_common_t, pki_common_t);
