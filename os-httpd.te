@@ -10,6 +10,7 @@ gen_require(`
 	type keystone_log_t;
 	type nova_api_t;
 	type keystone_var_lib_t;
+	type container_file_t;
 ')
 
 #
@@ -45,4 +46,10 @@ tunable_policy(`os_httpd_wsgi',`
 	# Bugzilla #1315457
 	# Bugzilla #1489863
 	corenet_tcp_bind_all_ports(httpd_t)
+
+	# Allow read-only access to container_file_t
+	# This is due to image-server, and images being pulled via mistral container
+	# during an update/upgrade
+	read_files_pattern(httpd_t, container_file_t, container_file_t)
+	allow httpd_t container_file_t:dir read;
 ')
