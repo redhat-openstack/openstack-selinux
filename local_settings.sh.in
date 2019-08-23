@@ -92,7 +92,9 @@ set_file_contexts()
 	fcontext -N -$1 -t swift_exec_t $BINDIR/swift-object-relinker
 	fcontext -N -$1 -t httpd_sys_content_t \"${ROOTDIR}httpboot(/.*)?\"
 	fcontext -N -$1 -t ssh_home_t \"$SHAREDSTATEDIR/nova/.ssh(/.*)?\"
-	fcontext -N -$1 -t tftpdir_t \"${ROOTDIR}tftpboot(/.*)?\""
+	fcontext -N -$1 -t tftpdir_t \"${ROOTDIR}tftpboot(/.*)?\"
+	fcontext -N -$1 -t cluster_var_log_t \"$LOCALSTATEDIR/log/pacemaker\.log.*\"
+	fcontext -N -$1 -t cluster_var_log_t \"$LOCALSTATEDIR/log/pacemaker(/.*)?\""
 
 	echo "$INPUT" | $SBINDIR/semanage import -N
 }
