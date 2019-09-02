@@ -2,9 +2,18 @@ policy_module(os-barbican,0.1)
 
 gen_require(`
   type container_t;
+  type initrc_t;
   type pki_common_t;
 ')
 
 # Bugzilla 1732578
 allow container_t pki_common_t:dir read;
 exec_files_pattern(container_t, pki_common_t, pki_common_t);
+
+gen_tunable(os_barbican_write_pki, false)
+tunable_policy(`os_barbican_write_pki',`
+    allow container_t initrc_t:unix_stream_socket connectto;
+    allow container_t pki_common_t:dir { add_name remove_name write };
+    allow container_t pki_common_t:file { append create lock rename write };
+    allow container_t pki_common_t:sock_file write;
+')
