@@ -85,6 +85,8 @@ set_file_contexts()
 	fcontext -N -$1 -t httpd_log_t $LOCALSTATEDIR/log/ceilometer/app.log
 	fcontext -N -$1 -t httpd_log_t $LOCALSTATEDIR/log/panko/app.log
 	fcontext -N -$1 -t httpd_log_t $LOCALSTATEDIR/log/zaqar/zaqar.log
+	fcontext -N -$1 -t container_file_t \"$LOCALSTATEDIR/log/containers/(.*)?\"
+	fcontext -N -$1 -t var_log_t \"$LOCALSTATEDIR/log/containers(/haproxy)?\"
 	fcontext -N -$1 -t neutron_exec_t $BINDIR/neutron-rootwrap-daemon
 	fcontext -N -$1 -t neutron_exec_t $BINDIR/neutron-vpn-agent
 	fcontext -N -$1 -t swift_var_cache_t \"$LOCALSTATEDIR/cache/swift(/.*)\"
