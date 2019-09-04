@@ -1,0 +1,4 @@
+type=AVC msg=audit(1567480861.728:31696): avc:  denied  { write } for  pid=683284 comm="logrotate" name="openvswitch" dev="sda2" ino=2881762 scontext=system_u:system_r:logrotate_t:s0-s0:c0.c1023 tcontext=system_u:object_r:container_file_t:s0 tclass=dir permissive=0
+type=AVC msg=audit(1562508548.724:40): avc:  denied  { execute_no_trans } for  pid=1212 comm="modprobe" path="/usr/bin/bash" dev="vda2" ino=4215568 scontext=system_u:system_r:openvswitch_load_module_t:s0 tcontext=system_u:object_r:shell_exec_t:s0 tclass=file permissive=0
+type=AVC msg=audit(1562513521.955:5768): avc:  denied  { read } for  pid=54302 comm="logrotate" name="openvswitch" dev="vda2" ino=1012142 scontext=system_u:system_r:logrotate_t:s0-s0:c0.c1023 tcontext=system_u:object_r:container_file_t:s0 tclass=dir permissive=0
+
