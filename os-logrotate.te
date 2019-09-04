@@ -1,0 +1,9 @@
+policy_module(os-logrotate,0.1)
+
+# Bugzilla 1727937
+gen_require(`
+  type logrotate_t;
+  type container_file_t;
+')
+manage_files_pattern(logrotate_t, container_file_t, container_file_t)
+manage_dirs_pattern(logrotate_t, container_file_t, container_file_t)
