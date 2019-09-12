@@ -6,6 +6,7 @@ gen_require(`
 	type virtlogd_t;
 	type svirt_t;
 	type spc_t;
+	type unlabeled_t;
 	class dbus send_msg;
 	class fifo_file write;
 	class tun_socket attach_queue;
@@ -29,3 +30,6 @@ tunable_policy(`os_virtlogd_use_nfs',`
 
 # Bugzilla 1642102
 allow svirt_t spc_t:tun_socket attach_queue;
+
+# Bugzilla 1751300
+allow spc_t unlabeled_t:key manage_key_perms;
