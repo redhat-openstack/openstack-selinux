@@ -18,6 +18,8 @@ gen_require(`
 	type usermodehelper_t;
 	type keepalived_exec_t;
 	type unconfined_service_t;
+	type NetworkManager_t;
+	type tmpfs_t;
 	class sock_file { create link rename setattr unlink write };
 	class capability { sys_ptrace sys_admin };
 	class file { create entrypoint execute execute_no_trans getattr ioctl open read write };
@@ -60,7 +62,9 @@ allow keepalived_t keepalived_exec_t:file execute_no_trans;
 allow keepalived_t root_t:dir mounton;
 allow keepalived_t sysfs_t:filesystem { mount unmount };
 allow keepalived_t user_tmp_t:dir mounton;
-allow keepalived_t var_run_t:dir { create mounton };
+allow keepalived_t var_run_t:dir { create mounton rmdir };
+allow keepalived_t sysfs_t:dir mounton;
+allow keepalived_t tmpfs_t:filesystem unmount;
 
 # Same access for haproxy_t
 allow haproxy_t bin_t:file { entrypoint execute };
@@ -75,6 +79,8 @@ allow haproxy_t etc_t:dir mounton;
 allow haproxy_t root_t:dir mounton;
 allow haproxy_t sysfs_t:filesystem { mount unmount };
 allow haproxy_t user_tmp_t:dir mounton;
+allow haproxy_t NetworkManager_t:file { open read };
+allow haproxy_t sysfs_t:dir mounton;
 
 kernel_read_fs_sysctls(ifconfig_t)
 
