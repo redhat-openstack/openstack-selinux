@@ -69,7 +69,7 @@ allow neutron_t self:netlink_xfrm_socket { bind create nlmsg_write };
 ipsec_exec_mgmt(neutron_t)
 ipsec_manage_key_file(neutron_t)
 ipsec_read_config(neutron_t)
-seutil_exec_restorecon(neutron_t)
+seutil_exec_setfiles(neutron_t)
 
 # Bugzilla 1280083
 allow neutron_t httpd_config_t:dir search;
