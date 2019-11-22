@@ -1,0 +1,1 @@
+type=AVC msg=audit(1573651690.514:4640): avc:  denied  { create } for  pid=34421 comm="ovs-vswitchd" name="dpdk" scontext=system_u:system_r:openvswitch_t:s0 tcontext=system_u:object_r:container_file_t:s0 tclass=dir permissive=1
