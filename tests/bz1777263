@@ -1,0 +1,3 @@
+type=AVC msg=audit(1574861307.690:5254): avc:  denied  { getattr } for  pid=25373 comm="ruby" path="/etc/puppet/hiera.yaml" dev="sda1" ino=150996716 scontext=system_u:system_r:certmonger_t:s0 tcontext=system_u:object_r:puppet_etc_t:s0 tclass=file permissive=1
+type=AVC msg=audit(1574861307.690:5255): avc:  denied  { read } for  pid=25373 comm="ruby" name="hiera.yaml" dev="sda1" ino=150996716 scontext=system_u:system_r:certmonger_t:s0 tcontext=system_u:object_r:puppet_etc_t:s0 tclass=file permissive=1
+type=AVC msg=audit(1574861307.690:5255): avc:  denied  { open } for  pid=25373 comm="ruby" path="/etc/puppet/hiera.yaml" dev="sda1" ino=150996716 scontext=system_u:system_r:certmonger_t:s0 tcontext=system_u:object_r:puppet_etc_t:s0 tclass=file permissive=1

@@ -1,0 +1,10 @@
+policy_module(os-certmonger,0.1)
+
+gen_require(`
+  type certmonger_t;
+  type puppet_etc_t;
+  class dir {search};
+')
+# rhbz#1777263
+allow certmonger_t puppet_etc_t:dir search;
+read_files_pattern(certmonger_t, puppet_etc_t, puppet_etc_t)
