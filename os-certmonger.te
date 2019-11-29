@@ -8,3 +8,7 @@ gen_require(`
 # rhbz#1777263
 allow certmonger_t puppet_etc_t:dir search;
 read_files_pattern(certmonger_t, puppet_etc_t, puppet_etc_t)
+
+# rhbz#1777368
+container_runtime_domtrans(certmonger_t)
+container_runtime_entrypoint(certmonger_t)
