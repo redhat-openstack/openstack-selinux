@@ -4,11 +4,27 @@ gen_require(`
   type certmonger_t;
   type puppet_etc_t;
   class dir {search};
+  # Should be removed once we use the proper interfaces
+  type container_runtime_exec_t;
+  type container_runtime_t;
+  type container_runtime_tmpfs_t;
 ')
 # rhbz#1777263
 allow certmonger_t puppet_etc_t:dir search;
 read_files_pattern(certmonger_t, puppet_etc_t, puppet_etc_t)
 
 # rhbz#1777368
-container_runtime_domtrans(certmonger_t)
-container_runtime_entrypoint(certmonger_t)
+# Here we have a problem: old container-selinux version we have in CentOS-7
+# has interfaces named "container_entrypoint" and "container_domtrans".
+# But it was renamed to "container_runtime_entrypoint" and
+# "container_runtime_domtrans" later, and this change is not backward
+# compatible. So as long as we support CentOS-7 (and RHEL-7) we need
+# to avoid calling those interfaces.
+
+# container_runtime_domtrans(certmonger_t)
+corecmd_search_bin(certmonger_t)
+domtrans_pattern(certmonger_t, container_runtime_exec_t, container_runtime_t)
+allow container_runtime_t certmonger_t:fifo_file setattr;
+
+# container_runtime_entrypoint(certmonger_t)
+allow certmonger_t container_runtime_exec_t:file entrypoint;
