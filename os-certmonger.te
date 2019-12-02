@@ -11,4 +11,4 @@ read_files_pattern(certmonger_t, puppet_etc_t, puppet_etc_t)
 
 # rhbz#1777368
 container_runtime_domtrans(certmonger_t)
-container_runtime_entrypoint(certmonger_t)
+allow certmonger_t container_runtime_exec_t:file entrypoint;
