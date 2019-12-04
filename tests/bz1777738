@@ -1,0 +1,1 @@
+type=AVC msg=audit(11/29/2019 14:32:51.557:32236) : avc:  denied  { write } for  pid=205548 comm=iptables path=pipe:[1864791] dev="pipefs" ino=1864791 scontext=system_u:system_r:iptables_t:s0 tcontext=system_u:system_r:certmonger_t:s0 tclass=fifo_file permissive=1

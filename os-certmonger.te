@@ -2,6 +2,7 @@ policy_module(os-certmonger,0.1)
 
 gen_require(`
   type certmonger_t;
+  type iptables_t;
   type puppet_etc_t;
   class dir {search};
 ')
@@ -12,3 +13,6 @@ read_files_pattern(certmonger_t, puppet_etc_t, puppet_etc_t)
 # rhbz#1777368
 container_runtime_domtrans(certmonger_t)
 container_runtime_entrypoint(certmonger_t)
+
+# rhbz#1777738
+write_fifo_files_pattern(iptables_t, certmonger_t, certmonger_t)
