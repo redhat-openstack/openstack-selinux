@@ -5,6 +5,7 @@ gen_require(`
         type openvswitch_t;
         type puppet_etc_t;
         type cluster_var_log_t;
+        type init_t;
 ')
 #============= container_t ==============
 miscfiles_read_generic_certs(container_t)
@@ -23,3 +24,6 @@ allow openvswitch_t self:capability net_broadcast;
 # needed for HA containers
 manage_files_pattern(container_t, cluster_var_log_t, cluster_var_log_t);
 manage_dirs_pattern(container_t, cluster_var_log_t, cluster_var_log_t);
+
+# Needed for LP#1853652
+allow init_t container_file_t:file { execute execute_no_trans };

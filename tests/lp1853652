@@ -1,0 +1,3 @@
+type=AVC msg=audit(1576568492.577:8193): avc:  denied  { execute } for  pid=77376 comm="(sync)" name="sync" dev="vda1" ino=236350363 scontext=system_u:system_r:init_t:s0 tcontext=system_u:object_r:container_file_t:s0 tclass=file permissive=1
+type=AVC msg=audit(1576568492.577:8193): avc:  denied  { execute_no_trans } for  pid=77376 comm="(sync)" path="/var/lib/neutron/dhcp_dnsmasq/sync" dev="vda1" ino=236350363 scontext=system_u:system_r:init_t:s0 tcontext=system_u:object_r:container_file_t:s0 tclass=file permissive=1
+
