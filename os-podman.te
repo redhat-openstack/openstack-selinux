@@ -19,7 +19,9 @@ allow openvswitch_t container_file_t:dir create;
 
 manage_files_pattern(openvswitch_t, container_file_t, container_file_t)
 manage_sock_files_pattern(openvswitch_t, container_file_t, container_file_t)
-allow openvswitch_t self:capability net_broadcast;
+
+# Bugzilla 1778793
+allow openvswitch_t self:capability { net_broadcast fowner fsetid };
 
 # needed for HA containers
 manage_files_pattern(container_t, cluster_var_log_t, cluster_var_log_t);

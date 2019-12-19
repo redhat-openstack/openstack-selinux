@@ -1,0 +1,2 @@
+type=AVC msg=audit(12/02/2019 13:32:12.703:5794) : avc:  denied  { fsetid } for  pid=3137 comm=install capability=fsetid  scontext=system_u:system_r:openvswitch_t:s0 tcontext=system_u:system_r:openvswitch_t:s0 tclass=capability permissive=1
+type=AVC msg=audit(12/02/2019 13:32:12.703:5794) : avc:  denied  { fowner } for  pid=3137 comm=install capability=fowner  scontext=system_u:system_r:openvswitch_t:s0 tcontext=system_u:system_r:openvswitch_t:s0 tclass=capability permissive=1
