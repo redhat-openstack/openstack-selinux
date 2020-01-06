@@ -14,7 +14,7 @@ gen_require(`
 	type ifconfig_exec_t;
 	type ifconfig_t;
 	class filesystem getattr;
-	class process { signull sigkill setpgid };
+	class process { signull sigkill setpgid setcap };
 	class capability { net_admin net_raw kill dac_override sys_admin };
 	class file { execute read create ioctl unlink execute_no_trans write getattr open entrypoint };
 ')
@@ -57,3 +57,7 @@ allow keepalived_t self:process setpgid;
 # Bugzilla #1434826
 allow keepalived_t ifconfig_exec_t:file entrypoint;
 sysnet_domtrans_ifconfig(keepalived_t)
+
+# Bugzilla 1789068
+netutils_exec_ping(keepalived_t)
+allow keepalived_t self:process setcap;
