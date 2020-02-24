@@ -13,6 +13,8 @@ openvswitch_stream_connect(container_t)
 # for posterity: read_files_pattern includes dir accesses
 read_files_pattern(container_t, puppet_etc_t, puppet_etc_t)
 read_lnk_files_pattern(container_t, puppet_etc_t, puppet_etc_t)
+# but read_files_pattern does not allow "read" on tclass=dir
+allow container_t puppet_etc_t:dir { read };
 
 # bugzilla #1772025
 allow openvswitch_t container_file_t:dir create;
