@@ -1,0 +1,1 @@
+type=AVC msg=audit(1582559167.088:1893): avc:  denied  { read } for  pid=39502 comm="ls" name="puppet" dev="sda1" ino=113293470 scontext=system_u:system_r:container_t:s0:c390,c595 tcontext=system_u:object_r:puppet_etc_t:s0 tclass=dir permissive=0
