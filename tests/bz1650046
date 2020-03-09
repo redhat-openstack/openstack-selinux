@@ -1,0 +1,3 @@
+type=AVC msg=audit(1583112189.890:19129): avc:  denied  { read } for  pid=13620 comm="inet_gethost" name="unix" dev="proc" ino=4026532003 scontext=system_u:system_r:rabbitmq_t:s0 tcontext=system_u:object_r:proc_net_t:s0 tclass=file permissive=1
+type=AVC msg=audit(1583136605.180:19713): avc:  denied  { setrlimit } for  pid=20488 comm="runuser" scontext=system_u:system_r:logrotate_t:s0-s0:c0.c1023 tcontext=system_u:system_r:logrotate_t:s0-s0:c0.c1023 tclass=process permissive=1
+type=AVC msg=audit(1583136606.388:19715): avc:  denied  { read } for  pid=20640 comm="inet_gethost" name="unix" dev="proc" ino=4026532003 scontext=system_u:system_r:logrotate_t:s0-s0:c0.c1023 tcontext=system_u:object_r:proc_net_t:s0 tclass=file permissive=1
