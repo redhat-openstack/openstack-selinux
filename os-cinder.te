@@ -5,9 +5,10 @@ gen_require(`
         type cinder_backup_t;
         type systemd_logind_t;
         type cinder_volume_t;
+        type cinder_var_lib_t;
         type httpd_t;
         class file { open create };
-        class dir { add_name write };
+        class dir { add_name write create };
         class dbus { send_msg };
         attribute cinder_domain;
 ')
@@ -15,6 +16,10 @@ gen_require(`
 # Bugzilla 1325623
 allow httpd_t cinder_log_t:file { open create };
 allow httpd_t cinder_log_t:dir { add_name write };
+
+# Cinder in WSGI needs to create directory
+# See https://review.rdoproject.org/r/#/c/26194/
+allow httpd_t cinder_var_lib_t:dir { add_name write create };
 
 # Bugzilla 1384472
 iscsid_domtrans(cinder_backup_t);
