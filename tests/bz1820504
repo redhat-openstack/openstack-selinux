@@ -1,0 +1,3 @@
+type=AVC msg=audit(1585843550.178:7813550): avc: denied { add_name } for pid=3306876 comm="httpd" name="groups" scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:cinder_var_lib_t:s0 tclass=dir
+type=AVC msg=audit(1585843799.707:7814032): avc: denied { write } for pid=3306876 comm="httpd" name="cinder" dev="dm-0" ino=1230986 scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:cinder_var_lib_t:s0 tclass=dir
+type=AVC msg=audit(1585843767.395:7814013): avc: denied { create } for pid=3306875 comm="httpd" name="groups" scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:cinder_var_lib_t:s0 tclass=dir
