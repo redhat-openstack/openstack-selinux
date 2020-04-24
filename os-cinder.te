@@ -7,7 +7,7 @@ gen_require(`
         type cinder_volume_t;
         type cinder_var_lib_t;
         type httpd_t;
-        class file { open create };
+        class file { open create append getattr lock };
         class dir { add_name write create };
         class dbus { send_msg };
         attribute cinder_domain;
@@ -19,6 +19,9 @@ allow httpd_t cinder_log_t:dir { add_name write };
 
 # Bugzilla 1820504
 allow httpd_t cinder_var_lib_t:dir { add_name write create };
+
+# Allow httpd to handle files in statedir
+allow httpd_t cinder_var_lib_t:file { open create append getattr lock };
 
 # Bugzilla 1384472
 iscsid_domtrans(cinder_backup_t);
