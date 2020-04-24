@@ -1,3 +1,8 @@
 type=AVC msg=audit(1585843550.178:7813550): avc: denied { add_name } for pid=3306876 comm="httpd" name="groups" scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:cinder_var_lib_t:s0 tclass=dir
 type=AVC msg=audit(1585843799.707:7814032): avc: denied { write } for pid=3306876 comm="httpd" name="cinder" dev="dm-0" ino=1230986 scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:cinder_var_lib_t:s0 tclass=dir
 type=AVC msg=audit(1585843767.395:7814013): avc: denied { create } for pid=3306875 comm="httpd" name="groups" scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:cinder_var_lib_t:s0 tclass=dir
+
+
+type=AVC msg=audit(1587719480.723:9252596): avc: denied { append open } for pid=3907385 comm="httpd" path="/var/lib/cinder/cinder-attachment_update-b3b103ae-78a6-424f-b406-642d177c6c20-" dev="dm-0" ino=135032832 scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:cinder_var_lib_t:s0 tclass=file
+type=AVC msg=audit(1587719779.203:2939539): avc: denied { getattr } for pid=2451695 comm="httpd" path="/var/lib/cinder/cinder-attachment_update-243361c4-189a-423c-963a-89beefac2135-" dev="dm-0" ino=134395353 scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:cinder_var_lib_t:s0 tclass=file
+type=AVC msg=audit(1587720082.812:2942608): avc: denied { lock } for pid=2451695 comm="httpd" path="/var/lib/cinder/cinder-attachment_update-243361c4-189a-423c-963a-89beefac2135-" dev="dm-0" ino=134395353 scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:cinder_var_lib_t:s0 tclass=file
