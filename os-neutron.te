@@ -4,6 +4,7 @@ gen_require(`
 	type neutron_t;
 	type neutron_var_lib_t;
 	type neutron_tmp_t;
+	type neutron_exec_t;
 	type haproxy_exec_t;
 	type haproxy_t;
 	type httpd_config_t;
@@ -45,6 +46,7 @@ neutron_domtrans(keepalived_t)
 
 # Bugzilla 1169859 & 1171460 & 1171458
 can_exec(neutron_t,neutron_var_lib_t)
+can_exec(neutron_t,neutron_exec_t)
 keepalived_domtrans(neutron_t)
 allow neutron_t self:netlink_socket { bind create getattr };
 
