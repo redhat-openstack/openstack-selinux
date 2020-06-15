@@ -1,0 +1,2 @@
+type=AVC msg=audit(1592206154.561:5419): avc: denied { execute_no_trans } for pid=3827 comm="sudo" path="/usr/bin/neutron-rootwrap-daemon" dev="sda1" ino=9310801 scontext=system_u:system_r:neutron_t:s0 tcontext=system_u:object_r:neutron_exec_t:s0 tclass=file permissive=0
+type=AVC msg=audit(1592206157.680:5438): avc: denied { execute_no_trans } for pid=3860 comm="sudo" path="/usr/bin/neutron-rootwrap-daemon" dev="sda1" ino=9310801 scontext=system_u:system_r:neutron_t:s0 tcontext=system_u:object_r:neutron_exec_t:s0 tclass=file permissive=0
