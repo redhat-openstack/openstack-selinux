@@ -1,0 +1,1 @@
+type=AVC msg=audit(1593076023.722:2752): avc: denied { dac_override } for pid=91081 comm="privsep-helper" capability=1 scontext=system_u:system_r:neutron_t:s0 tcontext=system_u:system_r:neutron_t:s0 tclass=capability permissive=0
