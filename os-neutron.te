@@ -63,16 +63,22 @@ allow neutron_t http_port_t:tcp_socket name_bind;
 # Bugzilla 1230900
 manage_sock_files_pattern(neutron_t, neutron_tmp_t, neutron_tmp_t)
 
-# Bugzilla 1245846 & 1850973
+# Bugzilla 1245846
 allow neutron_t ipsec_key_file_t:file { read ioctl open getattr };
 allow neutron_t modules_object_t:file getattr;
-allow neutron_t self:capability { setpcap dac_override };
+allow neutron_t self:capability { setpcap };
 allow neutron_t self:key_socket { write read create };
 allow neutron_t self:netlink_xfrm_socket { bind create nlmsg_write };
 ipsec_exec_mgmt(neutron_t)
 ipsec_manage_key_file(neutron_t)
 ipsec_read_config(neutron_t)
 seutil_exec_setfiles(neutron_t)
+
+# Bugzilla 1850973
+gen_tunable(os_neutron_dac_override, false)
+tunable_policy(`os_neutron_dac_override',`
+	allow neutron_t self:capability { dac_override };
+')
 
 # Bugzilla 1280083
 allow neutron_t httpd_config_t:dir search;
