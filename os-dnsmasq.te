@@ -4,9 +4,14 @@ gen_require(`
 	type var_lib_t;
 	type dnsmasq_t;
 	class file manage_file_perms;
+	class capability dac_override;
 ')
 
 # bug 1568993
 # dnsmasq_t can already create/delete var_lib_t directories
 allow dnsmasq_t var_lib_t:file manage_file_perms;
 
+gen_tunable(os_dnsmasq_dac_override, false)
+tunable_policy(`os_dnsmasq_dac_override',`
+	allow dnsmasq_t self:capability { dac_override };
+')
