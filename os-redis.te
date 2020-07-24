@@ -1,6 +1,8 @@
 policy_module(os-redis,0.1)
 
 gen_require(`
+	type container_file_t;
+	type init_t;
 	type redis_port_t;
 	type redis_t;
 	type cluster_var_log_t;
@@ -8,8 +10,11 @@ gen_require(`
 	type useradd_t;
 	class tcp_socket name_connect;
 	class file { read write };
+	class sock_file { setattr unlink };
 ')
 
 # Bugzilla 1283674
 allow sshd_t cluster_var_log_t:file { read write };
 allow useradd_t cluster_var_log_t:file { read write };
+# Bugzilla 1860423
+allow init_t container_file_t:sock_file { setattr unlink };

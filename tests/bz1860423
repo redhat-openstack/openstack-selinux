@@ -1,0 +1,1 @@
+type=AVC msg=audit(1595596546.420:1482): avc:  denied  { unlink } for  pid=1 comm="systemd" name="redis.sock" dev="tmpfs" ino=419874 scontext=system_u:system_r:init_t:s0 tcontext=system_u:object_r:container_file_t:s0 tclass=sock_file permissive=0
