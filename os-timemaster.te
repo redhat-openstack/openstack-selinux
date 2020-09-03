@@ -1,0 +1,9 @@
+policy_module(os-timemaster,0.1)
+
+gen_require(`
+  type ptp4l_t;
+')
+
+# Bugzilla 1872651 referencing RHEL bug 1759214. We need this for 8.2 too.
+allow ptp4l_t self:capability sys_admin;
+allow ptp4l_t self:packet_socket create_socket_perms;
