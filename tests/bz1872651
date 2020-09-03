@@ -1,0 +1,5 @@
+type=AVC msg=audit(1598898583.306:659): avc:  denied  { sys_admin } for  pid=2595 comm="ptp4l" capability=21  scontext=system_u:system_r:ptp4l_t:s0 tcontext=system_u:system_r:ptp4l_t:s0 tclass=capability permiss
+type=AVC msg=audit(1598898583.306:658): avc:  denied  { setopt } for  pid=2595 comm="ptp4l" scontext=system_u:system_r:ptp4l_t:s0 tcontext=system_u:system_r:ptp4l_t:s0 tclass=packet_socket permissive=1
+type=AVC msg=audit(1598898583.298:657): avc:  denied  { bind } for  pid=2595 comm="ptp4l" scontext=system_u:system_r:ptp4l_t:s0 tcontext=system_u:system_r:ptp4l_t:s0 tclass=packet_socket permissive=1
+type=AVC msg=audit(1598898583.298:656): avc:  denied  { ioctl } for  pid=2595 comm="ptp4l" path="socket:[186527]" dev="sockfs" ino=186527 ioctlcmd=0x8933 scontext=system_u:system_r:ptp4l_t:s0 tcontext=system_u:s
+type=AVC msg=audit(1598898583.298:655): avc:  denied  { create } for  pid=2595 comm="ptp4l" scontext=system_u:system_r:ptp4l_t:s0 tcontext=system_u:system_r:ptp4l_t:s0 tclass=packet_socket permissive=1
