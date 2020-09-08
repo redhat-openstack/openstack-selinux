@@ -16,6 +16,56 @@ MODULES=${MODULES:-@MODULES@}
 # See bug for bug #1560019 for more information.
 declare -A file_modes
 
+# This associative array ("dict", "map", "hash") holds ALL the specific
+# location with specific fcontext settings.
+declare -A custom_fcontext=(
+["$SHAREDSTATEDIR/designate/bind9(/.*)?"]='named_zone_t'
+["$SHAREDSTATEDIR/vhost_sockets(/.*)?"]='virt_cache_t'
+["$SHAREDSTATEDIR/openstack-dashboard"]='httpd_var_lib_t'
+["$SHAREDSTATEDIR/mongodb(/.*)?"]='mongod_var_lib_t'
+["$LOCALSTATEDIR/log/gnocchi/app.log"]='httpd_log_t'
+["$LOCALSTATEDIR/log/aodh/app.log"]='httpd_log_t'
+["$LOCALSTATEDIR/log/ceilometer/app.log"]='httpd_log_t'
+["$LOCALSTATEDIR/log/panko/app.log"]='httpd_log_t'
+["$LOCALSTATEDIR/log/zaqar/zaqar.log"]='httpd_log_t'
+["$LOCALSTATEDIR/log/containers(/.*)?"]='container_file_t'
+["$LOCALSTATEDIR/lib/config-data(/.*)?"]='container_file_t'
+["$LOCALSTATEDIR/lib/tripleo-config(/.*)?"]='container_file_t'
+["$BINDIR/neutron-rootwrap-daemon"]='neutron_exec_t'
+["$BINDIR/neutron-vpn-agent"]='neutron_exec_t'
+["$LOCALSTATEDIR/cache/swift(/.*)"]='swift_var_cache_t'
+["$BINDIR/swift-object-reconstructor"]='swift_exec_t'
+["$BINDIR/swift-object-relinker"]='swift_exec_t'
+["${ROOTDIR}httpboot(/.*)?"]='httpd_sys_content_t'
+["$SHAREDSTATEDIR/nova/.ssh(/.*)?"]='ssh_home_t'
+["${ROOTDIR}tftpboot(/.*)?"]='tftpdir_t'
+["$LOCALSTATEDIR/log/pacemaker.log.*"]='cluster_var_log_t'
+["$LOCALSTATEDIR/log/pacemaker(/.*)?"]='cluster_var_log_t'
+)
+
+# This associative array ("dict", "map", "hash") will holds all the current
+# custom fcontext settings
+declare -A existing_custom_fcontext
+
+# This associative array ("dict", "map", "hash") will holds all the differences
+# we have between existing custom fcontext, and what we really want.
+# It will be used in different methods in this script.
+declare -A diff_fcontext
+
+# Let's populate the existing_custom_fcontext
+for l in $(semanage fcontext -Cln | awk -F '[: ]+' '{print $1";"$6}'); do
+	existing_custom_fcontext+=([$(echo $l|cut -d ';' -f1)]=$(echo $l|cut -d ';' -f2))
+done
+
+# Let's populate the diff_fcontext
+for i in "${!custom_fcontext[@]}"; do
+    if [[ ! -v existing_custom_fcontext["$i"] ]]; then
+        diff_fcontext+=([$i]=${custom_fcontext[$i]})
+    elif [[ ${existing_custom_fcontext["$i"]} != "${custom_fcontext[$i]}" ]]; then
+        diff_fcontext+=([$i]=${custom_fcontext[$i]})
+    fi
+done
+
 do_echo() {
 	if [ $QUIET -eq 0 ]; then
 		return
@@ -23,38 +73,40 @@ do_echo() {
 	echo $*
 }
 
+function get_clean_name() {
+    if [[ "${1}" =~ '(' ]]; then
+        echo "$1" | cut -d '(' -f1
+    else
+        echo $1
+    fi
+}
 
-relabel_files()
-{
-	local opts=""
+relabel_files() {
+    local opts=""
 
-	do_echo "Relabeling files..."
-	if [ $QUIET -ne 0 ]; then
-		opts="-v"
-	fi
+    do_echo "Relabeling files..."
+    if [ $QUIET -ne 0 ]; then
+          opts="-v"
+    fi
 
-	# Setfiles is a lot like restorecon, except it takes a policy
-	# on-disk instead of looking at the kernel-loaded policy
-	# So, it works inside of image builds.
-	#
-	# At a minimum, we need a line for each entry we have where we are
-	# custominzing the label using 'semanage' below, but also
-	# others, when applicable.
-	$SBINDIR/setfiles $opts -F $ROOTDIR/etc/selinux/targeted/contexts/files/file_contexts \
-		$BINDIR/swift* \
-		$LOCALSTATEDIR/run/swift \
-		$LOCALSTATEDIR/swift \
-		$SHAREDSTATEDIR/nova/.ssh \
-		$SHAREDSTATEDIR/designate/bind9 \
-		$SHAREDSTATEDIR/vhost_sockets \
-		/srv \
-		$BINDIR/neutron* \
-		$BINDIR/swift-object-* \
-		${ROOTDIR}httpboot \
-		${ROOTDIR}tftpboot \
-		$LOCALSTATEDIR/run/redis \
-		$LOCALSTATEDIR/log \
-	2> /dev/null || :
+    # Setfiles is a lot like restorecon, except it takes a policy
+    # on-disk instead of looking at the kernel-loaded policy
+    # So, it works inside of image builds.
+    #
+    # At a minimum, we need a line for each entry we have where we are
+    # customizing the label using 'semanage' below, but also
+    # others, when applicable.
+    declare -a f_list
+    for i in "${!custom_fcontext[@]}"; do
+        f_list=("${f_list[@]}" "$(get_clean_name "$i")")
+    done
+    $SBINDIR/setfiles $opts -F $ROOTDIR/etc/selinux/targeted/contexts/files/file_contexts \
+      $LOCALSTATEDIR/run/swift \
+      $LOCALSTATEDIR/swift \
+      /srv \
+      $LOCALSTATEDIR/run/redis \
+      $LOCALSTATEDIR/log \
+      ${f_list[@]} 2> /dev/null || :
 }
 
 
@@ -74,40 +126,19 @@ set_port()
 }
 
 # usage: set_file_context a|d (add/delete)
-set_file_contexts()
-{
-	INPUT="fcontext -N -$1 -t named_zone_t \"$SHAREDSTATEDIR/designate/bind9(/.*)?\"
-	fcontext -N -$1 -t virt_cache_t \"$SHAREDSTATEDIR/vhost_sockets(/.*)?\"
-	fcontext -N -$1 -t httpd_var_lib_t $SHAREDSTATEDIR/openstack-dashboard
-	fcontext -N -$1 -t mongod_var_lib_t \"$SHAREDSTATEDIR/mongodb(/.*)?\"
-	fcontext -N -$1 -t httpd_log_t $LOCALSTATEDIR/log/gnocchi/app.log
-	fcontext -N -$1 -t httpd_log_t $LOCALSTATEDIR/log/aodh/app.log
-	fcontext -N -$1 -t httpd_log_t $LOCALSTATEDIR/log/ceilometer/app.log
-	fcontext -N -$1 -t httpd_log_t $LOCALSTATEDIR/log/panko/app.log
-	fcontext -N -$1 -t httpd_log_t $LOCALSTATEDIR/log/zaqar/zaqar.log
-	fcontext -N -$1 -t container_file_t \"$LOCALSTATEDIR/log/containers(/.*)?\"
-	fcontext -N -$1 -t container_file_t \"$LOCALSTATEDIR/lib/config-data(/.*)?\"
-	fcontext -N -$1 -t container_file_t \"$LOCALSTATEDIR/lib/tripleo-config(/.*)?\"
-	fcontext -N -$1 -t neutron_exec_t $BINDIR/neutron-rootwrap-daemon
-	fcontext -N -$1 -t neutron_exec_t $BINDIR/neutron-vpn-agent
-	fcontext -N -$1 -t swift_var_cache_t \"$LOCALSTATEDIR/cache/swift(/.*)\"
-	fcontext -N -$1 -t swift_exec_t $BINDIR/swift-object-reconstructor
-	fcontext -N -$1 -t swift_exec_t $BINDIR/swift-object-relinker
-	fcontext -N -$1 -t httpd_sys_content_t \"${ROOTDIR}httpboot(/.*)?\"
-	fcontext -N -$1 -t ssh_home_t \"$SHAREDSTATEDIR/nova/.ssh(/.*)?\"
-	fcontext -N -$1 -t tftpdir_t \"${ROOTDIR}tftpboot(/.*)?\"
-	fcontext -N -$1 -t cluster_var_log_t \"$LOCALSTATEDIR/log/pacemaker\.log.*\"
-	fcontext -N -$1 -t cluster_var_log_t \"$LOCALSTATEDIR/log/pacemaker(/.*)?\""
-
-	# Load these one by one so upgrades work properly.
-	# TODO (future): Make upgrades (only) do one by one;
-	#                install/remove can do batches to save time.
-	while read; do
-		eval semanage $REPLY &> /dev/null
-	done < <(echo "$INPUT")
-
-	# TODO (future): install/remove can do this to save time
-	# echo "$INPUT" | $SBINDIR/semanage import -N
+set_file_contexts() {
+    case $1 in
+        'a')
+            for f_context in "${!diff_fcontext[@]}"; do
+                eval semanage fcontext -N -${1} -t ${diff_fcontext[$f_context]} \"${f_context}\" &> /dev/null
+            done
+            ;;
+        'd')
+            for f_context in "${!custom_fcontext[@]}"; do
+                eval semanage fcontext -N -${1} -t ${custom_fcontext[$f_context]} \"${f_context}\" &> /dev/null
+            done
+            ;;
+    esac
 }
 
 
@@ -165,6 +196,7 @@ install_policies() {
 	set_port tcp 6642 ovsdb_port_t
 
 	# Create all the file contexts
+	do_echo "Add custom fcontext..."
 	set_file_contexts "a"
 
 	# Build up a script to pass to semanage
@@ -251,6 +283,7 @@ uninstall_policies() {
 	$SBINDIR/semodule -n -r $MODULES &> /dev/null || :
 
 	# Delete all the file contexts
+	do_echo "Removing custom fcontext..."
 	set_file_contexts "d"
 
 	relabel_files
