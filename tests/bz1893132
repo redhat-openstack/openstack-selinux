@@ -1,0 +1,2 @@
+type=AVC msg=audit(1604010639.062:643445): avc: denied { unmount } for pid=753263 comm="privsep-helper" scontext=system_u:system_r:neutron_t:s0 tcontext=system_u:object_r:fs_t:s0 tclass=filesystem
+type=AVC msg=audit(1604010639.098:643446): avc: denied { unmount } for pid=753263 comm="privsep-helper" scontext=system_u:system_r:neutron_t:s0 tcontext=system_u:object_r:fs_t:s0 tclass=filesystem
