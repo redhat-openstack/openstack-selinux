@@ -1,5 +1,7 @@
 policy_module(os-podman, 1.0)
 gen_require(`
+        attribute container_domain;
+        attribute container_runtime_domain;
         type container_t;
         type container_file_t;
         type openvswitch_t;
@@ -31,3 +33,6 @@ manage_dirs_pattern(container_t, cluster_var_log_t, cluster_var_log_t);
 
 # Needed for LP#1853652
 allow init_t container_file_t:file { execute execute_no_trans };
+
+# Bugzilla 1926765. See also container-selinux commit 448dfb
+allow container_domain container_runtime_domain:process sigchld;
