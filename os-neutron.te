@@ -105,8 +105,8 @@ optional_policy(`
 	# Bugzilla 1114254
 	manage_files_pattern(haproxy_t, neutron_var_lib_t, neutron_var_lib_t)
 	manage_sock_files_pattern(haproxy_t, neutron_var_lib_t, neutron_var_lib_t)
-	# Bugzilla 1115724
-	allow neutron_t haproxy_t:process sigkill;
+	# Bugzilla 1115724 and 1962802
+	allow neutron_t haproxy_t:process { sigkill signal };
 	allow neutron_t proc_t:filesystem unmount;
 ')
 
