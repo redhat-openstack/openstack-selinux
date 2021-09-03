@@ -34,8 +34,13 @@ allow keepalived_t init_var_lib_t:file { read getattr open };
 allow keepalived_t var_lib_t:file { read getattr open };
 allow keepalived_t var_log_t:file open;
 # bz1434826 - sys_admin
-allow keepalived_t self:capability { dac_override sys_admin };
+allow keepalived_t self:capability { sys_admin };
 allow keepalived_t neutron_t:process sigkill;
+
+gen_tunable(os_keepalived_dac_override, false)
+tunable_policy(`os_keepalived_dac_override',`
+	allow keepalived_t self:capability dac_override;
+')
 
 # Bugzilla 1206148
 allow keepalived_t sysfs_t:filesystem getattr;

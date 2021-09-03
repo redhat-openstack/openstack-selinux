@@ -254,7 +254,13 @@ install_policies() {
 	boolean -N -m --on os_gnocchi_use_nfs
 	boolean -N -m --on os_virtlogd_use_nfs
 	boolean -N -m --on os_glance_use_nfs
-	boolean -N -m --on os_cinder_use_nfs"
+	boolean -N -m --on os_cinder_use_nfs
+	boolean -N -m --on os_glance_dac_override
+	boolean -N -m --on os_haproxy_dac_override
+	boolean -N -m --on os_keepalived_dac_override
+	boolean -N -m --on os_openvswitch_dac_override
+	boolean -N -m --on os_virtlog_dac_override"
+	# Note the last 5 dac_override booleans will be eventually disabled (bugzilla 2000945)
 
 	do_echo "Setting OpenStack booleans..."
 	echo "$INPUT" | $SBINDIR/semanage import -N

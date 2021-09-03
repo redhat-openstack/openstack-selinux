@@ -69,7 +69,10 @@ allow httpd_t nova_log_t:file { open create };
 nova_manage_lib_files(virtlogd_t)
 
 # Bugzilla 1377272
-allow virtlogd_t self:capability dac_override;
+gen_tunable(os_virtlog_dac_override, false)
+tunable_policy(`os_virtlog_dac_override',`
+        allow virtlogd_t self:capability dac_override;
+')
 
 # Bugzilla #1499800 (workaround)
 # src: https://eucalyptus.atlassian.net/browse/EUCA-13447
