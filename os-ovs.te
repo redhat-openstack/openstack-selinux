@@ -110,8 +110,13 @@ dontaudit openvswitch_t neutron_t:file { read open getattr };
 corenet_tcp_connect_all_ports(openvswitch_t)
 
 # #1498797
-allow openvswitch_t self:capability { audit_write dac_override };
+allow openvswitch_t self:capability { audit_write };
 allow openvswitch_t self:netlink_audit_socket { create nlmsg_relay read write };
+
+gen_tunable(os_openvswitch_dac_override, false)
+tunable_policy(`os_openvswitch_dac_override',`
+	allow openvswitch_t self:capability dac_override;
+')
 
 # #1542107
 allow openvswitch_t svirt_tmpfs_t:file { read write };
