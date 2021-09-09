@@ -1,0 +1,1 @@
+type=AVC msg=audit(1631177895.318:10745): avc:  denied  { read } for  pid=40184 comm="python3" name="mysql.key" dev="vda2" ino=819659 scontext=system_u:system_r:container_t:s0:c499,c848 tcontext=system_u:object_r:cert_t:s0 tclass=file permissive=0

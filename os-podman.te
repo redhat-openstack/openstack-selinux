@@ -2,6 +2,7 @@ policy_module(os-podman, 1.0)
 gen_require(`
         attribute container_domain;
         attribute container_runtime_domain;
+        type cert_t;
         type container_t;
         type container_file_t;
         type openvswitch_t;
@@ -41,3 +42,6 @@ allow container_domain container_runtime_domain:process sigchld;
 # Bugzilla 1941922 + 1941412
 manage_files_pattern(container_t, swift_data_t, swift_data_t);
 manage_dirs_pattern(container_t, swift_data_t, swift_data_t);
+
+# Discovered while working with CS9 and latest podman/SELinux
+read_files_pattern(container_t, cert_t, cert_t)
