@@ -1,0 +1,1 @@
+type=AVC msg=audit(09/22/2021 10:46:27.412:11298) : avc:  denied  { getattr } for  pid=338462 comm=lsof path=/dev/sda2 dev="devtmpfs" ino=24765 scontext=system_u:system_r:container_t:s0:c216,c474 tcontext=system_u:object_r:fixed_disk_device_t:s0 tclass=blk_file permissive=1
