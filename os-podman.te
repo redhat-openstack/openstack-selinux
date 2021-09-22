@@ -9,6 +9,8 @@ gen_require(`
         type cluster_var_log_t;
         type init_t;
         type swift_data_t;
+        type fixed_disk_device_t;
+        class blk_file getattr;
 ')
 #============= container_t ==============
 miscfiles_read_generic_certs(container_t)
@@ -41,3 +43,6 @@ allow container_domain container_runtime_domain:process sigchld;
 # Bugzilla 1941922 + 1941412
 manage_files_pattern(container_t, swift_data_t, swift_data_t);
 manage_dirs_pattern(container_t, swift_data_t, swift_data_t);
+
+# LP 1944539
+allow container_t fixed_disk_device_t:blk_file getattr;
