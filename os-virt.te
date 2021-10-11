@@ -1,6 +1,7 @@
 policy_module(os-virt,0.1)
 
 gen_require(`
+	type container_file_t;
 	type systemd_logind_t;
 	type systemd_logind_inhibit_var_run_t;
 	type virtlogd_t;
@@ -33,3 +34,9 @@ allow svirt_t spc_t:tun_socket attach_queue;
 
 # Bugzilla 1751300
 allow spc_t unlabeled_t:key manage_key_perms;
+
+# Bugzilla 2007314
+gen_tunable(os_enable_vtpm, false)
+tunable_policy(`os_enable_vtpm',`
+        manage_sock_files_pattern(svirt_t, container_file_t, container_file_t)
+')
