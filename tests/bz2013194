@@ -1,0 +1,1 @@
+type=AVC msg=audit(1633990096.040:24220): avc:  denied  { read write } for  pid=5337 comm="swift-container" name="container.recon" dev="vda2" ino=46373631 scontext=system_u:system_r:container_t:s0:c50,c57 tcontext=system_u:object_r:swift_var_cache_t:s0 tclass=file permissive=0
