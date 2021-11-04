@@ -28,7 +28,6 @@ declare -A custom_fcontext=(
 ["$LOCALSTATEDIR/log/ceilometer/app.log"]='httpd_log_t'
 ["$LOCALSTATEDIR/log/panko/app.log"]='httpd_log_t'
 ["$LOCALSTATEDIR/log/zaqar/zaqar.log"]='httpd_log_t'
-["$LOCALSTATEDIR/log/containers(/.*)?"]='container_file_t'
 ["$LOCALSTATEDIR/lib/config-data(/.*)?"]='container_file_t'
 ["$LOCALSTATEDIR/lib/kolla(/.*)?"]='container_file_t'
 ["$LOCALSTATEDIR/lib/tripleo-config(/.*)?"]='container_file_t'
