@@ -4,6 +4,7 @@ gen_require(`
         attribute container_runtime_domain;
         type container_t;
         type container_file_t;
+        type container_log_t;
         type openvswitch_t;
         type puppet_etc_t;
         type cluster_var_log_t;
@@ -50,3 +51,7 @@ manage_dirs_pattern(container_t, swift_var_cache_t, swift_var_cache_t);
 
 # LP 1944539
 allow container_t fixed_disk_device_t:blk_file getattr;
+
+# Bugzilla 2020210
+manage_files_pattern(container_t, container_log_t, container_log_t);
+manage_dirs_pattern(container_t, container_log_t, container_log_t);

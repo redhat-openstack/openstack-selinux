@@ -1,0 +1,1 @@
+type=AVC msg=audit(1635988536.870:9187): avc:  denied  { append } for  pid=128557 comm="redis-server" name="redis.log" dev="vda2" ino=67368647 scontext=system_u:system_r:container_t:s0:c67,c288 tcontext=system_u:object_r:container_log_t:s0 tclass=file permissive=0
