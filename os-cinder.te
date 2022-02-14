@@ -17,11 +17,11 @@ gen_require(`
 allow httpd_t cinder_log_t:file { open create };
 allow httpd_t cinder_log_t:dir { add_name write };
 
-# Bugzilla 1820504
-allow httpd_t cinder_var_lib_t:dir { add_name write create };
+# Bugzilla 1820504 and 2053849
+manage_dirs_pattern(httpd_t, cinder_var_lib_t, cinder_var_lib_t);
 
 # Allow httpd to handle files in statedir
-allow httpd_t cinder_var_lib_t:file { open create append getattr lock };
+manage_files_pattern(httpd_t, cinder_var_lib_t, cinder_var_lib_t);
 
 # Bugzilla 1384472
 iscsid_domtrans(cinder_backup_t);
