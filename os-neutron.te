@@ -116,11 +116,14 @@ tunable_policy(`os_neutron_use_execmem',`
 	allow neutron_t self:process execmem;
 ')
 
-# Bugzilla 1419418
-allow neutron_t nsfs_t:file { open read };
+# Bugzilla 1419418 and 2053852
+allow neutron_t nsfs_t:file { open read getattr };
 
 # Bugzilla 1893132
 allow neutron_t fs_t:filesystem unmount;
+
+# Bugzilla 2053852
+allow neutron_t nsfs_t:filesystem unmount;
 
 # Bugzilla 1547197
 allow neutron_t self:process setpgid;

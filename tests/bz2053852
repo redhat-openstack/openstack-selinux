@@ -1,0 +1,2 @@
+type=AVC msg=audit(1644681472.535:9235): avc:  denied  { getattr } for  pid=78599 comm="privsep-helper" path="/run/netns/qdhcp-d6afbd95-bfef-44d7-84cc-559cda9a0686" dev="nsfs" ino=4026532244 scontext=system_u:system_r:neutron_t:s0 tcontext=system_u:object_r:nsfs_t:s0 tclass=file permissive=1
+type=AVC msg=audit(1644681474.970:9248): avc:  denied  { unmount } for  pid=78610 comm="privsep-helper" scontext=system_u:system_r:neutron_t:s0 tcontext=system_u:object_r:nsfs_t:s0 tclass=filesystem permissive=1
