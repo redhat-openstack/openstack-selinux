@@ -10,6 +10,7 @@ gen_require(`
 	type rabbitmq_t;
 	type rabbitmq_var_lib_t;
 	type security_t;
+	type tmpfs_t;
 	class dir { read write };
 	class file { getattr open read write };
 	class passwd passwd;
@@ -32,3 +33,6 @@ allow logrotate_t self:passwd passwd;
 allow logrotate_t proc_net_t:file read;
 allow logrotate_t self:process setrlimit;
 allow rabbitmq_t proc_net_t:file read;
+
+# Bugzilla 2056565
+allow rabbitmq_t tmpfs_t:file { read write execute };

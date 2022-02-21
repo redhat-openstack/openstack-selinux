@@ -1,0 +1,2 @@
+type=AVC msg=audit(1645438546.184:3306): avc:  denied  { write } for  pid=27672 comm="beam.smp" name="memfd:vmem" dev="tmpfs" ino=3 scontext=system_u:system_r:rabbitmq_t:s0 tcontext=system_u:object_r:tmpfs_t:s0 tclass=file permissive=1
+type=AVC msg=audit(1645438546.184:3307): avc:  denied  { read execute } for  pid=27672 comm="beam.smp" path=2F6D656D66643A766D656D202864656C6574656429 dev="tmpfs" ino=3 scontext=system_u:system_r:rabbitmq_t:s0 tcontext=system_u:object_r:tmpfs_t:s0 tclass=file permissive=1
