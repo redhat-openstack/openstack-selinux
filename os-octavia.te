@@ -20,6 +20,7 @@ gen_require(`
 	type unconfined_service_t;
 	type NetworkManager_t;
 	type tmpfs_t;
+	type shell_exec_t;
 	class sock_file { create link rename setattr unlink write };
 	class capability { sys_ptrace sys_admin };
 	class file { create entrypoint execute execute_no_trans getattr ioctl open read write };
@@ -67,12 +68,13 @@ allow keepalived_t sysfs_t:dir mounton;
 allow keepalived_t tmpfs_t:filesystem unmount;
 
 # Same access for haproxy_t
-allow haproxy_t bin_t:file { entrypoint execute };
+allow haproxy_t bin_t:file { entrypoint execute execute_no_trans };
 allow haproxy_t unconfined_service_t:file { open read };
 allow haproxy_t var_lib_t:dir { add_name write remove_name };
 allow haproxy_t var_lib_t:file { create execute execute_no_trans getattr ioctl open read write unlink };
 allow haproxy_t var_lib_t:sock_file { create link rename setattr unlink write };
 allow haproxy_t self:capability { sys_admin };
+allow haproxy_t shell_exec_t:file { entrypoint execute };
 
 gen_tunable(os_haproxy_dac_override, false)
 tunable_policy(`os_haproxy_dac_override',`

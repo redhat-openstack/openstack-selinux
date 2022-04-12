@@ -1,0 +1,3 @@
+type=AVC msg=audit(1649425422.841:194): avc:  denied  { entrypoint } for  pid=5633 comm="(sh)" path="/usr/bin/bash" dev="vda1" ino=4215617 scontext=system_u:system_r:haproxy_t:s0 tcontext=system_u:object_r:shell_exec_t:s0 tclass=file permissive=0
+type=AVC msg=audit(1649676510.117:101): avc:  denied  { execute } for  pid=5236 comm="sh" path="/usr/bin/bash" dev="vda1" ino=4215617 scontext=system_u:system_r:haproxy_t:s0 tcontext=system_u:object_r:shell_exec_t:s0 tclass=file permissive=0
+type=AVC msg=audit(1649677973.779:106): avc:  denied  { execute_no_trans } for  pid=5246 comm="sh" path="/usr/bin/socat" dev="vda1" ino=4216601 scontext=system_u:system_r:haproxy_t:s0 tcontext=system_u:object_r:bin_t:s0 tclass=file permissive=0
