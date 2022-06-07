@@ -20,7 +20,6 @@ gen_require(`
 	type nsfs_t;
 	type fs_t;
 	class capability setpcap;
-	class capability setpgid;
 	class capability dac_override;
 	class key_socket { write read create };
 	class netlink_xfrm_socket { bind create nlmsg_write };
