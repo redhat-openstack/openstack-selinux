@@ -303,8 +303,36 @@ uninstall_policies() {
 	_restore_file_modes
 }
 
+verify_policies() {
+	if ! selinuxenabled; then
+		echo "SELinux is disabled"
+		exit 0
+	fi
+	if [ $(getenforce) != "Enforcing" ]; then
+		echo "SELinux is permissive";
+		exit 0
+	fi
 
-while getopts m:xq opt; do
+	failed_count=0
+	INSTALLED_MODULES=$(semodule -l)
+	for module in $MODULES; do
+		local_failed=1
+		for installed_module in $INSTALLED_MODULES; do
+			if [ "$module" == "$installed_module" ]; then
+				local_failed=0
+				break
+			fi
+		done
+		test ${local_failed} -ne 0 && echo "Missing ${module}!"
+		let "failed_count+=$local_failed"
+	done
+	echo "Found ${failed_count} missing module(s)."
+	test ${failed_count} -eq 0
+	exit $?
+}
+
+
+while getopts m:xqV opt; do
 	case $opt in
 	m)	# modules
 		MODULES="$OPTARG"
@@ -314,6 +342,9 @@ while getopts m:xq opt; do
 		;;
 	q)
 		QUIET=0
+		;;
+	V)
+		MODE=2
 		;;
 	esac
 done
@@ -325,6 +356,9 @@ case $MODE in
 		;;
 	1)
 		uninstall_policies
+		;;
+	2)
+		verify_policies
 		;;
 esac
 exit $?
