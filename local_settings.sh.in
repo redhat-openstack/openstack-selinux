@@ -323,12 +323,16 @@ verify_policies() {
 				break
 			fi
 		done
-		test ${local_failed} -ne 0 && echo "Missing ${module}!"
+		test ${local_failed} -ne 0 && (echo "Missing ${module}!" >&2)
 		let "failed_count+=$local_failed"
 	done
-	echo "Found ${failed_count} missing module(s)."
-	test ${failed_count} -eq 0
-	exit $?
+	if [ ${failed_count} -eq 0 ]; then
+		echo "All modules are present."
+		exit 0
+	else
+		echo "Found ${failed_count} missing module(s)." >&2
+		exit 1
+	fi
 }
 
 
