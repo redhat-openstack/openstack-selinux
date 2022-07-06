@@ -21,6 +21,8 @@ gen_require(`
 	type NetworkManager_t;
 	type tmpfs_t;
 	type nsfs_t;
+	type shell_exec_t;
+	type ping_exec_t;
 	class sock_file { create link rename setattr unlink write };
 	class capability { sys_ptrace sys_admin };
 	class file { create entrypoint execute execute_no_trans getattr ioctl open read write };
@@ -90,6 +92,14 @@ allow haproxy_t sysfs_t:dir mounton;
 gen_tunable(os_haproxy_enable_nsfs, false)
 tunable_policy(`os_haproxy_enable_nsfs', `
     allow haproxy_t nsfs_t:file { open read };
+')
+gen_tunable(os_haproxy_ping, false)
+tunable_policy(`os_haproxy_ping', `
+    allow haproxy_t ping_exec_t:file { execute execute_no_trans open read };
+    allow haproxy_t self:rawip_socket { create getopt setopt write read };
+    allow haproxy_t self:icmp_socket { create getopt setopt write read };
+    allow haproxy_t self:process setcap;
+    allow haproxy_t shell_exec_t:file execute;
 ')
 
 kernel_read_fs_sysctls(ifconfig_t)
