@@ -117,8 +117,8 @@ relabel_files() {
           opts="-v"
     fi
     current_version=$(/usr/bin/secon --version| grep -oE '[0-9]+(\.[0-9]+)+') # ensure we match 3.3, 3.3.1, 3.3-rc3 and so on
-		vercomp $current_version $SELINUX_THREAD_VERSION
-    if [ $? -le 2 ];; then
+    vercomp $current_version $SELINUX_THREAD_VERSION
+    if [ $? -le 1 ]; then # we want '>='
       # "-T 0" will use all available cores.
       opts="${opts} -T 0"
     fi
