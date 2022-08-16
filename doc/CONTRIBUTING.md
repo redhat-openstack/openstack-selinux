@@ -29,7 +29,9 @@ How to run the tests
 
         $ make clean all install check
 
-It is recommended to use a VM for this.
+It is recommended to use a VM for this. Note that it is not usually
+possible nor recommended to develop or test SELinux policies from within
+a container.
 
 Fixing an issue
 ----------------
