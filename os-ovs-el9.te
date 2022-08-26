@@ -1,0 +1,14 @@
+#
+# openstack-selinux extra OVS policy for RHEL9
+#
+# Allow openvswitch to write to files in /tmp
+#
+policy_module(os-ovs-el9,0.1)
+
+gen_require(`
+	type openvswitch_t;
+	type svirt_t;
+')
+
+# bugzilla 2118908
+allow svirt_t openvswitch_t:anon_inode { read write };
