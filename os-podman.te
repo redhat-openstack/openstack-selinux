@@ -55,3 +55,6 @@ allow container_t fixed_disk_device_t:blk_file getattr;
 # Bugzilla 2020210
 manage_files_pattern(container_t, container_log_t, container_log_t);
 manage_dirs_pattern(container_t, container_log_t, container_log_t);
+
+# Bugzilla 2091076
+manage_sock_files_pattern(init_t, container_file_t, container_file_t);
