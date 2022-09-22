@@ -1,0 +1,2 @@
+type=AVC msg=audit(1663231589.213:223510): avc:  denied  { create } for  pid=1 comm="systemd" name="podman.sock" scontext=system_u:system_r:init_t:s0 tcontext=system_u:object_r:container_file_t:s0 tclass=sock_file permissive=1
+type=AVC msg=audit(1663231589.213:223511): avc:  denied  { write } for  pid=1 comm="systemd" name="podman.sock" dev="vda4" ino=143041949 scontext=system_u:system_r:init_t:s0 tcontext=system_u:object_r:container_file_t:s0 tclass=sock_file permissive=1
