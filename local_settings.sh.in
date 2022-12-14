@@ -342,10 +342,6 @@ verify_policies() {
 		echo "SELinux is disabled"
 		exit 0
 	fi
-	if [ $(getenforce) != "Enforcing" ]; then
-		echo "SELinux is permissive"
-		exit 0
-	fi
 	if [ "$(id -u)" != "0" ]; then
 		echo "Note: UID is not 0; cannot check SELinux module status"
 		exit 0
