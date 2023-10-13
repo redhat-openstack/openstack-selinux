@@ -13,7 +13,7 @@ EXTRA_TARGETS?=os-ovs-el9
 endif # version 9
 endif # RHEL clones
 
-TARGETS?=os-ovs os-swift os-nova os-neutron os-mysql os-glance os-rsync os-rabbitmq os-keepalived os-keystone os-haproxy os-mongodb os-ipxe os-redis os-cinder os-httpd os-gnocchi os-collectd os-virt os-dnsmasq os-octavia os-podman os-rsyslog os-pbis os-barbican os-logrotate os-certmonger os-timemaster $(EXTRA_TARGETS)
+TARGETS?=os-ovs os-swift os-nova os-neutron os-mysql os-glance os-rsync os-rabbitmq os-keepalived os-keystone os-haproxy os-ipxe os-redis os-cinder os-httpd os-gnocchi os-collectd os-virt os-dnsmasq os-octavia os-podman os-rsyslog os-pbis os-barbican os-logrotate os-certmonger os-timemaster $(EXTRA_TARGETS)
 MODULES?=${TARGETS:=.pp.bz2}
 DATADIR?=/usr/share
 LOCALDIR?=/usr/share/openstack-selinux/master

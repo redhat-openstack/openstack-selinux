@@ -24,7 +24,6 @@ declare -A custom_fcontext=(
 ["$SHAREDSTATEDIR/designate/bind9(/.*)?"]='named_zone_t'
 ["$SHAREDSTATEDIR/vhost_sockets(/.*)?"]='virt_cache_t'
 ["$SHAREDSTATEDIR/openstack-dashboard"]='httpd_var_lib_t'
-["$SHAREDSTATEDIR/mongodb(/.*)?"]='mongod_var_lib_t'
 ["$LOCALSTATEDIR/log/gnocchi/app.log"]='httpd_log_t'
 ["$LOCALSTATEDIR/log/aodh/app.log"]='httpd_log_t'
 ["$LOCALSTATEDIR/log/ceilometer/app.log"]='httpd_log_t'
