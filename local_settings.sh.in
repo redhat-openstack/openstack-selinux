@@ -26,7 +26,6 @@ declare -A custom_fcontext=(
 ["$SHAREDSTATEDIR/openstack-dashboard"]='httpd_var_lib_t'
 ["$LOCALSTATEDIR/log/gnocchi/app.log"]='httpd_log_t'
 ["$LOCALSTATEDIR/log/aodh/app.log"]='httpd_log_t'
-["$LOCALSTATEDIR/log/ceilometer/app.log"]='httpd_log_t'
 ["$LOCALSTATEDIR/log/panko/app.log"]='httpd_log_t'
 ["$LOCALSTATEDIR/log/zaqar/zaqar.log"]='httpd_log_t'
 ["$LOCALSTATEDIR/lib/config-data(/.*)?"]='container_file_t'
