@@ -17,7 +17,7 @@ mkdir -p $TMP
 PWD=$(pwd)
 cd "$(dirname $0)"
 
-TEST_FILES=$(/bin/ls -1 bz* lp*)
+TEST_FILES=$(/bin/ls -1 bz* lp* osprh*)
 TEST_INPUT=$TMP/input
 TEST_OUTPUT=$TMP/output
 TEST_FAIL=$TMP/failed_tests

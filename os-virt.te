@@ -5,6 +5,7 @@ gen_require(`
 	type systemd_logind_t;
 	type systemd_logind_inhibit_var_run_t;
 	type virtlogd_t;
+	type virt_var_run_t;
 	type svirt_t;
 	type spc_t;
 	type unlabeled_t;
@@ -19,7 +20,10 @@ gen_require(`
 allow virtlogd_t systemd_logind_t:dbus send_msg;
 allow systemd_logind_t virtlogd_t:dbus send_msg;
 allow virtlogd_t systemd_logind_inhibit_var_run_t:fifo_file write;
-
+# allow access to /var/lib/nova directories which are labeled with container_file_t
+# This is required for https://issues.redhat.com//browse/OSPRH-960
+manage_files_pattern(virtlogd_t, container_file_t, container_file_t)
+allow virtlogd_t self:capability dac_override;
 # #1566973
 # Tunable to allow virtlogd to write to NFS
 gen_tunable(os_virtlogd_use_nfs, false)

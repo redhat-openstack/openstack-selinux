@@ -9,7 +9,7 @@ How to report a bug
    denials (and ideally, the full permissive audit logs around the time
    the issue is triggered.)
 
-If a bug doesn't already exist on Launchpad or Bugzilla, create a [RDO
+If a bug doesn't already exist on Launchpad, Bugzilla or Jira, create a [RDO
 bug](https://bugzilla.redhat.com/enter_bug.cgi?product=RDO) with the
 `openstack-selinux` component. Having a bug number is necessary to add
 unit tests.
