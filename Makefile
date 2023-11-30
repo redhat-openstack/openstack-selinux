@@ -85,7 +85,7 @@ install:
 
 	# Install tests
 	${INSTALL} -d ${LOCALDIR}/tests
-	${INSTALL} -m 0644 tests/bz* tests/lp* ${LOCALDIR}/tests
+	${INSTALL} -m 0644 tests/bz* tests/lp* tests/osprh* ${LOCALDIR}/tests
 	${INSTALL} -m 0755 tests/check_all ${LOCALDIR}/tests
 
 	# Install interfaces
