@@ -133,3 +133,6 @@ corenet_udp_bind_dhcpc_port(neutron_t)
 # Bugzilla 1676954
 auth_use_pam(neutron_t)
 init_rw_utmp(neutron_t)
+
+# Bugzilla 2254886
+fs_manage_tmpfs_files(neutron_t)
