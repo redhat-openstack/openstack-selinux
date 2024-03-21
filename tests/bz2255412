@@ -1,0 +1,2 @@
+type=AVC msg=audit(1703084811.884:6481): avc:  denied  { execute } for  pid=72459 comm="sudo" name="unix_chkpwd" dev="vda1" ino=4700890 scontext=system_u:system_r:glance_api_t:s0 tcontext=system_u:object_r:chkpwd_exec_t:s0 tclass=file permissive=0
+type=AVC msg=audit(1703084818.067:6524): avc:  denied  { execute } for  pid=72505 comm="sudo" name="unix_chkpwd" dev="vda1" ino=4700890 scontext=system_u:system_r:glance_api_t:s0 tcontext=system_u:object_r:chkpwd_exec_t:s0 tclass=file permissive=0
