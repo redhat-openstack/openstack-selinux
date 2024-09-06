@@ -68,6 +68,8 @@ optional_policy(`
 gen_tunable(os_glance_use_sudo, false)
 tunable_policy(`os_glance_use_sudo',`
 	sudo_exec(glance_api_t)
+	auth_use_pam(glance_api_t)
+	init_rw_utmp(glance_api_t)
 	logging_send_audit_msgs(glance_api_t)
 	iscsid_domtrans(glance_api_t)
 	fstools_domtrans(glance_api_t)
