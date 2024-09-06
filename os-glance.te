@@ -10,6 +10,7 @@ gen_require(`
 	type sysfs_t;
 	type var_lib_t;
 	type nfs_t;
+	type httpd_t;
 	class dir { write getattr remove_name create add_name };
 	class file { write getattr unlink open create read};
 	class lnk_file read;
@@ -95,3 +96,7 @@ tunable_policy(`os_glance_use_nfs',`
 
 # Bugzilla 1789710
 allow glance_api_t glance_var_lib_t:filesystem getattr;
+
+# RDO-310 Allow httpd to handle files in statedir
+manage_dirs_pattern(httpd_t, glance_var_lib_t, glance_var_lib_t);
+manage_files_pattern(httpd_t, glance_var_lib_t, glance_var_lib_t);
