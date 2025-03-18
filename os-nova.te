@@ -22,6 +22,7 @@ gen_require(`
   type iptables_t;
   type modules_conf_t;
   type container_share_t;
+  type container_file_t;
   type container_runtime_t;
   attribute nova_domain;
   class key write;
@@ -122,6 +123,7 @@ optional_policy(`
 		type systemd_machined_t;
 		type container_runtime_t;
 		type container_share_t;
+		type container_file_t;
 		type container_unit_file_t;
 		type svirt_sandbox_file_t;
 		type spc_t;
@@ -139,6 +141,7 @@ optional_policy(`
 
 	container_read_share_files(svirt_t)
 	allow svirt_t container_share_t:file { entrypoint execute };
+	allow svirt_t container_file_t:file { entrypoint execute };
 
 	allow svirt_t spc_t:dir search;
 	allow svirt_t spc_t:fifo_file write_file_perms;
@@ -150,6 +153,9 @@ allow svirt_tcg_t container_runtime_t:process sigchld;
 allow svirt_tcg_t container_share_t:file { execute getattr read entrypoint open };
 allow svirt_tcg_t container_share_t:lnk_file read;
 allow svirt_tcg_t container_share_t:dir read;
+allow svirt_tcg_t container_file_t:file { execute getattr read entrypoint open };
+allow svirt_tcg_t container_file_t:lnk_file read;
+allow svirt_tcg_t container_file_t:dir read;
 
 # Bug 1640528
 auth_use_pam(nova_t)
