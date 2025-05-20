@@ -1,0 +1,16 @@
+#
+# openstack-selinux policy for os-net-config network manager
+#
+# Allow NetworkManager to access ovs db.sock
+#
+# Author: Ella Shulman <eshulman@redhat.com>
+#
+
+gen_require(`
+  type NetworkManager_t;
+  type container_file_t;
+  class sock_file write;
+')
+
+# Jira OSPRH-16672
+rw_sock_files_pattern(NetworkManager_t, container_file_t, container_file_t)

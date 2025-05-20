@@ -1,0 +1,1 @@
+type=AVC msg=audit(1747193869.722:197759): avc:  denied  { write } for  pid=321799 comm="NetworkManager" name="db.sock" dev="tmpfs" ino=2393 scontext=system_u:system_r:NetworkManager_t:s0 tcontext=system_u:object_r:container_file_t:s0 tclass=sock_file permissive=0
