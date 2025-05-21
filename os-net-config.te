@@ -6,6 +6,8 @@
 # Author: Ella Shulman <eshulman@redhat.com>
 #
 
+policy_module(os-net-config,0.1)
+
 gen_require(`
   type NetworkManager_t;
   type container_file_t;
