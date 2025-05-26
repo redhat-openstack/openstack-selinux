@@ -13,7 +13,7 @@ EXTRA_TARGETS?=os-ovs-el9
 endif # version 9
 endif # RHEL clones
 
-TARGETS?=os-ovs os-swift os-nova os-neutron os-mysql os-glance os-rsync os-rabbitmq os-keepalived os-keystone os-haproxy os-ipxe os-redis os-cinder os-httpd os-gnocchi os-collectd os-virt os-dnsmasq os-octavia os-podman os-rsyslog os-barbican os-logrotate os-certmonger os-timemaster os-ceilometer $(EXTRA_TARGETS)
+TARGETS?=os-ovs os-swift os-nova os-neutron os-mysql os-glance os-rsync os-rabbitmq os-keepalived os-keystone os-haproxy os-ipxe os-redis os-cinder os-httpd os-gnocchi os-collectd os-virt os-dnsmasq os-octavia os-podman os-rsyslog os-barbican os-logrotate os-certmonger os-timemaster os-ceilometer os-net-config $(EXTRA_TARGETS)
 MODULES?=${TARGETS:=.pp.bz2}
 DATADIR?=/usr/share
 LOCALDIR?=/usr/share/openstack-selinux/master
@@ -96,7 +96,7 @@ install:
 	${INSTALL} -d ${DATADIR}/selinux/packages
 	${INSTALL} -m 0644 ${TARGETS:=.pp.bz2} ${DATADIR}/selinux/packages
 
-# Note: You can't run this in a build system unless the build 
+# Note: You can't run this in a build system unless the build
 #       system has access to change the kernel SELinux policies
 check:
 	cd ${LOCALDIR} && ./local_settings.sh			;\
