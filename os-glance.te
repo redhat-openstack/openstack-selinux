@@ -97,6 +97,10 @@ tunable_policy(`os_glance_use_nfs',`
 # Bugzilla 1789710
 allow glance_api_t glance_var_lib_t:filesystem getattr;
 
+# Bugzilla 2255412
+auth_use_pam(glance_api_t)
+init_rw_utmp(glance_api_t)
+
 # RDO-310 Allow httpd to handle files in statedir
 manage_dirs_pattern(httpd_t, glance_var_lib_t, glance_var_lib_t);
 manage_files_pattern(httpd_t, glance_var_lib_t, glance_var_lib_t);
