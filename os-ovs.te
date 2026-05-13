@@ -129,3 +129,11 @@ allow openvswitch_t svirt_t:unix_stream_socket { read write };
 
 # bugzilla #1707840
 allow openvswitch_t spc_t:unix_stream_socket { read write };
+
+# bugzilla 2118908 - anon_inode class available on EL9+
+optional_policy(`
+	gen_require(`
+		class anon_inode { read write };
+	')
+	allow svirt_t openvswitch_t:anon_inode { read write };
+')

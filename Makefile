@@ -7,10 +7,6 @@ OS_MAJ=$(shell OS_VER=$(OS_VER) && echo $${OS_VER/.*/})
 
 # RHEL & rebuilds: if we match one of these, we do a version comparison.
 ifneq (,$(findstring $(OS_ID),rhel centos rocky almalinux))
-# If version 9 or greater, add extra targets
-ifeq ($(OS_MAJ),9)
-EXTRA_TARGETS?=os-ovs-el9
-endif # version 9
 endif # RHEL clones
 
 TARGETS?=os-ovs os-swift os-nova os-neutron os-mysql os-glance os-rsync os-rabbitmq os-keepalived os-keystone os-haproxy os-ipxe os-redis os-cinder os-httpd os-gnocchi os-collectd os-virt os-dnsmasq os-octavia os-podman os-rsyslog os-barbican os-logrotate os-certmonger os-timemaster os-ceilometer os-net-config os-frr $(EXTRA_TARGETS)

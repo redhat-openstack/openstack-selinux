@@ -6,7 +6,6 @@ gen_require(`
         type container_file_t;
         type container_log_t;
         type openvswitch_t;
-        type puppet_etc_t;
         type cluster_var_log_t;
         type init_t;
         type swift_data_t;
@@ -17,11 +16,17 @@ gen_require(`
 #============= container_t ==============
 miscfiles_read_generic_certs(container_t)
 openvswitch_stream_connect(container_t)
-# for posterity: read_files_pattern includes dir accesses
-read_files_pattern(container_t, puppet_etc_t, puppet_etc_t)
-read_lnk_files_pattern(container_t, puppet_etc_t, puppet_etc_t)
-# but read_files_pattern does not allow "read" on tclass=dir
-allow container_t puppet_etc_t:dir { read };
+
+optional_policy(`
+  gen_require(`
+    type puppet_etc_t;
+  ')
+  # for posterity: read_files_pattern includes dir accesses
+  read_files_pattern(container_t, puppet_etc_t, puppet_etc_t)
+  read_lnk_files_pattern(container_t, puppet_etc_t, puppet_etc_t)
+  # but read_files_pattern does not allow "read" on tclass=dir
+  allow container_t puppet_etc_t:dir { read };
+')
 
 # bugzilla #1772025
 allow openvswitch_t container_file_t:dir create;
