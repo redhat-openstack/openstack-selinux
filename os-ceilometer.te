@@ -7,6 +7,8 @@ gen_require(`
   type proc_t;
   type virt_var_run_t;
   type virtd_t;
+  type virtqemud_var_run_t;
+  type virtqemud_t;
 ')
 
 # Get ceilometer_polling_t to work as a container
@@ -21,3 +23,7 @@ logging_send_syslog_msg(ceilometer_polling_t)
 allow ceilometer_polling_t proc_t:filesystem associate;
 allow ceilometer_polling_t virt_var_run_t:sock_file write;
 allow ceilometer_polling_t virtd_t:unix_stream_socket connectto;
+
+# libvirt uses dedicated virtqemud types on newer SELinux policies.
+allow ceilometer_polling_t virtqemud_var_run_t:sock_file write;
+allow ceilometer_polling_t virtqemud_t:unix_stream_socket connectto;
